@@ -1458,6 +1458,13 @@ a:focus-visible,
   color: #451a03;
 }
 
+.garden-hint-callout--soft {
+  margin-top: 0.75rem;
+  background: var(--ll-sage-soft);
+  border-color: var(--ll-sage);
+  color: var(--ll-graphite);
+}
+
 .export-notice {
   font-size: 0.82rem;
   color: var(--ll-graphite);

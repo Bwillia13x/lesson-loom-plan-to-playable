@@ -17,6 +17,7 @@ type StudentFractionGardenProps = {
   onReset: () => void;
   onCheck: () => void;
   checkSuccess: boolean;
+  checkAttempted: boolean;
   showSuccessPulse: boolean;
 };
 
@@ -41,6 +42,7 @@ export function StudentFractionGarden({
   onReset,
   onCheck,
   checkSuccess,
+  checkAttempted,
   showSuccessPulse,
 }: StudentFractionGardenProps) {
   const [hintVisible, setHintVisible] = useState(false);
@@ -173,6 +175,17 @@ export function StudentFractionGarden({
               Check
             </IndustrialButton>
           </div>
+
+          {checkAttempted && !checkSuccess && selectedTileIds.length >= 1 && (
+            <div
+              className="garden-hint-callout garden-hint-callout--soft"
+              role="status"
+              data-testid="fraction-check-feedback"
+              aria-live="polite"
+            >
+              {studentActivity.hint}
+            </div>
+          )}
 
           {checkSuccess && (
             <div

@@ -52,6 +52,7 @@ export default function App() {
   const [copiedExportId, setCopiedExportId] = useState<string | null>(null);
   const [downloadNotice, setDownloadNotice] = useState<string | null>(null);
   const [checkSuccess, setCheckSuccess] = useState(false);
+  const [checkAttempted, setCheckAttempted] = useState(false);
   const [showSuccessPulse, setShowSuccessPulse] = useState(false);
   const [activeSegment, setActiveSegment] = useState<TimelineId>('partner');
   const [classMode, setClassMode] = useState<'whole' | 'groups'>('whole');
@@ -127,6 +128,7 @@ export default function App() {
 
   const handleToggleTile = (id: string) => {
     setCheckSuccess(false);
+    setCheckAttempted(false);
     setShowSuccessPulse(false);
     setSelectedTileIds((prev) => {
       if (prev.includes(id)) {
@@ -140,6 +142,7 @@ export default function App() {
   };
 
   const handleCheck = useCallback(() => {
+    setCheckAttempted(true);
     const success = isEquivalentTileSelection(selectedTileIds);
     setCheckSuccess(success);
     if (success) {
@@ -152,6 +155,7 @@ export default function App() {
   const handleResetTiles = () => {
     setSelectedTileIds([]);
     setCheckSuccess(false);
+    setCheckAttempted(false);
     setShowSuccessPulse(false);
   };
 
@@ -178,6 +182,7 @@ export default function App() {
     setDemoRunning(true);
     setApproved(false);
     setCheckSuccess(false);
+    setCheckAttempted(false);
     setSelectedTileIds([]);
 
     runWeaveSequence();
@@ -306,6 +311,7 @@ export default function App() {
             onReset={handleResetTiles}
             onCheck={handleCheck}
             checkSuccess={checkSuccess}
+            checkAttempted={checkAttempted}
             showSuccessPulse={showSuccessPulse}
           />
           <TeacherConsole
