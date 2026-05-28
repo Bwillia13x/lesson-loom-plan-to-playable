@@ -49,11 +49,21 @@ Judge-ready copy and walkthrough: [`docs/submission/`](docs/submission/).
 
 Hero → Lesson Intake → Lesson Weave → Teaching Signal → Fraction Garden → Teacher Console → UDL → Review & Safety → Export Pack → Device previews → Made with Stitch
 
-## Deploy (Vercel)
+## Deploy
 
 This project is a Vite SPA. `vercel.json` sets build output to `dist` and rewrites client routes to `index.html`.
 
-### Option A — GitHub (recommended)
+### Deploy (GitHub Pages)
+
+On push to `main`, [.github/workflows/deploy-pages.yml](.github/workflows/deploy-pages.yml) builds with `VITE_BASE_PATH=/lesson-loom-plan-to-playable/` and publishes to GitHub Pages.
+
+1. In the repo: **Settings → Pages → Build and deployment → Source:** GitHub Actions.
+2. After the workflow succeeds, open: **https://bwillia13x.github.io/lesson-loom-plan-to-playable/**
+3. Smoke-test **Run judge demo** on that URL.
+
+### Deploy (Vercel)
+
+### Option A — GitHub import (recommended for custom domain)
 
 1. Push this repo to [lesson-loom-plan-to-playable](https://github.com/Bwillia13x/lesson-loom-plan-to-playable).
 2. In [Vercel](https://vercel.com/new), import the repository.

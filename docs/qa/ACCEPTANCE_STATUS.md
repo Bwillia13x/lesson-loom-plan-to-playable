@@ -108,7 +108,7 @@ For each width:
 
 ## Submission checks
 
-- [ ] Live URL works. — _manual: deploy + paste URL in docs/submission/README.md_
+- [ ] Live URL works. — _GitHub Pages: https://bwillia13x.github.io/lesson-loom-plan-to-playable/ after deploy-pages workflow; smoke-test judge demo_
 - [x] Page title is set. — _index.html_
 - [x] Meta description is set. — _index.html_
 - [x] Screenshots captured. — _npm run capture:screenshots (local, gitignored)_
