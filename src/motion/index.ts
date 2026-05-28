@@ -1,7 +1,11 @@
 export { createWeaveTimeline } from './createWeaveTimeline';
 export { MotionProvider } from './MotionProvider';
 export { useMotion } from './motionContext';
-export { runWithMotion } from './gsapReducedMotion';
+export {
+  initGsapMotion,
+  reducedMotionMedia,
+  runWithMotion,
+} from './gsapReducedMotion';
 export { runGsapScoped } from './runGsapScoped';
 export { useScrollToSection } from './useScrollToSection';
 export {

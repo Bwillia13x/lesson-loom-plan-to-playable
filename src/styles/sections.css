@@ -37,6 +37,31 @@
   margin-bottom: 0.65rem;
 }
 
+.signal-card__content {
+  margin-bottom: 0.65rem;
+}
+
+.signal-card__source {
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.signal-card__source:hover {
+  border-color: var(--ll-orange);
+  color: var(--ll-graphite);
+}
+
+.signal-card__source:focus-visible {
+  outline: 2px solid var(--ll-orange);
+  outline-offset: 2px;
+}
+
+.signal-card__source:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
 /* Fraction garden */
 .garden-layout {
   display: grid;
