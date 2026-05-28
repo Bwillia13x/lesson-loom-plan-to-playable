@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   exportPack,
+  lessonPlanText,
   navSections,
   weaveSteps,
   type SupportLane,
@@ -46,6 +47,7 @@ const navIcons: Record<string, string> = {
 const CANONICAL_TILES = ['one-half', 'two-fourths', 'three-sixths'];
 
 export default function App() {
+  const [lessonPlanDraft, setLessonPlanDraft] = useState(lessonPlanText);
   const [hasWoven, setHasWoven] = useState(false);
   const [activeWeaveStep, setActiveWeaveStep] = useState(0);
   const [workspaceMode, setWorkspaceMode] = useState<WorkspaceMode>('student');
@@ -316,13 +318,18 @@ export default function App() {
         <main id="main-content">
           <HeroLanding
             hasWoven={hasWoven}
+            lessonPlanDraft={lessonPlanDraft}
             onWeave={runWeaveSequence}
             onViewDemo={() => {
               setWorkspaceMode('student');
               scrollTo('student');
             }}
           />
-          <LessonIntake onExtract={runWeaveSequence} />
+          <LessonIntake
+            value={lessonPlanDraft}
+            onChange={setLessonPlanDraft}
+            onExtract={runWeaveSequence}
+          />
           <LessonWeave
             hasWoven={hasWoven}
             activeWeaveStep={activeWeaveStep}

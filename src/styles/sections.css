@@ -532,6 +532,24 @@
   overflow: auto;
 }
 
+.lesson-plan-input {
+  display: block;
+  width: 100%;
+  min-height: 200px;
+  max-height: none;
+  margin: 0;
+  padding: 0.75rem;
+  border: 1px solid var(--ll-line);
+  border-radius: 8px;
+  background: var(--ll-paper);
+  resize: vertical;
+}
+
+.lesson-plan-input:focus {
+  outline: 2px solid var(--ll-cyan);
+  outline-offset: 2px;
+}
+
 .scanline::after {
   content: '';
   position: absolute;

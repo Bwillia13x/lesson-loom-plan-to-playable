@@ -1,13 +1,15 @@
-import { lesson, lessonPlanText } from '../../data/lessonLoomData';
+import { lesson } from '../../data/lessonLoomData';
 import { IndustrialButton } from '../ui/IndustrialButton';
 import { Panel } from '../ui/Panel';
 import { Section } from '../ui/Section';
 
 type LessonIntakeProps = {
+  value: string;
+  onChange: (value: string) => void;
   onExtract: () => void;
 };
 
-export function LessonIntake({ onExtract }: LessonIntakeProps) {
+export function LessonIntake({ value, onChange, onExtract }: LessonIntakeProps) {
   return (
     <Section
       id="intake"
@@ -50,13 +52,22 @@ export function LessonIntake({ onExtract }: LessonIntakeProps) {
         </div>
 
         <Panel inset bracket title="Paste Lesson Plan">
-          <div
-            className="lesson-plan-doc"
-            style={{ maxHeight: 'none', minHeight: '200px' }}
-            aria-label="Sample pasted lesson plan"
-          >
-            {lessonPlanText}
-          </div>
+          <label htmlFor="lesson-plan-draft" className="sr-only">
+            Lesson plan text
+          </label>
+          <textarea
+            id="lesson-plan-draft"
+            className="lesson-plan-doc lesson-plan-input"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            rows={12}
+            aria-label="Pasted lesson plan"
+            data-testid="lesson-plan-draft"
+          />
+          <p className="text-mono mt-1" style={{ fontSize: '0.72rem', color: 'var(--ll-muted)' }}>
+            In this demo, teaching signal cards stay tied to the sample plan. A full product
+            would re-extract after you edit.
+          </p>
         </Panel>
       </div>
 
