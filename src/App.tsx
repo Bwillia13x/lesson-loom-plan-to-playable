@@ -27,6 +27,7 @@ import { IndustrialButton } from './components/ui/IndustrialButton';
 import { StatusPip } from './components/ui/StatusPip';
 import { WorkspaceModeToggle } from './components/ui/WorkspaceModeToggle';
 import { createWeaveTimeline } from './motion/createWeaveTimeline';
+import { downloadExportZip } from './utils/buildExportZip';
 import { isEquivalentTileSelection } from './utils/fractionCheck';
 import { delay } from './utils/scroll';
 
@@ -189,7 +190,7 @@ export default function App() {
   const handleExportCopy = (id: string) => {
     const file = exportPack.find((f) => f.id === id);
     if (file && navigator.clipboard?.writeText) {
-      void navigator.clipboard.writeText(`${file.title}\n\n${file.preview}`);
+      void navigator.clipboard.writeText(file.body);
     }
     setCopiedExportId(id);
     const t = window.setTimeout(() => setCopiedExportId(null), 1500);
@@ -197,10 +198,9 @@ export default function App() {
   };
 
   const handleDownload = () => {
-    setDownloadNotice(
-      'Demo prototype: download is a visual preview only. Use Copy on each export card for handoff text.',
-    );
-    const t = window.setTimeout(() => setDownloadNotice(null), 4000);
+    downloadExportZip();
+    setDownloadNotice('Download started: lesson-loom-fraction-garden.zip');
+    const t = window.setTimeout(() => setDownloadNotice(null), 3500);
     uiTimeoutIds.current.push(t);
   };
 

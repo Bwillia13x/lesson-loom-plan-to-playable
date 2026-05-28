@@ -291,7 +291,16 @@ export const safetyCards = [
   },
 ];
 
-export const exportPack = [
+export type ExportPackItem = {
+  id: string;
+  title: string;
+  filename: string;
+  ext: string;
+  preview: string;
+  body: string;
+};
+
+export const exportPack: ExportPackItem[] = [
   {
     id: 'stitch-prompt',
     title: 'Stitch Prompt',
@@ -299,6 +308,31 @@ export const exportPack = [
     ext: '.md',
     preview:
       'Create a Grade 5 equivalent fractions student app called Fraction Garden with garden beds, fraction tiles, and teacher console…',
+    body: `# Stitch Prompt — Fraction Garden
+
+Create a Grade 5 equivalent-fractions **student app** called **Fraction Garden** with a calm, premium classroom aesthetic.
+
+## Screens
+
+1. **Garden mission** — Students select fraction tiles (1/2, 2/4, 3/6) on garden beds and tap **Check match** for equivalent-set feedback.
+2. **Reflection** — Short text area: "Two fractions can look different but be equal because…"
+3. **Teacher console** (toggle) — Timeline, misconception watch, approval gate, printable fallback note.
+
+## Interaction rules
+
+- Tiles are selectable buttons with clear focus states.
+- Success when 1/2, 2/4, and 3/6 are selected together.
+- No student accounts, names, or personal data.
+- Include reduced-motion-friendly transitions.
+
+## Copy tone
+
+Teacher-reviewed draft. Curriculum-aligned draft. Human approval before classroom use.
+
+## Export context
+
+This prompt regenerates the interactive lesson interface from the trusted lesson plan — not official curriculum lookup.
+`,
   },
   {
     id: 'design-md',
@@ -307,6 +341,47 @@ export const exportPack = [
     ext: '.md',
     preview:
       ':root { --ll-bg: #faf8f4; --ll-orange: #e85d04; --ll-ink: #1c1c1c; } /* warm industrial classroom studio */',
+    body: `# DESIGN.md — Fraction Garden
+
+Portable design rules for the Lesson Loom Fraction Garden prototype.
+
+## Palette
+
+\`\`\`css
+:root {
+  --ll-bg: #faf8f4;
+  --ll-paper: #fffdf8;
+  --ll-orange: #e85d04;
+  --ll-ink: #1c1c1c;
+  --ll-muted: #5c5c5c;
+  --ll-line: rgba(28, 28, 28, 0.12);
+}
+\`\`\`
+
+## Typography
+
+- Display: refined serif for section titles
+- UI: humanist sans for controls and lesson copy
+- Mono: filenames, tokens, export previews
+
+## Components
+
+- Soft paper/glass cards with woven linework accents
+- Industrial primary buttons; secondary ghost actions
+- Status pips: amber preview, green when woven/approved
+
+## Motion
+
+- Soft activation glows on weave completion
+- Card reveal on weave; hover lift restrained
+- Respect \`prefers-reduced-motion\` — shorten timelines, skip decorative loops
+
+## Accessibility
+
+- Real \`<button>\` elements; visible focus rings
+- Do not rely on color alone for fraction feedback
+- Semantic heading order preserved across sections
+`,
   },
   {
     id: 'teacher-guide',
@@ -315,6 +390,42 @@ export const exportPack = [
     ext: '.md',
     preview:
       '45-minute run of show: warm-up, guided demo, partner challenge, share-out, exit ticket. Misconception watch included.',
+    body: `# Teacher Guide — Equivalent Fractions (45 min)
+
+**Grade 5 · Mathematics · Fraction Garden**
+
+## Learning goal
+
+Students represent equivalent fractions visually and explain why different-looking fractions can name the same amount.
+
+## Run of show
+
+| Segment | Time | Teacher move |
+|--------|------|----------------|
+| Warm-up | 8 min | Compare 1/2, 2/4, 4/8 with quick sketches |
+| Guided demo | 10 min | Model fraction tiles on one garden bed |
+| Partner work | 15 min | Build three equivalent examples; circulate |
+| Share-out | 7 min | Two student explanations; press on "same whole" |
+| Exit ticket | 5 min | Sentence stem below |
+
+## Misconception watch
+
+Students may think a **larger denominator always means a larger amount**. Ask: "Did the whole garden stay the same size?"
+
+## Differentiation
+
+- **Support:** Pre-divided beds, sentence stems, partner pairing
+- **Core:** Standard tile challenge (1/2, 2/4, 3/6)
+- **Extend:** Create a new equivalent set and justify
+
+## Exit ticket stem
+
+> Two fractions can look different but be equal because _________________________.
+
+## Safety note
+
+Teacher-reviewed draft for classroom use. Verify alignment with your district materials before teaching.
+`,
   },
   {
     id: 'student-activity',
@@ -323,14 +434,78 @@ export const exportPack = [
     ext: '.md',
     preview:
       'Tile selection rules, garden bed states, success feedback, reflection prompt.',
+    body: `# Student Activity Spec — Fraction Garden
+
+## Mission flow
+
+1. **Select tiles** — Tap fraction tiles on garden beds (1/2, 2/4, 3/6).
+2. **Check match** — Submit selection; show equivalent-set success or retry hint.
+3. **Reflect** — Optional short response; saved locally in prototype only (no upload).
+
+## Tile rules
+
+- Tiles toggle on/off; keyboard operable
+- Canonical success set: \`one-half\`, \`two-fourths\`, \`three-sixths\`
+- Success copy: "Equivalent? Yes!" with explicit fraction list
+
+## Feedback
+
+- Hint button reveals garden-bed coaching callout
+- Do not auto-grade beyond the equivalence check — teacher reviews in console
+
+## States (prototype)
+
+\`\`\`txt
+selectedTileIds: string[]
+checkAttempted: boolean
+checkSuccess: boolean
+reflectionText: string (local UI only)
+\`\`\`
+
+## Privacy
+
+No student names, accounts, or personal data required.
+`,
   },
   {
     id: 'printable',
     title: 'Printable Worksheet',
-    filename: 'fraction-garden-printable.pdf',
-    ext: '.pdf',
+    filename: 'fraction-garden-printable.md',
+    ext: '.md',
     preview:
-      'Paper garden beds with 1/2, 2/4, 3/6 shading prompts and exit ticket stem.',
+      'Printable worksheet spec: paper garden beds, shading prompts, exit ticket stem (no binary PDF in pack).',
+    body: `# Printable Worksheet Spec — Fraction Garden
+
+> **Note:** This export is a printable worksheet **spec** (Markdown). No PDF is bundled in the prototype zip. Use this outline to print or project a no-tech backup.
+
+## Page 1 — Garden beds
+
+Draw three garden beds. Shade:
+
+1. **1/2** of Bed A
+2. **2/4** of Bed B
+3. **3/6** of Bed C
+
+Label each with the fraction. Circle beds that show the **same amount**.
+
+## Page 2 — Partner explain
+
+With a partner, complete:
+
+"We know the fractions are equivalent because the wholes are the same and _______________."
+
+## Exit ticket
+
+Two fractions can look different but be equal because _________________________.
+
+## Materials
+
+Fraction strips optional. Pencils. No devices required.
+
+## Classroom use
+
+Human approval before classroom use. Teacher verifies alignment with local curriculum.
+`,
   },
   {
     id: 'implementation',
@@ -339,6 +514,44 @@ export const exportPack = [
     ext: '.md',
     preview:
       'React prototype handoff: state model, component map, motion tokens, safe copy rules.',
+    body: `# Implementation Notes — Lesson Loom Prototype
+
+## Stack
+
+- Vite + React + TypeScript (client-only SPA)
+- GSAP for weave timeline (reduced-motion aware)
+- \`fflate\` for client-side export zip
+
+## State model
+
+\`\`\`txt
+hasWoven: boolean
+activeMode: 'teacher' | 'student'
+activeSupport: 'support' | 'core' | 'extend'
+selectedTiles: string[]
+copiedExportId: string | null
+activeWeaveStep: number
+\`\`\`
+
+## Section map
+
+Hero → Intake → Weave → Signals → Student App → Teacher Console → UDL → Review → Export → Devices → Made with Stitch
+
+## Boundaries (do not implement in demo)
+
+- No real AI calls, auth, backend, LMS, or student profiles
+- No automated grading claims; teacher approval gate stays visible
+
+## Safe language
+
+Use: teacher-reviewed draft, curriculum-aligned draft, printable fallback, no student data required.
+
+Avoid: district-approved, fully compliant, replaces teachers, official curriculum generator.
+
+## Export pack
+
+Download builds \`lesson-loom-fraction-garden.zip\` from \`exportPack\` bodies in \`lessonLoomData.ts\`.
+`,
   },
 ];
 
