@@ -27,9 +27,9 @@ export function HeroLanding({
           Turn lesson plans into interactive classroom apps.
         </h1>
         <p className="ll-section__lead" style={{ maxWidth: '58ch' }}>
-          Turn lesson plans into interactive classroom apps. Paste a trusted lesson plan
-          and Lesson Loom creates a student app, teacher console, differentiation supports,
-          checkpoints, and printable fallback.
+          Paste a trusted lesson plan. Lesson Loom creates a student activity, teacher
+          console, differentiation supports, assessment checkpoints, printable fallback,
+          and Stitch-ready export pack.
         </p>
 
         <div className="flex-between gap-1" style={{ marginBottom: '2rem' }}>
@@ -47,7 +47,7 @@ export function HeroLanding({
             </IndustrialButton>
           </div>
           <p className="text-mono" style={{ fontSize: '0.75rem', color: 'var(--ll-muted)' }}>
-            Teacher first. Always. You own the lesson.
+            Teacher-reviewed draft. No student accounts or personal data required.
           </p>
         </div>
 

@@ -193,6 +193,7 @@ export default function App() {
     scrollToSection('student');
     await delay(400);
 
+    setCheckAttempted(true);
     setCheckSuccess(true);
     setShowSuccessPulse(true);
     await delay(prefersReducedMotion ? 200 : 800);

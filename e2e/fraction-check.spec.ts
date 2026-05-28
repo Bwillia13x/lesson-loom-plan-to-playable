@@ -16,3 +16,11 @@ test('fraction check shows gentle hint when selection is wrong', async ({ page }
   );
   await expect(page.getByText('Equivalent? Yes!')).not.toBeVisible();
 });
+
+test('fraction check shows hint when Check is pressed with no tiles', async ({ page }) => {
+  await page.goto('/');
+  await page.getByTestId('workspace-student').click();
+  await page.locator('#student').scrollIntoViewIfNeeded();
+  await page.getByTestId('fraction-check').click();
+  await expect(page.getByTestId('fraction-check-feedback')).toBeVisible();
+});

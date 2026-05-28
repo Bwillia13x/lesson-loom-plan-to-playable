@@ -9,7 +9,7 @@
 
 1. Open live URL.
 2. Click **Run judge demo** (top bar) — auto-weave, fraction success, approval, export.
-3. Or manual: **Weave lesson** → Student tiles → **Check** → **Approve for Classroom Use** → Export **Copy**.
+3. Or manual: **Weave lesson** (hero) → Student tiles → **Check** → **Approve for Classroom Use** → Export **Copy**.
 
 ## Capture screenshots
 

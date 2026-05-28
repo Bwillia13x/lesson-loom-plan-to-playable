@@ -131,7 +131,7 @@ Use before posting to Contra / the challenge portal. Full QA detail lives in `08
 ### Technical & submission assets
 
 - [ ] `npm run build` succeeds.
-- [ ] `npm run verify` passes (or build + lint + smoke documented).
+- [ ] `npm run verify` passes (build + lint + full e2e suite).
 - [ ] Page title and meta description are set.
 - [ ] Live deployment URL loads and deep links work (after you deploy).
 - [ ] Screenshots captured (`npm run capture:screenshots`).

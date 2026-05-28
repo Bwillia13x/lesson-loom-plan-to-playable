@@ -176,7 +176,7 @@ export function StudentFractionGarden({
             </IndustrialButton>
           </div>
 
-          {checkAttempted && !checkSuccess && selectedTileIds.length >= 1 && (
+          {checkAttempted && !checkSuccess && (
             <div
               className="garden-hint-callout garden-hint-callout--soft"
               role="status"
