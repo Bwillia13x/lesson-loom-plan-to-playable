@@ -21,3 +21,22 @@ Finally, the review layer keeps the teacher in control. This is a classroom-read
 
 Lesson Loom is a prototype for a simple idea: AI design tools should not just generate apps for startups. They can help teachers turn trusted plans into beautiful, usable classroom experiences.
 ```
+
+## Shareable demo URL
+
+Query params sync demo state (no PII, short keys):
+
+| Param | Values | Meaning |
+|-------|--------|---------|
+| `w` | `0` / `1` | Lesson fully woven (teaching signal + student app ready) |
+| `mode` | `student` / `teacher` | Workspace toggle |
+| `tiles` | comma-separated tile ids | Selected fraction tiles (e.g. `one-half,two-fourths,three-sixths`) |
+| `approved` | `0` / `1` | Teacher review approved |
+| `support` | `support` / `core` / `extend` | Differentiation lane |
+
+Examples:
+
+- `/?w=1#student` — woven lesson, scroll to student app
+- `/?w=1&tiles=one-half,two-fourths,three-sixths&approved=1#export` — success + approval, jump to export
+
+Footer **Demo presets**: Reset demo, Success state, Review approved. **Run judge demo** shows presenter captions at the bottom of the screen.

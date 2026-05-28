@@ -1,7 +1,8 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { teachingSignals } from '../../data/lessonLoomData';
 import { useMotion } from '../../motion/motionContext';
 import { runGsapScoped } from '../../motion/runGsapScoped';
+import { useScrollToSection } from '../../motion/useScrollToSection';
 import { WEAVE_SIGNAL_REVEAL_DELAY_S } from '../../motion/weaveTiming';
 import { IndustrialButton } from '../ui/IndustrialButton';
 import { Panel } from '../ui/Panel';
@@ -13,9 +14,26 @@ type TeachingSignalProps = {
   onWeave: () => void;
 };
 
+const LESSON_PLAN_TEXTAREA_ID = 'lesson-plan-draft';
+
 export function TeachingSignal({ hasWoven, onWeave }: TeachingSignalProps) {
   const { reduced } = useMotion();
   const gridRef = useRef<HTMLDivElement>(null);
+  const scrollToSection = useScrollToSection();
+  const [sourceAnnouncement, setSourceAnnouncement] = useState('');
+
+  const handleSourcePhrase = useCallback(
+    (source: string) => {
+      scrollToSection('intake');
+      document
+        .getElementById(LESSON_PLAN_TEXTAREA_ID)
+        ?.focus({ preventScroll: true });
+      setSourceAnnouncement(
+        `Source phrase in lesson plan: ${source}`,
+      );
+    },
+    [scrollToSection],
+  );
 
   useLayoutEffect(() => {
     const grid = gridRef.current;
@@ -25,7 +43,10 @@ export function TeachingSignal({ hasWoven, onWeave }: TeachingSignalProps) {
       grid,
       reduced,
       (gsapApi) => {
-        const cards = gsapApi.utils.toArray<HTMLElement>('.signal-card', grid);
+        const cards = gsapApi.utils.toArray<HTMLElement>(
+          '.signal-card__content',
+          grid,
+        );
         gsapApi.set(cards, { autoAlpha: 0, y: 12 });
         gsapApi.from(cards, {
           y: 0,
@@ -37,7 +58,10 @@ export function TeachingSignal({ hasWoven, onWeave }: TeachingSignalProps) {
         });
       },
       (gsapApi) => {
-        const cards = gsapApi.utils.toArray<HTMLElement>('.signal-card', grid);
+        const cards = gsapApi.utils.toArray<HTMLElement>(
+          '.signal-card__content',
+          grid,
+        );
         gsapApi.set(cards, { y: 0, autoAlpha: 1 });
       },
     );
@@ -50,6 +74,15 @@ export function TeachingSignal({ hasWoven, onWeave }: TeachingSignalProps) {
       title="Teaching signal extracted from the plan"
       lead="Each card traces back to a phrase in the original lesson. The output stays grounded in the teacher's intent."
     >
+      <p
+        className="sr-only"
+        aria-live="polite"
+        aria-atomic="true"
+        data-testid="source-phrase-announcement"
+      >
+        {sourceAnnouncement}
+      </p>
+
       {!hasWoven && (
         <Panel inset className="mt-1" style={{ marginBottom: '1.25rem' }}>
           <p style={{ fontSize: '0.88rem', margin: '0 0 0.75rem' }}>
@@ -68,19 +101,30 @@ export function TeachingSignal({ hasWoven, onWeave }: TeachingSignalProps) {
             className="signal-card"
             style={!hasWoven ? { opacity: 0.55 } : undefined}
           >
-            <div className="flex-between">
-              <span className="signal-card__label">{card.label}</span>
-              {hasWoven && (
-                <StatusPip
-                  label="Live"
-                  tone={index % 3 === 0 ? 'cyan' : index % 3 === 1 ? 'amber' : 'green'}
-                />
-              )}
+            <div className="signal-card__content">
+              <div className="flex-between">
+                <span className="signal-card__label">{card.label}</span>
+                {hasWoven && (
+                  <StatusPip
+                    label="Live"
+                    tone={
+                      index % 3 === 0 ? 'cyan' : index % 3 === 1 ? 'amber' : 'green'
+                    }
+                  />
+                )}
+              </div>
+              <p className="signal-card__value">{card.value}</p>
             </div>
-            <p className="signal-card__value">{card.value}</p>
-            <span className="badge badge--source">
+            <button
+              type="button"
+              className="badge badge--source signal-card__source"
+              data-testid={`source-phrase-${card.id}`}
+              onClick={() => handleSourcePhrase(card.source)}
+              aria-label={`View source phrase in lesson plan: ${card.source}`}
+              disabled={!hasWoven}
+            >
               Source: {card.source}
-            </span>
+            </button>
           </article>
         ))}
       </div>

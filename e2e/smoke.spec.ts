@@ -48,6 +48,8 @@ test('run judge demo completes key states', async ({ page }) => {
   await expect(page.getByText('Equivalent? Yes!')).toBeVisible({ timeout: 8000 });
   await expect(page.getByText('Teacher approval recorded')).toBeVisible({ timeout: 8000 });
 
+  const downloadPromise = page.waitForEvent('download');
   await page.getByTestId('export-download').click();
-  await expect(page.getByTestId('export-download-notice')).toBeVisible();
+  const download = await downloadPromise;
+  expect(download.suggestedFilename()).toBe('lesson-loom-fraction-garden.zip');
 });

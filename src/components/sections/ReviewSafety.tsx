@@ -29,8 +29,8 @@ export function ReviewSafety({ approved, onApprove }: ReviewSafetyProps) {
     <Section
       id="review"
       eyebrow="Review & safety"
-      title="Review & safety layer"
-      lead="Human approval before classroom use. Curriculum alignment is a draft for educator verification — not official curriculum."
+      title="Review before classroom use"
+      lead="Lesson Loom creates a classroom-ready draft. The teacher reviews the lesson, checks alignment, and decides what to use."
     >
       <div className="safety-grid">
         {safetyCards.map((card) => (

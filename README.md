@@ -42,7 +42,8 @@ Judge-ready copy and walkthrough: [`docs/submission/`](docs/submission/).
 ## What is real vs prototype
 
 - **Real:** UI, interactions, sample lesson data, copy-to-clipboard on export cards
-- **Demo / not implemented:** AI generation, auth, database, LMS, real zip download, automated grading, official curriculum claims
+- **Demo / not implemented:** AI generation, auth, database, LMS, automated grading, official curriculum claims
+- **Client-side only:** Export pack downloads as `lesson-loom-fraction-garden.zip` (markdown artifacts; no server)
 
 ## Flow
 

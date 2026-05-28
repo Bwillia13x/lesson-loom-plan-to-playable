@@ -1,4 +1,4 @@
-import { lesson, lessonPlanText } from '../../data/lessonLoomData';
+import { lesson } from '../../data/lessonLoomData';
 import { IndustrialButton } from '../ui/IndustrialButton';
 import { Panel } from '../ui/Panel';
 import { StatusPip } from '../ui/StatusPip';
@@ -6,12 +6,19 @@ import { WeaveSignalLine } from '../WeaveSignalLine';
 
 type HeroLandingProps = {
   hasWoven: boolean;
+  lessonPlanDraft: string;
   onWeave: () => void;
   onViewDemo: () => void;
 };
 
+function heroPlanPreview(draft: string): string {
+  if (draft.length <= 280) return draft;
+  return `${draft.slice(0, 280)}…`;
+}
+
 export function HeroLanding({
   hasWoven,
+  lessonPlanDraft,
   onWeave,
   onViewDemo,
 }: HeroLandingProps) {
@@ -72,7 +79,7 @@ export function HeroLanding({
                 <div className="meta-item__value">{lesson.topic}</div>
               </div>
             </div>
-            <div className="lesson-plan-doc">{lessonPlanText.slice(0, 280)}…</div>
+            <div className="lesson-plan-doc">{heroPlanPreview(lessonPlanDraft)}</div>
           </Panel>
 
           <Panel

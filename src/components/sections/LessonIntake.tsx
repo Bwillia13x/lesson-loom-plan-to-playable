@@ -1,13 +1,26 @@
-import { lesson, lessonPlanText } from '../../data/lessonLoomData';
+import { useState } from 'react';
+import { lesson } from '../../data/lessonLoomData';
+import { parseLessonPlanStub } from '../../utils/parseLessonPlanStub';
 import { IndustrialButton } from '../ui/IndustrialButton';
 import { Panel } from '../ui/Panel';
 import { Section } from '../ui/Section';
 
+const PREVIEW_CHIP_TITLE = 'Additional lessons coming in future Labs builds';
+
 type LessonIntakeProps = {
+  value: string;
+  onChange: (value: string) => void;
   onExtract: () => void;
 };
 
-export function LessonIntake({ onExtract }: LessonIntakeProps) {
+export function LessonIntake({ value, onChange, onExtract }: LessonIntakeProps) {
+  const [parserHighlights, setParserHighlights] = useState<string[] | null>(null);
+
+  const runQuickScan = () => {
+    const { highlights } = parseLessonPlanStub(value);
+    setParserHighlights(highlights);
+  };
+
   return (
     <Section
       id="intake"
@@ -15,6 +28,45 @@ export function LessonIntake({ onExtract }: LessonIntakeProps) {
       title="Start with the plan you already trust"
       lead="Lesson Loom does not invent the curriculum for you. It starts with your approved lesson plan, then helps turn it into a richer classroom interface."
     >
+      <div
+        className="lesson-chip-row"
+        role="list"
+        aria-label="Lesson library preview"
+        data-testid="lesson-chip-row"
+      >
+        <button
+          type="button"
+          className="lesson-chip lesson-chip--active"
+          role="listitem"
+          data-testid="lesson-chip-active"
+          aria-current="true"
+        >
+          Fraction Garden (active)
+        </button>
+        <button
+          type="button"
+          className="lesson-chip lesson-chip--preview"
+          role="listitem"
+          data-testid="lesson-chip-preview"
+          aria-disabled="true"
+          disabled
+          title={PREVIEW_CHIP_TITLE}
+        >
+          Water Cycle (preview)
+        </button>
+        <button
+          type="button"
+          className="lesson-chip lesson-chip--preview"
+          role="listitem"
+          data-testid="lesson-chip-preview"
+          aria-disabled="true"
+          disabled
+          title={PREVIEW_CHIP_TITLE}
+        >
+          Poetry Circles (preview)
+        </button>
+      </div>
+
       <div className="grid-2">
         <div>
           <div className="meta-grid">
@@ -50,12 +102,55 @@ export function LessonIntake({ onExtract }: LessonIntakeProps) {
         </div>
 
         <Panel inset bracket title="Paste Lesson Plan">
-          <div
-            className="lesson-plan-doc"
-            style={{ maxHeight: 'none', minHeight: '200px' }}
-            aria-label="Sample pasted lesson plan"
-          >
-            {lessonPlanText}
+          <label htmlFor="lesson-plan-draft" className="sr-only">
+            Lesson plan text
+          </label>
+          <textarea
+            id="lesson-plan-draft"
+            className="lesson-plan-doc lesson-plan-input"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            rows={12}
+            aria-label="Pasted lesson plan"
+            data-testid="lesson-plan-draft"
+          />
+          <p className="text-mono mt-1" style={{ fontSize: '0.72rem', color: 'var(--ll-muted)' }}>
+            In this demo, teaching signal cards stay tied to the sample plan. A full product
+            would re-extract after you edit.
+          </p>
+
+          <div className="lesson-parser-stub mt-2">
+            <div className="flex-between" style={{ alignItems: 'flex-start', gap: '0.75rem' }}>
+              <div>
+                <strong style={{ fontSize: '0.85rem' }}>Quick scan (demo)</strong>
+                <p
+                  className="text-mono"
+                  style={{ fontSize: '0.68rem', color: 'var(--ll-muted)', marginTop: '0.25rem' }}
+                >
+                  Demo parser — not AI
+                </p>
+              </div>
+              <IndustrialButton
+                variant="secondary"
+                size="sm"
+                type="button"
+                data-testid="lesson-parser-scan"
+                onClick={runQuickScan}
+              >
+                Quick scan (demo)
+              </IndustrialButton>
+            </div>
+            {parserHighlights && (
+              <ul
+                className="lesson-parser-stub__list mt-1"
+                data-testid="lesson-parser-highlights"
+                aria-label="Demo parser highlights"
+              >
+                {parserHighlights.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+            )}
           </div>
         </Panel>
       </div>

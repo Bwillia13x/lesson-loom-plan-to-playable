@@ -1,10 +1,21 @@
 import { navSections } from '../data/lessonLoomData';
 import { useScrollToSection } from '../motion/useScrollToSection';
+import { IndustrialButton } from './ui/IndustrialButton';
 
-export function SiteFooter() {
+type SiteFooterProps = {
+  onResetDemo: () => void;
+  onSuccessState: () => void;
+  onReviewApproved: () => void;
+};
+
+export function SiteFooter({
+  onResetDemo,
+  onSuccessState,
+  onReviewApproved,
+}: SiteFooterProps) {
   const scrollTo = useScrollToSection();
   const jumpLinks = navSections.filter((s) =>
-    ['hero', 'student', 'teacher', 'review', 'export', 'stitch'].includes(s.id),
+    ['hero', 'student', 'teacher', 'review', 'export', 'stitch', 'labs'].includes(s.id),
   );
 
   return (
@@ -24,6 +35,33 @@ export function SiteFooter() {
           </button>
         ))}
       </nav>
+      <div className="site-footer__presets" aria-label="Demo presets">
+        <span className="site-footer__presets-label">Demo presets</span>
+        <IndustrialButton
+          variant="ghost"
+          size="sm"
+          data-testid="demo-preset-reset"
+          onClick={onResetDemo}
+        >
+          Reset demo
+        </IndustrialButton>
+        <IndustrialButton
+          variant="ghost"
+          size="sm"
+          data-testid="demo-preset-success"
+          onClick={onSuccessState}
+        >
+          Success state
+        </IndustrialButton>
+        <IndustrialButton
+          variant="ghost"
+          size="sm"
+          data-testid="demo-preset-approved"
+          onClick={onReviewApproved}
+        >
+          Review approved
+        </IndustrialButton>
+      </div>
     </footer>
   );
 }
