@@ -278,8 +278,9 @@ See `package.json` scripts. Quick reference:
 - **Dev server:** `npm run dev`
 - **Build (tsc + vite):** `npm run build`
 - **Lint:** `npm run lint`
-- **Smoke tests:** `npm run test:smoke` (requires Playwright Chromium)
-- **Full verify:** `npm run verify` (build + lint + smoke)
+- **Smoke tests:** `npm run test:smoke` (requires Playwright Chromium; fast subset)
+- **Full verify:** `npm run verify` (build + lint + full Playwright e2e suite)
+- **Submission verify:** `npm run verify:submission` (verify + screenshot capture)
 - **Capture screenshots:** `npm run capture:screenshots`
 
 ### Gotchas

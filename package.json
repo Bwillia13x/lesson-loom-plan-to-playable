@@ -12,7 +12,8 @@
     "test:e2e": "playwright test --grep-invert capture",
     "test:smoke": "playwright test e2e/smoke.spec.ts",
     "capture:screenshots": "playwright test e2e/capture-screenshots.spec.ts",
-    "verify": "npm run build && npm run lint && npm run test:smoke"
+    "verify": "npm run build && npm run lint && npm run test:e2e",
+    "verify:submission": "npm run verify && npm run capture:screenshots"
   },
   "dependencies": {
     "react": "^19.1.0",

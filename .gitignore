@@ -6,3 +6,4 @@ playwright-report
 playwright/.cache
 .DS_Store
 *.local
+submission-screenshots/
