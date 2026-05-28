@@ -1,6 +1,6 @@
 # QA acceptance status
 
-Tracked against `08_QA_ACCEPTANCE_CHECKLIST.md`. Last updated: 2026-05-28 (10 e2e tests passing).
+Tracked against `08_QA_ACCEPTANCE_CHECKLIST.md`. Last updated: 2026-05-28 (smoke: 5 tests including reduced-motion).
 
 ## Product acceptance
 
@@ -67,7 +67,9 @@ For each width:
 - [x] Interactive fraction tiles have accessible labels. — _StudentFractionGarden aria-label_
 - [x] Color is not the only indicator of selection/success. — _labels + checkmarks_
 - [ ] Contrast is acceptable. — _manual_
-- [x] Reduced-motion preference is respected. — _usePrefersReducedMotion + CSS_
+- [x] Reduced-motion preference is respected. — _usePrefersReducedMotion + CSS + GSAP initGsapMotion + e2e/reduced-motion.spec.ts_
+- [x] GSAP weave timeline + reduced-motion e2e. — _e2e/reduced-motion.spec.ts_
+- [x] Student section active styling post-weave. — _ll-section--woven-active_
 - [x] Text alternatives or labels exist for visual-only concepts. — _aria on tiles_
 
 ## Claim-safety checks
