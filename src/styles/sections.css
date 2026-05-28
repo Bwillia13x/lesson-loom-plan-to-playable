@@ -575,6 +575,65 @@
   outline-offset: 2px;
 }
 
+.lesson-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.lesson-chip {
+  font-family: var(--ll-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--ll-radius-pill);
+  border: 1px solid var(--ll-line);
+  background: var(--ll-paper);
+  color: var(--ll-ink);
+  cursor: default;
+}
+
+.lesson-chip--active {
+  border-color: rgba(232, 93, 4, 0.35);
+  background: var(--ll-orange-soft);
+  color: var(--ll-orange-deep);
+  font-weight: 600;
+}
+
+.lesson-chip--preview {
+  color: var(--ll-muted);
+  opacity: 0.85;
+}
+
+.lesson-chip--preview:disabled {
+  cursor: not-allowed;
+}
+
+.lesson-parser-stub {
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--ll-line);
+}
+
+.lesson-parser-stub__list {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--ll-graphite);
+}
+
+.labs-case-study__list {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.labs-case-study__list li + li {
+  margin-top: 0.5rem;
+}
+
 .scanline::after {
   content: '';
   position: absolute;

@@ -21,6 +21,7 @@ import { ExportPackSection } from './components/sections/ExportPackSection';
 import { HeroLanding } from './components/sections/HeroLanding';
 import { LessonIntake } from './components/sections/LessonIntake';
 import { LessonWeave } from './components/sections/LessonWeave';
+import { LabsCaseStudy } from './components/sections/LabsCaseStudy';
 import { MadeWithStitch } from './components/sections/MadeWithStitch';
 import { ResponsivePreview } from './components/sections/ResponsivePreview';
 import { ReviewSafety } from './components/sections/ReviewSafety';
@@ -468,6 +469,7 @@ export default function App() {
           />
           <ResponsivePreview />
           <MadeWithStitch />
+          <LabsCaseStudy />
         </main>
 
         <SiteFooter

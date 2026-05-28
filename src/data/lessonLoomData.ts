@@ -553,6 +553,49 @@ Avoid: district-approved, fully compliant, replaces teachers, official curriculu
 Download builds \`lesson-loom-fraction-garden.zip\` from \`exportPack\` bodies in \`lessonLoomData.ts\`.
 `,
   },
+  {
+    id: 'workshop-checklist',
+    title: 'Workshop Checklist',
+    filename: 'workshop-checklist.md',
+    ext: '.md',
+    preview:
+      'Facilitator checklist: review learning goal, misconception watch, UDL lanes, approval gate, printable fallback.',
+    body: `# Workshop Checklist — From Static Lesson to Interactive Interface
+
+Use this checklist when facilitating a PrairieSignal Edge–style lab session with Lesson Loom.
+
+## Before the session
+
+- [ ] Confirm the lesson plan is **teacher-provided** and curriculum-aligned for your context.
+- [ ] Read the learning goal aloud; agree it matches your unit outcomes.
+- [ ] Note materials and class context (readiness, time, devices).
+
+## During the weave demo
+
+- [ ] Run **Extract Teaching Signal** and verify source phrases trace back to the plan.
+- [ ] Toggle **Student** vs **Teacher** modes; confirm the console shows timeline and misconception watch.
+- [ ] Try **Support / Core / Extend** lanes; discuss which students each lane serves.
+
+## Review gate (required)
+
+- [ ] Complete the **Review & Safety** panel — human approval before classroom use.
+- [ ] Confirm copy says **teacher-reviewed draft**, not district-approved or automated grading.
+- [ ] Verify **no student data** is required in the prototype flow.
+
+## Classroom readiness
+
+- [ ] Download or copy the **export pack** (Stitch prompt, teacher guide, printable spec).
+- [ ] Identify a **printable fallback** if devices are unavailable.
+- [ ] Plan how students will explain equivalence (exit ticket stem).
+
+## After the workshop
+
+- [ ] Capture one takeaway for your team (workflow, UX, or policy question).
+- [ ] Optional: contact PrairieSignal Labs with inquiry about pilot or custom lesson interface work.
+
+> Internal prototype / public demo — not a production LMS or official curriculum tool.
+`,
+  },
 ];
 
 export type WorkspaceMode = 'student' | 'teacher';
@@ -569,4 +612,5 @@ export const navSections = [
   { id: 'export', label: 'Export' },
   { id: 'devices', label: 'Devices' },
   { id: 'stitch', label: 'Stitch' },
+  { id: 'labs', label: 'Labs' },
 ] as const;

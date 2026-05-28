@@ -15,7 +15,7 @@ export function SiteFooter({
 }: SiteFooterProps) {
   const scrollTo = useScrollToSection();
   const jumpLinks = navSections.filter((s) =>
-    ['hero', 'student', 'teacher', 'review', 'export', 'stitch'].includes(s.id),
+    ['hero', 'student', 'teacher', 'review', 'export', 'stitch', 'labs'].includes(s.id),
   );
 
   return (
