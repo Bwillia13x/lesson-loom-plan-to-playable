@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { teachingSignals } from '../../data/lessonLoomData';
 import { runWithMotion } from '../../motion/gsapReducedMotion';
+import { WEAVE_SIGNAL_REVEAL_DELAY_S } from '../../motion/weaveTiming';
 import { IndustrialButton } from '../ui/IndustrialButton';
 import { Panel } from '../ui/Panel';
 import { Section } from '../ui/Section';
@@ -32,12 +33,14 @@ export function TeachingSignal({
       runWithMotion(
         reducedMotion,
         () => {
+          gsap.set(cards, { autoAlpha: 0, y: 12 });
           gsap.from(cards, {
-            y: 12,
-            autoAlpha: 0,
+            y: 0,
+            autoAlpha: 1,
             duration: 0.45,
             stagger: 0.08,
             ease: 'power2.out',
+            delay: WEAVE_SIGNAL_REVEAL_DELAY_S,
           });
         },
         () => {

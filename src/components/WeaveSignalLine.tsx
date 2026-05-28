@@ -71,7 +71,7 @@ export function WeaveSignalLine({ active, reducedMotion = false }: WeaveSignalLi
               alignOrigin: [0.5, 0.5],
             },
             duration: 2.5,
-            repeat: -1,
+            repeat: 2,
             ease: 'none',
           });
         },

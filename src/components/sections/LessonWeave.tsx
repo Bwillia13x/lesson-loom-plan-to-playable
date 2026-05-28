@@ -91,7 +91,7 @@ export function LessonWeave({ hasWoven, activeWeaveStep, onWeave }: LessonWeaveP
             aria-valuemax={weaveSteps.length}
             aria-valuenow={
               hasWoven
-                ? Math.min(activeWeaveStep + 1, weaveSteps.length)
+                ? Math.max(0, Math.min(activeWeaveStep + 1, weaveSteps.length))
                 : 0
             }
             aria-valuetext={
@@ -99,7 +99,9 @@ export function LessonWeave({ hasWoven, activeWeaveStep, onWeave }: LessonWeaveP
                 ? 'Weave not started'
                 : activeWeaveStep >= weaveSteps.length - 1
                   ? 'Weave complete'
-                  : `Step ${activeWeaveStep + 1} of ${weaveSteps.length}: ${weaveSteps[activeWeaveStep]}`
+                  : activeWeaveStep < 0
+                    ? 'Weaving in progress'
+                    : `Step ${activeWeaveStep + 1} of ${weaveSteps.length}: ${weaveSteps[activeWeaveStep]}`
             }
           />
         </nav>

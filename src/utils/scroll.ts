@@ -1,5 +1,14 @@
-export function scrollToSection(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+export function scrollToSection(
+  id: string,
+  options?: { reducedMotion?: boolean },
+) {
+  const reduced =
+    options?.reducedMotion ??
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.getElementById(id)?.scrollIntoView({
+    behavior: reduced ? 'auto' : 'smooth',
+    block: 'start',
+  });
 }
 
 export function delay(ms: number): Promise<void> {

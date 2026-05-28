@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   exportPack,
   navSections,
+  weaveSteps,
   type SupportLane,
   type TimelineId,
   type WorkspaceMode,
@@ -78,8 +79,8 @@ export default function App() {
   const runWeaveSequence = useCallback(() => {
     clearWeaveTimers();
     setHasWoven(true);
-    setActiveWeaveStep(0);
-    scrollToSection('weave');
+    setActiveWeaveStep(-1);
+    scrollToSection('weave', { reducedMotion: prefersReducedMotion });
 
     weaveTimelineRef.current = createWeaveTimeline(
       setActiveWeaveStep,
@@ -120,7 +121,9 @@ export default function App() {
 
   const handleWorkspaceModeChange = (mode: WorkspaceMode) => {
     setWorkspaceMode(mode);
-    scrollToSection(mode === 'student' ? 'student' : 'teacher');
+    scrollToSection(mode === 'student' ? 'student' : 'teacher', {
+      reducedMotion: prefersReducedMotion,
+    });
   };
 
   const handleToggleTile = (id: string) => {
@@ -162,7 +165,7 @@ export default function App() {
       void navigator.clipboard.writeText(`${file.title}\n\n${file.preview}`);
     }
     setCopiedExportId(id);
-    const t = window.setTimeout(() => setCopiedExportId(null), 2000);
+    const t = window.setTimeout(() => setCopiedExportId(null), 1500);
     weaveTimers.current.push(t);
   };
 
@@ -187,7 +190,7 @@ export default function App() {
 
     setWorkspaceMode('student');
     setSelectedTileIds(CANONICAL_TILES);
-    scrollToSection('student');
+    scrollToSection('student', { reducedMotion: prefersReducedMotion });
     await delay(400);
 
     setCheckAttempted(true);
@@ -196,14 +199,14 @@ export default function App() {
     await delay(prefersReducedMotion ? 200 : 800);
 
     setWorkspaceMode('teacher');
-    scrollToSection('teacher');
+    scrollToSection('teacher', { reducedMotion: prefersReducedMotion });
     await delay(prefersReducedMotion ? 200 : 600);
 
-    scrollToSection('review');
+    scrollToSection('review', { reducedMotion: prefersReducedMotion });
     setApproved(true);
     await delay(300);
 
-    scrollToSection('export');
+    scrollToSection('export', { reducedMotion: prefersReducedMotion });
     setDemoRunning(false);
   }, [demoRunning, prefersReducedMotion, runWeaveSequence]);
 
@@ -226,7 +229,9 @@ export default function App() {
             key={item.id}
             type="button"
             className={`app-nav__link ${activeNav === item.id ? 'app-nav__link--active' : ''}`}
-            onClick={() => scrollToSection(item.id)}
+            onClick={() =>
+              scrollToSection(item.id, { reducedMotion: prefersReducedMotion })
+            }
             aria-label={item.label}
             title={item.label}
           >
@@ -268,17 +273,19 @@ export default function App() {
           </p>
         </header>
 
-        {hasWoven && (
+        {hasWoven && activeWeaveStep >= weaveSteps.length - 1 && (
           <WeaveCompleteBanner
             onStudent={() => {
               setWorkspaceMode('student');
-              scrollToSection('student');
+              scrollToSection('student', { reducedMotion: prefersReducedMotion });
             }}
             onTeacher={() => {
               setWorkspaceMode('teacher');
-              scrollToSection('teacher');
+              scrollToSection('teacher', { reducedMotion: prefersReducedMotion });
             }}
-            onExport={() => scrollToSection('export')}
+            onExport={() =>
+              scrollToSection('export', { reducedMotion: prefersReducedMotion })
+            }
           />
         )}
 
@@ -289,7 +296,7 @@ export default function App() {
             onWeave={runWeaveSequence}
             onViewDemo={() => {
               setWorkspaceMode('student');
-              scrollToSection('student');
+              scrollToSection('student', { reducedMotion: prefersReducedMotion });
             }}
           />
           <LessonIntake onExtract={runWeaveSequence} />
