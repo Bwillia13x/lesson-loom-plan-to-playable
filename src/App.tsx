@@ -319,7 +319,6 @@ export default function App() {
           />
           <TeachingSignal
             hasWoven={hasWoven}
-            activeWeaveStep={activeWeaveStep}
             onWeave={runWeaveSequence}
             reducedMotion={prefersReducedMotion}
           />

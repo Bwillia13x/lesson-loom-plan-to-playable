@@ -779,14 +779,6 @@ a:focus-visible,
   box-shadow: var(--ll-shadow-soft);
 }
 
-.signal-card--revealed {
-  border-left-color: var(--ll-orange);
-}
-
-.signal-card--revealed.signal-card--dim {
-  opacity: 0.92;
-}
-
 .signal-card__label {
   font-family: var(--ll-font-mono);
   font-size: 0.65rem;

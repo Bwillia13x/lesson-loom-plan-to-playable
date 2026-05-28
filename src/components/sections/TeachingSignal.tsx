@@ -10,14 +10,12 @@ import { StatusPip } from '../ui/StatusPip';
 
 type TeachingSignalProps = {
   hasWoven: boolean;
-  activeWeaveStep: number;
   onWeave: () => void;
   reducedMotion?: boolean;
 };
 
 export function TeachingSignal({
   hasWoven,
-  activeWeaveStep,
   onWeave,
   reducedMotion = false,
 }: TeachingSignalProps) {
@@ -74,13 +72,7 @@ export function TeachingSignal({
         {teachingSignals.map((card, index) => (
           <article
             key={card.id}
-            className={[
-              'signal-card',
-              hasWoven ? 'signal-card--revealed' : '',
-              hasWoven && index > activeWeaveStep ? 'signal-card--dim' : '',
-            ]
-              .filter(Boolean)
-              .join(' ')}
+            className="signal-card"
             style={!hasWoven ? { opacity: 0.55 } : undefined}
           >
             <div className="flex-between">
