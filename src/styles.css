@@ -946,24 +946,6 @@ a:focus-visible,
   margin-top: 1rem;
 }
 
-.garden-success--pulse {
-  animation: success-pulse 0.6s ease;
-}
-
-@keyframes success-pulse {
-  0% {
-    transform: scale(0.98);
-    opacity: 0.7;
-  }
-  50% {
-    transform: scale(1.01);
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
 /* Teacher console */
 .console-grid {
   display: grid;
