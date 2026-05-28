@@ -260,3 +260,30 @@ At the end, provide:
 4. screenshots or preview instructions if available;
 5. remaining risks or polish items;
 6. final submission checklist status.
+
+## Cursor Cloud specific instructions
+
+This is a pure client-side Vite + React + TypeScript SPA with no backend, database, or external services.
+
+### Services
+
+| Service | Command | URL |
+|---|---|---|
+| Vite dev server | `npm run dev` | `http://127.0.0.1:5173` |
+
+### Key commands
+
+See `package.json` scripts. Quick reference:
+
+- **Dev server:** `npm run dev`
+- **Build (tsc + vite):** `npm run build`
+- **Lint:** `npm run lint`
+- **Smoke tests:** `npm run test:smoke` (requires Playwright Chromium)
+- **Full verify:** `npm run verify` (build + lint + smoke)
+- **Capture screenshots:** `npm run capture:screenshots`
+
+### Gotchas
+
+- Playwright browsers must be installed separately: `npx playwright install --with-deps chromium`.
+- No `.env` file, API keys, or secrets are needed; all data is hardcoded.
+- The "Run judge demo" button in the top bar auto-plays the full prototype flow — useful for quick verification.
