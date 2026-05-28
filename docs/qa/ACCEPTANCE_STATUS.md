@@ -84,7 +84,7 @@ For each width:
 
 ## Performance checks
 
-- [x] App builds successfully. — _npm run build_
+- [x] App builds successfully. — _npm run verify (build + lint + 10 e2e)_
 - [ ] No console errors in normal flow. — _manual_
 - [x] No huge unnecessary assets. — _vite build ~240kb js_
 - [ ] No blocking external scripts unless necessary. — _Google Fonts only_
