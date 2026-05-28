@@ -11,9 +11,15 @@ These items are **not** automated in CI and must be completed before Contra subm
 
 Do not paste a fake deploy URL in this repo.
 
+### One-time: enable GitHub Pages (required for deploy workflow)
+
+1. Repo **Settings → Pages → Build and deployment → Source:** **GitHub Actions**.
+2. Re-run the latest **Deploy GitHub Pages** workflow (Actions tab → workflow → Re-run all jobs), or push to `main`.
+3. Confirm the site loads at the URL below before Contra submit.
+
 ## Live demo
 
-- **URL (GitHub Pages):** https://bwillia13x.github.io/lesson-loom-plan-to-playable/
+- **URL (GitHub Pages):** https://bwillia13x.github.io/lesson-loom-plan-to-playable/ _(after Pages is enabled + deploy succeeds)_
 - **Shareable demo:** https://bwillia13x.github.io/lesson-loom-plan-to-playable/?w=1#student
 - **Alt:** Vercel — see [README deploy](../../README.md#deploy-vercel). Re-verify URL after first Pages deploy (Settings → Pages → GitHub Actions).
 - **Repo:** https://github.com/Bwillia13x/lesson-loom-plan-to-playable
