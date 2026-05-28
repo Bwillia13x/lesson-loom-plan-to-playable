@@ -9,6 +9,7 @@ type SectionProps = {
   children: ReactNode;
   className?: string;
   workspace?: WorkspaceMode;
+  deferRender?: boolean;
 };
 
 export function Section({
@@ -19,11 +20,19 @@ export function Section({
   children,
   className = '',
   workspace,
+  deferRender = id !== 'hero',
 }: SectionProps) {
   return (
     <section
       id={id}
-      className={`ll-section ${workspace ? 'll-section--workspace' : ''} ${className}`.trim()}
+      className={[
+        'll-section',
+        deferRender ? 'll-section--deferred' : '',
+        workspace ? 'll-section--workspace' : '',
+        className,
+      ]
+        .filter(Boolean)
+        .join(' ')}
       data-workspace={workspace}
       aria-labelledby={`${id}-title`}
     >

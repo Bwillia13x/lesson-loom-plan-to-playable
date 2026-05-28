@@ -58,7 +58,9 @@ export default function App() {
   const [approved, setApproved] = useState(false);
   const [activeNav, setActiveNav] = useState('hero');
   const [demoRunning, setDemoRunning] = useState(false);
+  const [weaveLiveMessage, setWeaveLiveMessage] = useState('');
   const weaveTimers = useRef<number[]>([]);
+  const prevHasWovenRef = useRef(false);
 
   const prefersReducedMotion = usePrefersReducedMotion();
 
@@ -88,6 +90,15 @@ export default function App() {
   }, [prefersReducedMotion]);
 
   useEffect(() => () => clearWeaveTimers(), []);
+
+  useEffect(() => {
+    if (hasWoven && !prevHasWovenRef.current) {
+      setWeaveLiveMessage(
+        'Lesson woven. Teaching signal extracted and ready to explore.',
+      );
+    }
+    prevHasWovenRef.current = hasWoven;
+  }, [hasWoven]);
 
   useEffect(() => {
     const ids = navSections.map((s) => s.id);
@@ -198,6 +209,10 @@ export default function App() {
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
+
+      <div className="sr-only" aria-live="polite" aria-atomic="true">
+        {weaveLiveMessage}
+      </div>
 
       <nav className="app-nav" aria-label="Section navigation">
         <div className="app-nav__logo" title="Lesson Loom">

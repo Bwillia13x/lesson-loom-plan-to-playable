@@ -20,6 +20,9 @@ export function WeaveCompleteBanner({
       data-testid="weave-complete-banner"
     >
       <div className="weave-complete-banner__copy">
+        <span className="weave-complete-banner__status-icon" aria-hidden="true">
+          ✓
+        </span>
         <StatusPip label="Lesson woven" tone="green" pulse />
         <p>
           Teaching signal extracted. Explore the student app, teacher console, or export

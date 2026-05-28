@@ -113,6 +113,14 @@ export function StudentFractionGarden({
               const selected = selectedTileIds.includes(tile.id);
               const success =
                 checkSuccess && equivalentCanonicalIds.includes(tile.id) && selected;
+              const tileLabel = [
+                `Fraction tile ${tile.label}`,
+                `${tile.filled} of ${tile.parts} parts`,
+                selected ? 'selected' : '',
+                success ? 'equivalent match' : '',
+              ]
+                .filter(Boolean)
+                .join(', ');
               return (
                 <button
                   key={tile.id}
@@ -126,10 +134,15 @@ export function StudentFractionGarden({
                     .filter(Boolean)
                     .join(' ')}
                   aria-pressed={selected}
-                  aria-label={`Fraction tile ${tile.label}, ${tile.filled} of ${tile.parts} parts`}
+                  aria-label={tileLabel}
                   onClick={() => onToggleTile(tile.id)}
                 >
                   <FractionTileVisual tile={tile} />
+                  {success && (
+                    <span className="fraction-tile__check" aria-hidden="true">
+                      ✓
+                    </span>
+                  )}
                   <span>{tile.label}</span>
                 </button>
               );
@@ -167,6 +180,7 @@ export function StudentFractionGarden({
               role="status"
               aria-live="polite"
             >
+              <span aria-hidden="true">✓ </span>
               {studentActivity.success}
             </div>
           )}

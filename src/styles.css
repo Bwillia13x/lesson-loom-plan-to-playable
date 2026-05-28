@@ -6,7 +6,7 @@
   --ll-paper-inset: #f3f0ea;
   --ll-ink: #1c1c1c;
   --ll-graphite: #3d3d3d;
-  --ll-muted: #6b6b6b;
+  --ll-muted: #525252;
   --ll-line: rgba(28, 28, 28, 0.1);
   --ll-line-strong: rgba(28, 28, 28, 0.18);
   --ll-orange: #e85d04;
@@ -96,6 +96,13 @@ button {
 :focus-visible {
   outline: 2px solid var(--ll-orange);
   outline-offset: 3px;
+}
+
+button:focus-visible,
+a:focus-visible,
+[role='button']:focus-visible {
+  outline: 2px solid var(--ll-orange-deep);
+  outline-offset: 2px;
 }
 
 .sr-only {
@@ -268,6 +275,9 @@ button {
   gap: 0.25rem;
   overflow-x: auto;
   padding-bottom: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
 }
 
 .weave-stepper__item {
@@ -321,6 +331,13 @@ button {
   background: var(--ll-green-soft);
 }
 
+.weave-stepper__check {
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ll-green);
+}
+
 .weave-stepper__index {
   font-family: var(--ll-font-mono);
   font-size: 0.65rem;
@@ -369,6 +386,12 @@ button {
 .ll-section {
   padding: 4rem 1.5rem;
   scroll-margin-top: 4rem;
+}
+
+/* Below-fold sections: defer layout/paint until near viewport (modern-web-guidance) */
+.ll-section--deferred {
+  content-visibility: auto;
+  contain-intrinsic-size: auto none auto 720px;
 }
 
 .ll-section__inner {
@@ -817,7 +840,7 @@ button {
   font-size: 0.75rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: var(--ll-sage);
+  color: #3d5242;
 }
 
 .garden-bed__plots {
@@ -903,6 +926,14 @@ button {
 .fraction-tile--success {
   border-color: var(--ll-green);
   background: var(--ll-green-soft);
+  box-shadow: inset 0 0 0 1px rgba(22, 163, 74, 0.35);
+}
+
+.fraction-tile__check {
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #14532d;
 }
 
 .garden-success {
@@ -1360,8 +1391,11 @@ button {
   text-decoration: none;
 }
 
-.skip-link:focus {
+.skip-link:focus,
+.skip-link:focus-visible {
   left: var(--ll-nav-w);
+  outline: 2px solid #fff;
+  outline-offset: 2px;
 }
 
 /* Post-weave banner */
@@ -1377,6 +1411,21 @@ button {
   border: 1px solid rgba(232, 93, 4, 0.25);
   border-radius: var(--ll-radius);
   box-shadow: var(--ll-shadow-soft);
+}
+
+.weave-complete-banner__status-icon {
+  flex-shrink: 0;
+  display: inline-grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  border: 2px solid var(--ll-green);
+  background: var(--ll-green-soft);
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #14532d;
 }
 
 .weave-complete-banner__copy {
@@ -1403,10 +1452,10 @@ button {
   padding: 0.65rem 0.85rem;
   margin-bottom: 1rem;
   border-radius: 10px;
-  background: var(--ll-amber-soft);
-  border: 1px solid rgba(217, 119, 6, 0.35);
+  background: #fde8c8;
+  border: 1px solid #b45309;
   font-size: 0.88rem;
-  color: #78350f;
+  color: #451a03;
 }
 
 .export-notice {
@@ -1523,6 +1572,13 @@ button {
 }
 
 /* Mobile topbar tightening */
+@media (max-width: 900px) {
+  .skip-link:focus,
+  .skip-link:focus-visible {
+    left: 0.75rem;
+  }
+}
+
 @media (max-width: 720px) {
   .app-topbar__status,
   .app-topbar__trust {

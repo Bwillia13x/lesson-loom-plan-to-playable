@@ -6,7 +6,7 @@ test('golden path: weave → fractions → approve → export copy', async ({ pa
   await page.getByTestId('weave-lesson').first().click();
   await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 4000 });
 
-  await page.getByRole('button', { name: 'Student view' }).click();
+  await page.getByTestId('workspace-student').click();
   await expect(page.locator('#student')).toBeInViewport();
 
   await page.getByTestId('garden-hint-btn').click();

@@ -1,11 +1,32 @@
+import { useEffect, useRef, useState } from 'react';
+
 type WeaveSignalLineProps = {
   active: boolean;
   reducedMotion?: boolean;
 };
 
 export function WeaveSignalLine({ active, reducedMotion = false }: WeaveSignalLineProps) {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const [inView, setInView] = useState(true);
+
+  useEffect(() => {
+    if (reducedMotion) return;
+    const el = svgRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [reducedMotion]);
+
+  const motionEnabled = active && !reducedMotion && inView;
+
   return (
     <svg
+      ref={svgRef}
       className="hero-weave-svg"
       viewBox="0 0 400 120"
       preserveAspectRatio="none"
@@ -25,7 +46,7 @@ export function WeaveSignalLine({ active, reducedMotion = false }: WeaveSignalLi
             : undefined
         }
       />
-      {active && !reducedMotion && (
+      {motionEnabled && (
         <circle r="6" fill="var(--ll-orange)" opacity="0.9">
           <animateMotion
             dur="2.5s"
