@@ -23,7 +23,7 @@ Open the URL shown in the terminal (typically `http://localhost:5173`).
 npm run verify
 ```
 
-Runs build, lint, and Playwright smoke tests.
+Runs build, lint, and the full Playwright e2e suite (smoke, accessibility, responsive).
 
 ## Submission screenshots
 
@@ -34,6 +34,10 @@ npm run capture:screenshots
 ```
 
 Captures: hero, teaching signals, fraction garden, teacher console, review/export, and mobile student view.
+
+## Submission package
+
+Judge-ready copy and walkthrough: [`docs/submission/`](docs/submission/).
 
 ## What is real vs prototype
 
