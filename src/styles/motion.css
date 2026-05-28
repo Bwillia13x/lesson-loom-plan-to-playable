@@ -1,0 +1,54 @@
+/* Weave path */
+.weave-path {
+  position: relative;
+  height: 48px;
+  margin: 1.5rem 0;
+}
+
+.weave-path__svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.weave-path__line {
+  fill: none;
+  stroke: var(--ll-line-strong);
+  stroke-width: 2;
+  stroke-dasharray: 6 4;
+}
+
+.weave-path__line--active {
+  stroke: var(--ll-orange);
+  stroke-width: 3;
+  stroke-dasharray: none;
+  filter: drop-shadow(0 0 6px var(--ll-orange-glow));
+  transition: stroke-dashoffset 0.6s ease;
+}
+
+.weave-path--animated .weave-path__line--active {
+  animation: weave-glow 2.5s ease-in-out infinite;
+}
+
+@keyframes weave-glow {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.75;
+  }
+}
+/* Student app activates when weave reaches final step (spec ~820ms) */
+#student.ll-section--woven-active .panel {
+  box-shadow:
+    0 0 0 2px var(--ll-orange),
+    var(--ll-shadow-soft);
+  transition: box-shadow 0.35s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #student.ll-section--woven-active .panel {
+    transition: none;
+  }
+}

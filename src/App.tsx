@@ -9,7 +9,8 @@ import {
 } from './data/lessonLoomData';
 import { SiteFooter } from './components/SiteFooter';
 import { WeaveCompleteBanner } from './components/WeaveCompleteBanner';
-import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion';
+import { useMotion } from './motion/motionContext';
+import { useScrollToSection } from './motion/useScrollToSection';
 import { DifferentiationUDL } from './components/sections/DifferentiationUDL';
 import { ExportPackSection } from './components/sections/ExportPackSection';
 import { HeroLanding } from './components/sections/HeroLanding';
@@ -26,7 +27,7 @@ import { StatusPip } from './components/ui/StatusPip';
 import { WorkspaceModeToggle } from './components/ui/WorkspaceModeToggle';
 import { createWeaveTimeline } from './motion/createWeaveTimeline';
 import { isEquivalentTileSelection } from './utils/fractionCheck';
-import { delay, scrollToSection } from './utils/scroll';
+import { delay } from './utils/scroll';
 
 const navIcons: Record<string, string> = {
   hero: '⌂',
@@ -65,7 +66,8 @@ export default function App() {
   const weaveTimelineRef = useRef<ReturnType<typeof createWeaveTimeline>>(null);
   const prevHasWovenRef = useRef(false);
 
-  const prefersReducedMotion = usePrefersReducedMotion();
+  const { reduced: prefersReducedMotion } = useMotion();
+  const scrollTo = useScrollToSection();
   const studentAppActive =
     hasWoven && activeWeaveStep >= weaveSteps.length - 1;
 
@@ -86,13 +88,13 @@ export default function App() {
     clearUiTimeouts();
     setHasWoven(true);
     setActiveWeaveStep(-1);
-    scrollToSection('weave', { reducedMotion: prefersReducedMotion });
+    scrollTo('weave');
 
     weaveTimelineRef.current = createWeaveTimeline(
       setActiveWeaveStep,
       prefersReducedMotion,
     );
-  }, [prefersReducedMotion]);
+  }, [prefersReducedMotion, scrollTo]);
 
   useEffect(
     () => () => {
@@ -133,9 +135,7 @@ export default function App() {
 
   const handleWorkspaceModeChange = (mode: WorkspaceMode) => {
     setWorkspaceMode(mode);
-    scrollToSection(mode === 'student' ? 'student' : 'teacher', {
-      reducedMotion: prefersReducedMotion,
-    });
+    scrollTo(mode === 'student' ? 'student' : 'teacher');
   };
 
   const handleToggleTile = (id: string) => {
@@ -202,7 +202,7 @@ export default function App() {
 
     setWorkspaceMode('student');
     setSelectedTileIds(CANONICAL_TILES);
-    scrollToSection('student', { reducedMotion: prefersReducedMotion });
+    scrollTo('student');
     await delay(400);
 
     setCheckAttempted(true);
@@ -211,16 +211,16 @@ export default function App() {
     await delay(prefersReducedMotion ? 200 : 800);
 
     setWorkspaceMode('teacher');
-    scrollToSection('teacher', { reducedMotion: prefersReducedMotion });
+    scrollTo('teacher');
     await delay(prefersReducedMotion ? 200 : 600);
 
-    scrollToSection('review', { reducedMotion: prefersReducedMotion });
+    scrollTo('review');
     setApproved(true);
     await delay(300);
 
-    scrollToSection('export', { reducedMotion: prefersReducedMotion });
+    scrollTo('export');
     setDemoRunning(false);
-  }, [demoRunning, prefersReducedMotion, runWeaveSequence]);
+  }, [demoRunning, prefersReducedMotion, runWeaveSequence, scrollTo]);
 
   return (
     <div className="app-shell">
@@ -241,9 +241,7 @@ export default function App() {
             key={item.id}
             type="button"
             className={`app-nav__link ${activeNav === item.id ? 'app-nav__link--active' : ''}`}
-            onClick={() =>
-              scrollToSection(item.id, { reducedMotion: prefersReducedMotion })
-            }
+            onClick={() => scrollTo(item.id)}
             aria-label={item.label}
             title={item.label}
           >
@@ -289,26 +287,23 @@ export default function App() {
           <WeaveCompleteBanner
             onStudent={() => {
               setWorkspaceMode('student');
-              scrollToSection('student', { reducedMotion: prefersReducedMotion });
+              scrollTo('student');
             }}
             onTeacher={() => {
               setWorkspaceMode('teacher');
-              scrollToSection('teacher', { reducedMotion: prefersReducedMotion });
+              scrollTo('teacher');
             }}
-            onExport={() =>
-              scrollToSection('export', { reducedMotion: prefersReducedMotion })
-            }
+            onExport={() => scrollTo('export')}
           />
         )}
 
         <main id="main-content">
           <HeroLanding
             hasWoven={hasWoven}
-            reducedMotion={prefersReducedMotion}
             onWeave={runWeaveSequence}
             onViewDemo={() => {
               setWorkspaceMode('student');
-              scrollToSection('student', { reducedMotion: prefersReducedMotion });
+              scrollTo('student');
             }}
           />
           <LessonIntake onExtract={runWeaveSequence} />
@@ -317,11 +312,7 @@ export default function App() {
             activeWeaveStep={activeWeaveStep}
             onWeave={runWeaveSequence}
           />
-          <TeachingSignal
-            hasWoven={hasWoven}
-            onWeave={runWeaveSequence}
-            reducedMotion={prefersReducedMotion}
-          />
+          <TeachingSignal hasWoven={hasWoven} onWeave={runWeaveSequence} />
           <StudentFractionGarden
             selectedTileIds={selectedTileIds}
             onToggleTile={handleToggleTile}
@@ -330,7 +321,6 @@ export default function App() {
             checkSuccess={checkSuccess}
             checkAttempted={checkAttempted}
             showSuccessPulse={showSuccessPulse}
-            reducedMotion={prefersReducedMotion}
             studentAppActive={studentAppActive}
           />
           <TeacherConsole
@@ -355,7 +345,7 @@ export default function App() {
           <MadeWithStitch />
         </main>
 
-        <SiteFooter reducedMotion={prefersReducedMotion} />
+        <SiteFooter />
       </div>
     </div>
   );

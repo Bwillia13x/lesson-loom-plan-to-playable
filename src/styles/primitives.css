@@ -1,0 +1,330 @@
+/* Section */
+.ll-section {
+  padding: 4rem 1.5rem;
+  scroll-margin-top: 4rem;
+}
+
+/* Below-fold sections: defer layout/paint until near viewport (modern-web-guidance) */
+.ll-section--deferred {
+  content-visibility: auto;
+  contain-intrinsic-size: auto none auto 720px;
+}
+
+.ll-section__inner {
+  max-width: var(--ll-max);
+  margin: 0 auto;
+}
+
+.ll-section__eyebrow {
+  font-family: var(--ll-font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ll-orange);
+  margin-bottom: 0.5rem;
+}
+
+.ll-section__title {
+  font-family: var(--ll-font-display);
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  line-height: 1.05;
+  margin-bottom: 0.75rem;
+}
+
+.ll-section__lead {
+  max-width: 52ch;
+  color: var(--ll-muted);
+  margin-bottom: 2rem;
+}
+
+/* Panel */
+.panel {
+  position: relative;
+  background: linear-gradient(165deg, #ffffff 0%, #f9f7f2 100%);
+  border: 1px solid var(--ll-line);
+  border-radius: var(--ll-radius-lg);
+  box-shadow: var(--ll-shadow-soft);
+  overflow: hidden;
+}
+
+.panel--inset {
+  background: var(--ll-paper-inset);
+  box-shadow: var(--ll-shadow-inset);
+  border-radius: var(--ll-radius);
+}
+
+.panel--bracket::before,
+.panel--bracket::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--ll-line-strong);
+  pointer-events: none;
+}
+
+.panel--bracket::before {
+  top: 10px;
+  left: 10px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.panel--bracket::after {
+  bottom: 10px;
+  right: 10px;
+  border-left: none;
+  border-top: none;
+}
+
+.panel__screw {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e8e4dc, #c8c4bc);
+  border: 1px solid var(--ll-line);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+.panel__screw--tl {
+  top: 12px;
+  left: 12px;
+}
+.panel__screw--tr {
+  top: 12px;
+  right: 12px;
+}
+.panel__screw--bl {
+  bottom: 12px;
+  left: 12px;
+}
+.panel__screw--br {
+  bottom: 12px;
+  right: 12px;
+}
+
+.panel__header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--ll-line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.panel__title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.panel__body {
+  padding: 1.25rem;
+}
+
+/* Status pip */
+.status-pip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--ll-font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.status-pip__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-pip--orange .status-pip__dot {
+  background: var(--ll-orange);
+  box-shadow: 0 0 8px var(--ll-orange-glow);
+}
+
+.status-pip--cyan .status-pip__dot {
+  background: var(--ll-cyan);
+}
+
+.status-pip--amber .status-pip__dot {
+  background: var(--ll-amber);
+}
+
+.status-pip--green .status-pip__dot {
+  background: var(--ll-green);
+}
+
+.status-pip--pulse .status-pip__dot {
+  animation: pip-pulse 2s ease-in-out infinite;
+}
+
+@keyframes pip-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(0.85);
+  }
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.25rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition:
+    transform 0.15s,
+    box-shadow 0.2s,
+    background 0.2s;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn--primary {
+  background: linear-gradient(180deg, #f07020 0%, var(--ll-orange) 55%, var(--ll-orange-deep) 100%);
+  color: #fff;
+  border-color: var(--ll-orange-deep);
+  box-shadow:
+    0 4px 0 rgba(0, 0, 0, 0.08),
+    0 8px 24px var(--ll-orange-glow);
+}
+
+.btn--primary:hover {
+  box-shadow:
+    0 4px 0 rgba(0, 0, 0, 0.08),
+    0 12px 32px var(--ll-orange-glow);
+}
+
+.btn--secondary {
+  background: var(--ll-paper);
+  color: var(--ll-ink);
+  border-color: var(--ll-line-strong);
+}
+
+.btn--secondary:hover {
+  background: var(--ll-bg-soft);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ll-graphite);
+  border-color: var(--ll-line);
+}
+
+.btn--sm {
+  padding: 0.45rem 0.85rem;
+  font-size: 0.8rem;
+}
+
+.btn--lg {
+  padding: 0.9rem 1.75rem;
+  font-size: 1rem;
+}
+
+/* Badge / chip */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--ll-radius-pill);
+  font-family: var(--ll-font-mono);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid var(--ll-line);
+  background: var(--ll-paper);
+}
+
+.badge--orange {
+  border-color: rgba(232, 93, 4, 0.3);
+  background: var(--ll-orange-soft);
+  color: var(--ll-orange-deep);
+}
+
+.badge--source {
+  color: var(--ll-muted);
+  font-style: normal;
+}
+
+/* Meta grid */
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+}
+
+.meta-item {
+  padding: 0.65rem 0.85rem;
+  background: var(--ll-paper);
+  border: 1px solid var(--ll-line);
+  border-radius: 10px;
+}
+
+.meta-item__label {
+  font-family: var(--ll-font-mono);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ll-muted);
+  margin-bottom: 0.2rem;
+}
+
+.meta-item__value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ll-ink);
+}
+
+/* Progress rail */
+.progress-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--ll-paper-inset);
+  border-radius: var(--ll-radius);
+  border: 1px solid var(--ll-line);
+}
+
+.progress-rail__step {
+  font-family: var(--ll-font-mono);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ll-muted);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.progress-rail__step--active {
+  background: var(--ll-orange-soft);
+  color: var(--ll-orange-deep);
+  font-weight: 600;
+}
+
+.progress-rail__step--done {
+  color: var(--ll-green);
+}
+
+.progress-rail__arrow {
+  color: var(--ll-line-strong);
+  font-size: 0.65rem;
+}

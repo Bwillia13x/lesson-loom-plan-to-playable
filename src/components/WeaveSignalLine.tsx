@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+import { useMotion } from '../motion/motionContext';
 import { runGsapScoped } from '../motion/runGsapScoped';
 
 gsap.registerPlugin(MotionPathPlugin);
@@ -9,10 +10,10 @@ const WEAVE_PATH_D = 'M 20 60 C 80 20, 120 100, 200 60 S 320 20, 380 60';
 
 type WeaveSignalLineProps = {
   active: boolean;
-  reducedMotion?: boolean;
 };
 
-export function WeaveSignalLine({ active, reducedMotion = false }: WeaveSignalLineProps) {
+export function WeaveSignalLine({ active }: WeaveSignalLineProps) {
+  const { reduced: reducedMotion } = useMotion();
   const svgRef = useRef<SVGSVGElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
   const circleRef = useRef<SVGCircleElement>(null);

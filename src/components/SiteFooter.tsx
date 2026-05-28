@@ -1,11 +1,8 @@
 import { navSections } from '../data/lessonLoomData';
-import { scrollToSection } from '../utils/scroll';
+import { useScrollToSection } from '../motion/useScrollToSection';
 
-type SiteFooterProps = {
-  reducedMotion: boolean;
-};
-
-export function SiteFooter({ reducedMotion }: SiteFooterProps) {
+export function SiteFooter() {
+  const scrollTo = useScrollToSection();
   const jumpLinks = navSections.filter((s) =>
     ['hero', 'student', 'teacher', 'review', 'export', 'stitch'].includes(s.id),
   );
@@ -21,9 +18,7 @@ export function SiteFooter({ reducedMotion }: SiteFooterProps) {
             key={item.id}
             type="button"
             className="site-footer__link"
-            onClick={() =>
-              scrollToSection(item.id, { reducedMotion })
-            }
+            onClick={() => scrollTo(item.id)}
           >
             {item.label}
           </button>

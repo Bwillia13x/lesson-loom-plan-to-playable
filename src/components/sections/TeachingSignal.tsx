@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef } from 'react';
 import { teachingSignals } from '../../data/lessonLoomData';
+import { useMotion } from '../../motion/motionContext';
 import { runGsapScoped } from '../../motion/runGsapScoped';
 import { WEAVE_SIGNAL_REVEAL_DELAY_S } from '../../motion/weaveTiming';
 import { IndustrialButton } from '../ui/IndustrialButton';
@@ -10,14 +11,10 @@ import { StatusPip } from '../ui/StatusPip';
 type TeachingSignalProps = {
   hasWoven: boolean;
   onWeave: () => void;
-  reducedMotion?: boolean;
 };
 
-export function TeachingSignal({
-  hasWoven,
-  onWeave,
-  reducedMotion = false,
-}: TeachingSignalProps) {
+export function TeachingSignal({ hasWoven, onWeave }: TeachingSignalProps) {
+  const { reduced } = useMotion();
   const gridRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -26,7 +23,7 @@ export function TeachingSignal({
 
     return runGsapScoped(
       grid,
-      reducedMotion,
+      reduced,
       (gsapApi) => {
         const cards = gsapApi.utils.toArray<HTMLElement>('.signal-card', grid);
         gsapApi.set(cards, { autoAlpha: 0, y: 12 });
@@ -44,7 +41,7 @@ export function TeachingSignal({
         gsapApi.set(cards, { y: 0, autoAlpha: 1 });
       },
     );
-  }, [hasWoven, reducedMotion]);
+  }, [hasWoven, reduced]);
 
   return (
     <Section

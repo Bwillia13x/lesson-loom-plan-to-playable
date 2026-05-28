@@ -6,14 +6,12 @@ import { WeaveSignalLine } from '../WeaveSignalLine';
 
 type HeroLandingProps = {
   hasWoven: boolean;
-  reducedMotion?: boolean;
   onWeave: () => void;
   onViewDemo: () => void;
 };
 
 export function HeroLanding({
   hasWoven,
-  reducedMotion = false,
   onWeave,
   onViewDemo,
 }: HeroLandingProps) {
@@ -52,7 +50,7 @@ export function HeroLanding({
         </div>
 
         <div className={`hero-visual scanline ${hasWoven ? 'scanline--active' : ''}`}>
-          <WeaveSignalLine active={hasWoven} reducedMotion={reducedMotion} />
+          <WeaveSignalLine active={hasWoven} />
           <Panel
             className="hero-plan"
             bracket

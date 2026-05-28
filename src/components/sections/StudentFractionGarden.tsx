@@ -1,4 +1,5 @@
 import { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useMotion } from '../../motion/motionContext';
 import { runGsapScoped } from '../../motion/runGsapScoped';
 import {
   equivalentCanonicalIds,
@@ -20,7 +21,6 @@ type StudentFractionGardenProps = {
   checkSuccess: boolean;
   checkAttempted: boolean;
   showSuccessPulse: boolean;
-  reducedMotion?: boolean;
   studentAppActive?: boolean;
 };
 
@@ -47,9 +47,9 @@ export function StudentFractionGarden({
   checkSuccess,
   checkAttempted,
   showSuccessPulse,
-  reducedMotion = false,
   studentAppActive = false,
 }: StudentFractionGardenProps) {
+  const { reduced } = useMotion();
   const [hintVisible, setHintVisible] = useState(false);
   const successRef = useRef<HTMLDivElement>(null);
 
@@ -59,7 +59,7 @@ export function StudentFractionGarden({
 
     return runGsapScoped(
       successRef,
-      reducedMotion,
+      reduced,
       (gsapApi) => {
         gsapApi.fromTo(
           el,
@@ -71,7 +71,7 @@ export function StudentFractionGarden({
         gsapApi.set(el, { scale: 1, opacity: 1 });
       },
     );
-  }, [showSuccessPulse, checkSuccess, reducedMotion]);
+  }, [showSuccessPulse, checkSuccess, reduced]);
 
   const selectedTiles = useMemo(
     () => fractionTiles.filter((t) => selectedTileIds.includes(t.id)),
