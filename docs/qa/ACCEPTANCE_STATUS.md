@@ -5,7 +5,8 @@ Tracked against `08_QA_ACCEPTANCE_CHECKLIST.md`. Last updated: 2026-05-28 (10 e2
 ## Product acceptance
 
 - [ ] The concept is clear within 30 seconds. — _manual judge pass_
-- [x] The hero explains “lesson plan → interactive classroom app.” — _hero copy + e2e/copy-deck.spec.ts_
+- [x] The hero explains “lesson plan → interactive classroom app.” — _hero headline + e2e/copy-deck.spec.ts_
+- [x] Hero trust line uses claim-safe copy deck language. — _e2e/copy-deck.spec.ts_
 - [x] The demo focuses on one lesson: Fraction Garden. — _lessonLoomData.ts_
 - [ ] The prototype does not feel like a generic SaaS landing page. — _manual_
 - [ ] The output feels useful to a teacher. — _manual_
