@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   exportPack,
   navSections,
-  weaveSteps,
   type SupportLane,
   type TimelineId,
   type WorkspaceMode,
@@ -24,6 +23,7 @@ import { TeachingSignal } from './components/sections/TeachingSignal';
 import { IndustrialButton } from './components/ui/IndustrialButton';
 import { StatusPip } from './components/ui/StatusPip';
 import { WorkspaceModeToggle } from './components/ui/WorkspaceModeToggle';
+import { createWeaveTimeline } from './motion/createWeaveTimeline';
 import { isEquivalentTileSelection } from './utils/fractionCheck';
 import { delay, scrollToSection } from './utils/scroll';
 
@@ -61,11 +61,16 @@ export default function App() {
   const [demoRunning, setDemoRunning] = useState(false);
   const [weaveLiveMessage, setWeaveLiveMessage] = useState('');
   const weaveTimers = useRef<number[]>([]);
+  const weaveTimelineRef = useRef<ReturnType<typeof createWeaveTimeline> | null>(
+    null,
+  );
   const prevHasWovenRef = useRef(false);
 
   const prefersReducedMotion = usePrefersReducedMotion();
 
   const clearWeaveTimers = () => {
+    weaveTimelineRef.current?.kill();
+    weaveTimelineRef.current = null;
     weaveTimers.current.forEach((t) => window.clearTimeout(t));
     weaveTimers.current = [];
   };
@@ -76,18 +81,10 @@ export default function App() {
     setActiveWeaveStep(0);
     scrollToSection('weave');
 
-    if (prefersReducedMotion) {
-      setActiveWeaveStep(weaveSteps.length - 1);
-      return;
-    }
-
-    const delays = [100, 220, 340, 460, 580, 700, 820];
-    delays.forEach((delayMs, index) => {
-      const timer = window.setTimeout(() => {
-        setActiveWeaveStep(index);
-      }, delayMs);
-      weaveTimers.current.push(timer);
-    });
+    weaveTimelineRef.current = createWeaveTimeline(
+      setActiveWeaveStep,
+      prefersReducedMotion,
+    );
   }, [prefersReducedMotion]);
 
   useEffect(() => () => clearWeaveTimers(), []);
