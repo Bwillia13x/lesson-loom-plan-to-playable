@@ -10,7 +10,7 @@ test.describe('mobile viewport (390px)', () => {
     page,
   }) => {
     await expect(page.locator('#hero')).toBeVisible();
-    await expect(page.locator('#hero-title')).toContainText('Lesson Loom');
+    await expect(page.locator('#hero-title')).toContainText('interactive classroom apps');
 
     await page
       .getByRole('navigation', { name: 'Section navigation' })

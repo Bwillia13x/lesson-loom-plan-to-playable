@@ -20,9 +20,11 @@ export function HeroLanding({
   return (
     <section id="hero" className="ll-section" aria-labelledby="hero-title">
       <div className="ll-section__inner">
-        <p className="ll-section__eyebrow">AI-native lesson interface studio</p>
+        <p className="ll-section__eyebrow">
+          Lesson Loom · AI-native lesson interface studio
+        </p>
         <h1 id="hero-title" className="hero-headline">
-          Lesson Loom — Plan to Playable
+          Turn lesson plans into interactive classroom apps.
         </h1>
         <p className="ll-section__lead" style={{ maxWidth: '58ch' }}>
           Turn lesson plans into interactive classroom apps. Paste a trusted lesson plan
@@ -38,10 +40,10 @@ export function HeroLanding({
               onClick={onWeave}
               data-testid="weave-lesson"
             >
-              Weave Lesson
+              Weave lesson
             </IndustrialButton>
             <IndustrialButton variant="secondary" size="lg" onClick={onViewDemo}>
-              View Demo
+              View student app
             </IndustrialButton>
           </div>
           <p className="text-mono" style={{ fontSize: '0.75rem', color: 'var(--ll-muted)' }}>

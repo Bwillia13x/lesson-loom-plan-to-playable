@@ -122,7 +122,7 @@ export function LessonWeave({ hasWoven, activeWeaveStep, onWeave }: LessonWeaveP
               onClick={onWeave}
               data-testid="weave-lesson"
             >
-              Weave Lesson
+              Weave lesson
             </IndustrialButton>
           )}
         </div>
