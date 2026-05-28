@@ -1,12 +1,12 @@
 # QA acceptance status
 
-Tracked against `08_QA_ACCEPTANCE_CHECKLIST.md`. Last updated: 2026-05-28 (smoke: 5 tests including reduced-motion).
+Tracked against `08_QA_ACCEPTANCE_CHECKLIST.md`. Last updated: 2026-05-28 (submission hardening: copy-deck, judge-demo console, fonts/theme).
 
 ## Product acceptance
 
 - [ ] The concept is clear within 30 seconds. — _manual judge pass_
 - [x] The hero explains “lesson plan → interactive classroom app.” — _hero headline + e2e/copy-deck.spec.ts_
-- [x] Hero trust line uses claim-safe copy deck language. — _e2e/copy-deck.spec.ts_
+- [x] Hero trust line uses claim-safe copy deck language. — _e2e/copy-deck.spec.ts (hero, intake, review)_
 - [x] The demo focuses on one lesson: Fraction Garden. — _lessonLoomData.ts_
 - [ ] The prototype does not feel like a generic SaaS landing page. — _manual_
 - [ ] The output feels useful to a teacher. — _manual_
@@ -81,31 +81,33 @@ For each width:
 - [x] Does not imply student profiling. — _copy audit_
 - [x] Does not automate grading. — _copy audit_
 - [x] Review & Safety section is visible. — _ReviewSafety section_
-- [x] “Teacher review required” language is present. — _ReviewSafety_
-- [x] “No student data required” language is present. — _ReviewSafety / hero_
-- [x] “Printable fallback” language is present. — _PrintableFallback_
+- [x] “Teacher review required” language is present. — _ReviewSafety + e2e/copy-deck.spec.ts_
+- [x] “No student data required” language is present. — _ReviewSafety / hero + e2e/copy-deck.spec.ts_
+- [x] “Printable fallback” language is present. — _PrintableFallback + e2e/copy-deck.spec.ts_
+- [x] Copy deck strings (hero, intake, review headings). — _e2e/copy-deck.spec.ts_
 
 ## Performance checks
 
-- [x] App builds successfully. — _npm run verify (build + lint + 10 e2e)_
-- [ ] No console errors in normal flow. — _manual_
+- [x] App builds successfully. — _npm run verify (build + lint + e2e suite)_
+- [x] No console errors in normal flow. — _e2e/judge-demo-console.spec.ts (judge demo path)_
 - [x] No huge unnecessary assets. — _vite build ~240kb js_
-- [ ] No blocking external scripts unless necessary. — _Google Fonts only_
+- [x] No blocking external scripts unless necessary. — _Google Fonts with display=swap; system fallbacks in tokens.css_
+- [x] theme-color matches warm ivory UI. — _index.html #faf8f4 (--ll-bg)_
 - [ ] CSS animations do not cause obvious jank. — _manual_
 
 ## Browser checks
 
 - [x] Chrome. — _Playwright chromium CI_
-- [ ] Safari if available. — _manual_
-- [ ] Mobile Safari if available. — _manual_
+- [ ] Safari if available. — _manual (see docs/submission/README.md § Manual steps)_
+- [ ] Mobile Safari if available. — _manual (see docs/submission/README.md § Manual steps)_
 
 ## Submission checks
 
-- [ ] Live URL works. — _after Vercel deploy_
+- [ ] Live URL works. — _manual: deploy + paste URL in docs/submission/README.md_
 - [x] Page title is set. — _index.html_
 - [x] Meta description is set. — _index.html_
 - [x] Screenshots captured. — _npm run capture:screenshots (local, gitignored)_
-- [ ] 60–90 second walkthrough recorded. — _manual_
+- [ ] 60–90 second walkthrough recorded. — _manual: see docs/submission/WALKTHROUGH.md_
 - [x] Contra submission copy ready. — _docs/submission/CONTRA_COPY.md_
 - [x] Source/credits clear. — _README + MadeWithStitch_
-- [ ] Final challenge rules checked manually before posting. — _manual_
+- [ ] Final challenge rules checked manually before posting. — _manual (docs/submission/README.md § Manual steps)_

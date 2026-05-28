@@ -27,9 +27,12 @@
   --ll-radius: 16px;
   --ll-radius-lg: 22px;
   --ll-radius-pill: 999px;
-  --ll-font-display: 'Instrument Serif', Georgia, serif;
-  --ll-font-ui: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
-  --ll-font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  --ll-font-display: 'Instrument Serif', 'Iowan Old Style', 'Apple Garamond', Georgia,
+    'Times New Roman', serif;
+  --ll-font-ui: 'DM Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --ll-font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas,
+    'Liberation Mono', monospace;
   --ll-max: 1240px;
   --ll-nav-w: 72px;
 }
