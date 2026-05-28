@@ -22,6 +22,7 @@ type StudentFractionGardenProps = {
   checkAttempted: boolean;
   showSuccessPulse: boolean;
   reducedMotion?: boolean;
+  studentAppActive?: boolean;
 };
 
 function GardenBedVisual({ tile }: { tile: FractionTile | undefined }) {
@@ -48,6 +49,7 @@ export function StudentFractionGarden({
   checkAttempted,
   showSuccessPulse,
   reducedMotion = false,
+  studentAppActive = false,
 }: StudentFractionGardenProps) {
   const [hintVisible, setHintVisible] = useState(false);
   const successRef = useRef<HTMLDivElement>(null);
@@ -91,6 +93,7 @@ export function StudentFractionGarden({
     <Section
       id="student"
       workspace="student"
+      className={studentAppActive ? 'll-section--woven-active' : ''}
       eyebrow="Student app"
       title={studentActivity.title}
       lead={studentActivity.mission}

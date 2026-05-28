@@ -68,6 +68,8 @@ export default function App() {
   const prevHasWovenRef = useRef(false);
 
   const prefersReducedMotion = usePrefersReducedMotion();
+  const studentAppActive =
+    hasWoven && activeWeaveStep >= weaveSteps.length - 1;
 
   const clearWeaveTimers = () => {
     weaveTimelineRef.current?.kill();
@@ -320,6 +322,7 @@ export default function App() {
             checkAttempted={checkAttempted}
             showSuccessPulse={showSuccessPulse}
             reducedMotion={prefersReducedMotion}
+            studentAppActive={studentAppActive}
           />
           <TeacherConsole
             activeSegment={activeSegment}

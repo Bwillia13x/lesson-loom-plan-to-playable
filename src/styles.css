@@ -802,6 +802,20 @@ a:focus-visible,
   margin-bottom: 0.65rem;
 }
 
+/* Student app activates when weave reaches final step (spec ~820ms) */
+#student.ll-section--woven-active .panel {
+  box-shadow:
+    0 0 0 2px var(--ll-orange),
+    var(--ll-shadow-soft);
+  transition: box-shadow 0.35s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #student.ll-section--woven-active .panel {
+    transition: none;
+  }
+}
+
 /* Fraction garden */
 .garden-layout {
   display: grid;
