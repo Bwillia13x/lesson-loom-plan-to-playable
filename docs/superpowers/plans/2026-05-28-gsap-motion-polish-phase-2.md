@@ -211,7 +211,7 @@ Append to `src/styles.css` (near other garden styles):
 
 ```css
 /* Student app activates when weave reaches final step (spec ~820ms) */
-#student.ll-section--woven-active .ll-panel {
+#student.ll-section--woven-active .panel {
   box-shadow:
     0 0 0 2px var(--ll-orange),
     var(--ll-shadow-soft);
@@ -219,13 +219,13 @@ Append to `src/styles.css` (near other garden styles):
 }
 
 @media (prefers-reduced-motion: reduce) {
-  #student.ll-section--woven-active .ll-panel {
+  #student.ll-section--woven-active .panel {
     transition: none;
   }
 }
 ```
 
-Note: `Panel` renders with class `ll-panel` — verify in `src/components/ui/Panel.tsx` and adjust selector if the class is `panel` instead.
+`Panel` root class is `panel` (see `src/components/ui/Panel.tsx`).
 
 - [ ] **Step 2: Extend `StudentFractionGarden` props**
 
