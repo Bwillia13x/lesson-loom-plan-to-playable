@@ -48,6 +48,7 @@ const navIcons: Record<string, string> = {
   export: '⬇',
   devices: '▭',
   stitch: '✦',
+  labs: '◆',
 };
 
 const CANONICAL_TILES = equivalentCanonicalIds;

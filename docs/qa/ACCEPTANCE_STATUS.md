@@ -85,12 +85,17 @@ For each width:
 - [x] “No student data required” language is present. — _ReviewSafety / hero + e2e/copy-deck.spec.ts_
 - [x] “Printable fallback” language is present. — _PrintableFallback + e2e/copy-deck.spec.ts_
 - [x] Copy deck strings (hero, intake, review headings). — _e2e/copy-deck.spec.ts_
+- [x] Student mission progress rail. — _e2e/student-progress.spec.ts_
+- [x] Editable lesson plan draft (session). — _e2e/editable-intake.spec.ts_
+- [x] Export pack zip download. — _e2e/export-zip.spec.ts_
+- [x] Shareable demo URL + hash. — _e2e/demo-url.spec.ts_
+- [x] Source phrase scroll to intake. — _e2e/source-phrase.spec.ts_
 
 ## Performance checks
 
 - [x] App builds successfully. — _npm run verify (build + lint + e2e suite)_
 - [x] No console errors in normal flow. — _e2e/judge-demo-console.spec.ts (judge demo path)_
-- [x] No huge unnecessary assets. — _vite build ~240kb js_
+- [x] No huge unnecessary assets. — _vite build ~361kb js (~122kb gzip); fflate for client zip_
 - [x] No blocking external scripts unless necessary. — _Google Fonts with display=swap; system fallbacks in tokens.css_
 - [x] theme-color matches warm ivory UI. — _index.html #faf8f4 (--ll-bg)_
 - [ ] CSS animations do not cause obvious jank. — _manual_
