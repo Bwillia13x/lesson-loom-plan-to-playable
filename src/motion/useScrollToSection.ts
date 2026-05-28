@@ -5,7 +5,8 @@ import { useMotion } from './motionContext';
 export function useScrollToSection() {
   const { reduced } = useMotion();
   return useCallback(
-    (id: string) => scrollToSection(id, { reducedMotion: reduced }),
+    (id: string, options?: { updateHash?: boolean }) =>
+      scrollToSection(id, { reducedMotion: reduced, updateHash: options?.updateHash }),
     [reduced],
   );
 }

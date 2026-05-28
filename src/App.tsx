@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   exportPack,
+  equivalentCanonicalIds,
   lessonPlanText,
   navSections,
   weaveSteps,
@@ -8,6 +9,9 @@ import {
   type TimelineId,
   type WorkspaceMode,
 } from './data/lessonLoomData';
+import { judgeDemoPresenterCaptions } from './data/presenterCaptions';
+import { useDemoUrlState, readDemoUrlOnLoad } from './hooks/useDemoUrlState';
+import { useHashNavigationOnLoad } from './hooks/useHashNavigation';
 import { SiteFooter } from './components/SiteFooter';
 import { WeaveCompleteBanner } from './components/WeaveCompleteBanner';
 import { useMotion } from './motion/motionContext';
@@ -45,15 +49,24 @@ const navIcons: Record<string, string> = {
   stitch: '✦',
 };
 
-const CANONICAL_TILES = ['one-half', 'two-fourths', 'three-sixths'];
+const CANONICAL_TILES = equivalentCanonicalIds;
+const urlOnLoad = readDemoUrlOnLoad();
 
 export default function App() {
   const [lessonPlanDraft, setLessonPlanDraft] = useState(lessonPlanText);
-  const [hasWoven, setHasWoven] = useState(false);
-  const [activeWeaveStep, setActiveWeaveStep] = useState(0);
-  const [workspaceMode, setWorkspaceMode] = useState<WorkspaceMode>('student');
-  const [activeSupport, setActiveSupport] = useState<SupportLane>('core');
-  const [selectedTileIds, setSelectedTileIds] = useState<string[]>([]);
+  const [hasWoven, setHasWoven] = useState(urlOnLoad?.woven ?? false);
+  const [activeWeaveStep, setActiveWeaveStep] = useState(() =>
+    urlOnLoad?.woven ? weaveSteps.length - 1 : 0,
+  );
+  const [workspaceMode, setWorkspaceMode] = useState<WorkspaceMode>(
+    urlOnLoad?.mode ?? 'student',
+  );
+  const [activeSupport, setActiveSupport] = useState<SupportLane>(
+    urlOnLoad?.support ?? 'core',
+  );
+  const [selectedTileIds, setSelectedTileIds] = useState<string[]>(
+    urlOnLoad?.tiles ?? [],
+  );
   const [copiedExportId, setCopiedExportId] = useState<string | null>(null);
   const [downloadNotice, setDownloadNotice] = useState<string | null>(null);
   const [checkSuccess, setCheckSuccess] = useState(false);
@@ -64,9 +77,10 @@ export default function App() {
   const [reflectionTouched, setReflectionTouched] = useState(false);
   const [activeSegment, setActiveSegment] = useState<TimelineId>('partner');
   const [classMode, setClassMode] = useState<'whole' | 'groups'>('whole');
-  const [approved, setApproved] = useState(false);
+  const [approved, setApproved] = useState(urlOnLoad?.approved ?? false);
   const [activeNav, setActiveNav] = useState('hero');
   const [demoRunning, setDemoRunning] = useState(false);
+  const [demoCaptionIndex, setDemoCaptionIndex] = useState(0);
   const [weaveLiveMessage, setWeaveLiveMessage] = useState('');
   const uiTimeoutIds = useRef<number[]>([]);
   const weaveTimelineRef = useRef<ReturnType<typeof createWeaveTimeline>>(null);
@@ -76,6 +90,28 @@ export default function App() {
   const scrollTo = useScrollToSection();
   const studentAppActive =
     hasWoven && activeWeaveStep >= weaveSteps.length - 1;
+
+  useHashNavigationOnLoad(prefersReducedMotion);
+
+  const demoUrlSnapshot = useMemo(
+    () => ({
+      woven: hasWoven && studentAppActive,
+      mode: workspaceMode,
+      tiles: selectedTileIds,
+      approved,
+      support: activeSupport,
+    }),
+    [
+      hasWoven,
+      studentAppActive,
+      workspaceMode,
+      selectedTileIds,
+      approved,
+      activeSupport,
+    ],
+  );
+
+  useDemoUrlState({ snapshot: demoUrlSnapshot });
 
   const clearWeaveTimeline = () => {
     if (weaveTimelineRef.current) {
@@ -118,6 +154,14 @@ export default function App() {
     }
     prevHasWovenRef.current = hasWoven;
   }, [hasWoven]);
+
+  useEffect(() => {
+    const initialTiles = urlOnLoad?.tiles;
+    if (initialTiles?.length && isEquivalentTileSelection(initialTiles)) {
+      setCheckAttempted(true);
+      setCheckSuccess(true);
+    }
+  }, []);
 
   useEffect(() => {
     const ids = navSections.map((s) => s.id);
@@ -204,9 +248,54 @@ export default function App() {
     uiTimeoutIds.current.push(t);
   };
 
+  const applyDemoReset = useCallback(() => {
+    clearWeaveTimeline();
+    clearUiTimeouts();
+    setHasWoven(false);
+    setActiveWeaveStep(0);
+    setWorkspaceMode('student');
+    setActiveSupport('core');
+    setSelectedTileIds([]);
+    setCopiedExportId(null);
+    setDownloadNotice(null);
+    setCheckSuccess(false);
+    setCheckAttempted(false);
+    setShowSuccessPulse(false);
+    setReflectionText('');
+    setReflectionSaved(false);
+    setReflectionTouched(false);
+    setApproved(false);
+    setDemoCaptionIndex(0);
+    setWeaveLiveMessage('');
+  }, []);
+
+  const applyDemoSuccessState = useCallback(() => {
+    clearWeaveTimeline();
+    clearUiTimeouts();
+    setHasWoven(true);
+    setActiveWeaveStep(weaveSteps.length - 1);
+    setWorkspaceMode('student');
+    setSelectedTileIds([...CANONICAL_TILES]);
+    setCheckAttempted(true);
+    setCheckSuccess(true);
+    setShowSuccessPulse(true);
+    setWeaveLiveMessage(
+      'Lesson woven. Teaching signal extracted and ready to explore.',
+    );
+    scrollTo('student');
+  }, [scrollTo]);
+
+  const applyDemoReviewApproved = useCallback(() => {
+    setHasWoven(true);
+    setActiveWeaveStep(weaveSteps.length - 1);
+    setApproved(true);
+    scrollTo('review');
+  }, [scrollTo]);
+
   const runJudgeDemo = useCallback(async () => {
     if (demoRunning) return;
     setDemoRunning(true);
+    setDemoCaptionIndex(0);
     setApproved(false);
     setCheckSuccess(false);
     setCheckAttempted(false);
@@ -216,28 +305,35 @@ export default function App() {
     setReflectionTouched(false);
 
     runWeaveSequence();
+    setDemoCaptionIndex(1);
     await delay(prefersReducedMotion ? 300 : 1100);
 
     setWorkspaceMode('student');
     setSelectedTileIds(CANONICAL_TILES);
+    setDemoCaptionIndex(2);
     scrollTo('student');
     await delay(400);
 
     setCheckAttempted(true);
     setCheckSuccess(true);
     setShowSuccessPulse(true);
+    setDemoCaptionIndex(3);
     await delay(prefersReducedMotion ? 200 : 800);
 
     setWorkspaceMode('teacher');
+    setDemoCaptionIndex(4);
     scrollTo('teacher');
     await delay(prefersReducedMotion ? 200 : 600);
 
     scrollTo('review');
     setApproved(true);
+    setDemoCaptionIndex(5);
     await delay(300);
 
+    setDemoCaptionIndex(6);
     scrollTo('export');
     setDemoRunning(false);
+    setDemoCaptionIndex(0);
   }, [demoRunning, prefersReducedMotion, runWeaveSequence, scrollTo]);
 
   return (
@@ -374,8 +470,24 @@ export default function App() {
           <MadeWithStitch />
         </main>
 
-        <SiteFooter />
+        <SiteFooter
+          onResetDemo={applyDemoReset}
+          onSuccessState={applyDemoSuccessState}
+          onReviewApproved={applyDemoReviewApproved}
+        />
       </div>
+
+      {demoRunning && (
+        <div
+          className="presenter-caption"
+          data-testid="presenter-caption"
+          role="status"
+          aria-live="polite"
+        >
+          {judgeDemoPresenterCaptions[demoCaptionIndex] ??
+            judgeDemoPresenterCaptions[0]}
+        </div>
+      )}
     </div>
   );
 }
