@@ -4,7 +4,7 @@
 
 These items are **not** automated in CI and must be completed before Contra submission:
 
-1. **Production deploy URL** — Deploy via [README deploy steps](../../README.md#deploy-vercel) (or your host). Replace the placeholder under [Live demo](#live-demo) with the real HTTPS URL and smoke-test **Run judge demo** on that URL.
+1. **Production deploy URL** — After [GitHub Pages](../../README.md#deploy-github-pages) workflow succeeds (or Vercel), confirm the live URL below and smoke-test **Run judge demo** on that host.
 2. **Walkthrough video (60–90s)** — Record following [WALKTHROUGH.md](./WALKTHROUGH.md). Suggested arc: hero → weave → teaching signals → Fraction Garden → teacher console → review/export → Made with Stitch.
 3. **Safari / Mobile Safari** — Playwright covers Chromium only; spot-check on Safari if available before posting.
 4. **Final challenge rules** — Re-read official Stitch / Contra requirements manually before submit.
@@ -13,7 +13,9 @@ Do not paste a fake deploy URL in this repo.
 
 ## Live demo
 
-- **URL:** _Pending — deploy via [README deploy steps](../../README.md#deploy-vercel) and paste production URL here._
+- **URL (GitHub Pages):** https://bwillia13x.github.io/lesson-loom-plan-to-playable/
+- **Shareable demo:** https://bwillia13x.github.io/lesson-loom-plan-to-playable/?w=1#student
+- **Alt:** Vercel — see [README deploy](../../README.md#deploy-vercel). Re-verify URL after first Pages deploy (Settings → Pages → GitHub Actions).
 - **Repo:** https://github.com/Bwillia13x/lesson-loom-plan-to-playable
 
 ## Quick judge path

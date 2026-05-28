@@ -1,5 +1,10 @@
 # Contra submission copy
 
+## Live demo
+
+- https://bwillia13x.github.io/lesson-loom-plan-to-playable/
+- Judge path: open URL → **Run judge demo** (top bar)
+
 ## Post
 
 ```text
