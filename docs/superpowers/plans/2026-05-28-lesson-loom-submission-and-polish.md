@@ -272,8 +272,8 @@ test('fraction check shows gentle hint when selection is wrong', async ({ page }
   await page.locator('#student').scrollIntoViewIfNeeded();
 
   await page.getByTestId('tile-one-half').click();
-  await page.getByTestId('tile-one-fourth').click();
-  await page.getByTestId('tile-three-fourths').click();
+  await page.getByTestId('tile-one-third').click();
+  await page.getByTestId('tile-two-thirds').click();
 
   await page.getByTestId('fraction-check').click();
   await expect(page.getByTestId('fraction-check-feedback')).toBeVisible();
