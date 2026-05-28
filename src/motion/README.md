@@ -18,6 +18,10 @@
 | `TeachingSignal` | Card stagger at 900ms after `hasWoven` |
 | `StudentFractionGarden` | Success message `fromTo` pulse |
 
+## Post-weave UI (CSS)
+
+When `activeWeaveStep` reaches the final weave step, `studentAppActive` adds `ll-section--woven-active` on `#student`, highlighting the garden panel with an orange ring (no GSAP).
+
 ## Reduced motion
 
 - User setting: `usePrefersReducedMotion()` in React

@@ -6,11 +6,16 @@ export const reducedMotionMedia = gsap.matchMedia();
 const DEFAULT_EASE = 'power2.out';
 const DEFAULT_DURATION = 0.5;
 
+let motionInitialized = false;
+
 /**
  * Registers GSAP global defaults per prefers-reduced-motion.
  * Call exactly once from `main.tsx` before `createRoot().render()`.
  */
 export function initGsapMotion(): void {
+  if (motionInitialized) return;
+  motionInitialized = true;
+
   reducedMotionMedia.add(
     { reduceMotion: '(prefers-reduced-motion: reduce)' },
     () => {

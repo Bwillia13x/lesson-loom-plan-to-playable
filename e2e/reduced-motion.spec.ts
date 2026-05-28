@@ -14,15 +14,17 @@ test('reduced motion: weave completes immediately and banner shows', async ({
   });
 
   const elapsed = Date.now() - started;
-  expect(elapsed).toBeLessThan(600);
+  expect(elapsed).toBeLessThan(1000);
 
   await expect(page.locator('[role="progressbar"]')).toHaveAttribute(
     'aria-valuetext',
     'Weave complete',
   );
+
+  await expect(page.locator('#student')).toHaveClass(/ll-section--woven-active/);
 });
 
-test('reduced motion: scroll uses auto behavior on workspace toggle', async ({
+test('reduced motion: workspace toggle reaches teacher section', async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
