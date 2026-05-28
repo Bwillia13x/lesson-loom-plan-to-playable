@@ -61,25 +61,29 @@ export default function App() {
   const [activeNav, setActiveNav] = useState('hero');
   const [demoRunning, setDemoRunning] = useState(false);
   const [weaveLiveMessage, setWeaveLiveMessage] = useState('');
-  const weaveTimers = useRef<number[]>([]);
-  const weaveTimelineRef = useRef<ReturnType<typeof createWeaveTimeline> | null>(
-    null,
-  );
+  const uiTimeoutIds = useRef<number[]>([]);
+  const weaveTimelineRef = useRef<ReturnType<typeof createWeaveTimeline>>(null);
   const prevHasWovenRef = useRef(false);
 
   const prefersReducedMotion = usePrefersReducedMotion();
   const studentAppActive =
     hasWoven && activeWeaveStep >= weaveSteps.length - 1;
 
-  const clearWeaveTimers = () => {
-    weaveTimelineRef.current?.kill();
-    weaveTimelineRef.current = null;
-    weaveTimers.current.forEach((t) => window.clearTimeout(t));
-    weaveTimers.current = [];
+  const clearWeaveTimeline = () => {
+    if (weaveTimelineRef.current) {
+      weaveTimelineRef.current.kill();
+      weaveTimelineRef.current = null;
+    }
+  };
+
+  const clearUiTimeouts = () => {
+    uiTimeoutIds.current.forEach((t) => window.clearTimeout(t));
+    uiTimeoutIds.current = [];
   };
 
   const runWeaveSequence = useCallback(() => {
-    clearWeaveTimers();
+    clearWeaveTimeline();
+    clearUiTimeouts();
     setHasWoven(true);
     setActiveWeaveStep(-1);
     scrollToSection('weave', { reducedMotion: prefersReducedMotion });
@@ -90,7 +94,13 @@ export default function App() {
     );
   }, [prefersReducedMotion]);
 
-  useEffect(() => () => clearWeaveTimers(), []);
+  useEffect(
+    () => () => {
+      clearWeaveTimeline();
+      clearUiTimeouts();
+    },
+    [],
+  );
 
   useEffect(() => {
     if (hasWoven && !prevHasWovenRef.current) {
@@ -150,7 +160,7 @@ export default function App() {
     if (success) {
       setShowSuccessPulse(true);
       const t = window.setTimeout(() => setShowSuccessPulse(false), 700);
-      weaveTimers.current.push(t);
+      uiTimeoutIds.current.push(t);
     }
   }, [selectedTileIds]);
 
@@ -168,7 +178,7 @@ export default function App() {
     }
     setCopiedExportId(id);
     const t = window.setTimeout(() => setCopiedExportId(null), 1500);
-    weaveTimers.current.push(t);
+    uiTimeoutIds.current.push(t);
   };
 
   const handleDownload = () => {
@@ -176,7 +186,7 @@ export default function App() {
       'Demo prototype: download is a visual preview only. Use Copy on each export card for handoff text.',
     );
     const t = window.setTimeout(() => setDownloadNotice(null), 4000);
-    weaveTimers.current.push(t);
+    uiTimeoutIds.current.push(t);
   };
 
   const runJudgeDemo = useCallback(async () => {
