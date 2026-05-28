@@ -1,6 +1,5 @@
 import { useLayoutEffect, useMemo, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { runWithMotion } from '../../motion/gsapReducedMotion';
+import { runGsapScoped } from '../../motion/runGsapScoped';
 import {
   equivalentCanonicalIds,
   fractionTiles,
@@ -58,23 +57,20 @@ export function StudentFractionGarden({
     const el = successRef.current;
     if (!showSuccessPulse || !checkSuccess || !el) return;
 
-    const ctx = gsap.context(() => {
-      runWithMotion(
-        reducedMotion,
-        () => {
-          gsap.fromTo(
-            el,
-            { scale: 0.98, opacity: 0.7 },
-            { scale: 1, opacity: 1, duration: 0.6, ease: 'power2.out' },
-          );
-        },
-        () => {
-          gsap.set(el, { scale: 1, opacity: 1 });
-        },
-      );
-    }, successRef);
-
-    return () => ctx.revert();
+    return runGsapScoped(
+      successRef,
+      reducedMotion,
+      (gsapApi) => {
+        gsapApi.fromTo(
+          el,
+          { scale: 0.98, opacity: 0.7 },
+          { scale: 1, opacity: 1, duration: 0.6, ease: 'power2.out' },
+        );
+      },
+      (gsapApi) => {
+        gsapApi.set(el, { scale: 1, opacity: 1 });
+      },
+    );
   }, [showSuccessPulse, checkSuccess, reducedMotion]);
 
   const selectedTiles = useMemo(

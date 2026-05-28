@@ -6,7 +6,8 @@ Single spine — no GSAP global `matchMedia` boot:
 
 1. **`usePrefersReducedMotion()`** (`src/hooks/usePrefersReducedMotion.ts`) — React hook; subscribe once in `App.tsx`.
 2. **`runWithMotion(reduced, animate, instant?)`** — imperative GSAP gate in components.
-3. **`scrollToSection(id, { reducedMotion })`** — callers pass the hook value (required).
+3. **`runGsapScoped(scope, reduced, setup, instant?)`** — `gsap.context` + `runWithMotion` with cleanup revert.
+4. **`scrollToSection(id, { reducedMotion })`** — callers pass the hook value (required).
 
 ## Weave sequence
 

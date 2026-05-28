@@ -1,7 +1,6 @@
 import { useLayoutEffect, useRef } from 'react';
-import gsap from 'gsap';
 import { teachingSignals } from '../../data/lessonLoomData';
-import { runWithMotion } from '../../motion/gsapReducedMotion';
+import { runGsapScoped } from '../../motion/runGsapScoped';
 import { WEAVE_SIGNAL_REVEAL_DELAY_S } from '../../motion/weaveTiming';
 import { IndustrialButton } from '../ui/IndustrialButton';
 import { Panel } from '../ui/Panel';
@@ -25,29 +24,26 @@ export function TeachingSignal({
     const grid = gridRef.current;
     if (!hasWoven || !grid) return;
 
-    const ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray<HTMLElement>('.signal-card', grid);
-
-      runWithMotion(
-        reducedMotion,
-        () => {
-          gsap.set(cards, { autoAlpha: 0, y: 12 });
-          gsap.from(cards, {
-            y: 0,
-            autoAlpha: 1,
-            duration: 0.45,
-            stagger: 0.08,
-            ease: 'power2.out',
-            delay: WEAVE_SIGNAL_REVEAL_DELAY_S,
-          });
-        },
-        () => {
-          gsap.set(cards, { y: 0, autoAlpha: 1 });
-        },
-      );
-    }, grid);
-
-    return () => ctx.revert();
+    return runGsapScoped(
+      grid,
+      reducedMotion,
+      (gsapApi) => {
+        const cards = gsapApi.utils.toArray<HTMLElement>('.signal-card', grid);
+        gsapApi.set(cards, { autoAlpha: 0, y: 12 });
+        gsapApi.from(cards, {
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.45,
+          stagger: 0.08,
+          ease: 'power2.out',
+          delay: WEAVE_SIGNAL_REVEAL_DELAY_S,
+        });
+      },
+      (gsapApi) => {
+        const cards = gsapApi.utils.toArray<HTMLElement>('.signal-card', grid);
+        gsapApi.set(cards, { y: 0, autoAlpha: 1 });
+      },
+    );
   }, [hasWoven, reducedMotion]);
 
   return (

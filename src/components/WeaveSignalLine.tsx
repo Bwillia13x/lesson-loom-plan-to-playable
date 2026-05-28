@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
-import { runWithMotion } from '../motion/gsapReducedMotion';
+import { runGsapScoped } from '../motion/runGsapScoped';
 
 gsap.registerPlugin(MotionPathPlugin);
 
@@ -32,54 +32,48 @@ export function WeaveSignalLine({ active, reducedMotion = false }: WeaveSignalLi
   }, [reducedMotion]);
 
   useLayoutEffect(() => {
-    const svg = svgRef.current;
     const path = pathRef.current;
     const circle = circleRef.current;
-    if (!svg || !path || !circle) return;
+    if (!svgRef.current || !path || !circle) return;
 
     const motionEnabled = active && inView;
 
-    const ctx = gsap.context(() => {
-      const setInstantState = () => {
-        gsap.set(path, {
+    return runGsapScoped(
+      svgRef,
+      reducedMotion,
+      (gsapApi) => {
+        if (!motionEnabled) {
+          gsapApi.set(path, { strokeDasharray: 1, strokeDashoffset: 1 });
+          gsapApi.set(circle, { autoAlpha: 0 });
+          return;
+        }
+
+        gsapApi.fromTo(
+          path,
+          { strokeDasharray: 1, strokeDashoffset: 1 },
+          { strokeDashoffset: 0, duration: 1, ease: 'power2.out' },
+        );
+
+        gsapApi.set(circle, { autoAlpha: 1 });
+        gsapApi.to(circle, {
+          motionPath: {
+            path,
+            align: path,
+            alignOrigin: [0.5, 0.5],
+          },
+          duration: 2.5,
+          repeat: 2,
+          ease: 'none',
+        });
+      },
+      (gsapApi) => {
+        gsapApi.set(path, {
           strokeDasharray: 1,
           strokeDashoffset: motionEnabled ? 0 : 1,
         });
-        gsap.set(circle, { autoAlpha: motionEnabled ? 1 : 0 });
-      };
-
-      runWithMotion(
-        reducedMotion,
-        () => {
-          if (!motionEnabled) {
-            gsap.set(path, { strokeDasharray: 1, strokeDashoffset: 1 });
-            gsap.set(circle, { autoAlpha: 0 });
-            return;
-          }
-
-          gsap.fromTo(
-            path,
-            { strokeDasharray: 1, strokeDashoffset: 1 },
-            { strokeDashoffset: 0, duration: 1, ease: 'power2.out' },
-          );
-
-          gsap.set(circle, { autoAlpha: 1 });
-          gsap.to(circle, {
-            motionPath: {
-              path,
-              align: path,
-              alignOrigin: [0.5, 0.5],
-            },
-            duration: 2.5,
-            repeat: 2,
-            ease: 'none',
-          });
-        },
-        setInstantState,
-      );
-    }, svg);
-
-    return () => ctx.revert();
+        gsapApi.set(circle, { autoAlpha: motionEnabled ? 1 : 0 });
+      },
+    );
   }, [active, reducedMotion, inView]);
 
   return (
