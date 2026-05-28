@@ -1,8 +1,12 @@
 # Lesson Loom — Motion (GSAP)
 
-## Boot
+## Reduced-motion policy
 
-`initGsapMotion()` runs once in `src/main.tsx` and sets `gsap.defaults()` via `gsap.matchMedia()`.
+Single spine — no GSAP global `matchMedia` boot:
+
+1. **`usePrefersReducedMotion()`** (`src/hooks/usePrefersReducedMotion.ts`) — React hook; subscribe once in `App.tsx`.
+2. **`runWithMotion(reduced, animate, instant?)`** — imperative GSAP gate in components.
+3. **`scrollToSection(id, { reducedMotion })`** — callers pass the hook value (required).
 
 ## Weave sequence
 
@@ -21,11 +25,5 @@
 ## Post-weave UI (CSS)
 
 When `activeWeaveStep` reaches the final weave step, `studentAppActive` adds `ll-section--woven-active` on `#student`, highlighting the garden panel with an orange ring (no GSAP).
-
-## Reduced motion
-
-- User setting: `usePrefersReducedMotion()` in React
-- Imperative gate: `runWithMotion(reduced, animate, instant)`
-- Scroll: `scrollToSection(id, { reducedMotion })`
 
 Do not add infinite decorative loops without reduced-motion off switch.

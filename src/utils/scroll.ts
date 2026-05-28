@@ -1,12 +1,9 @@
 export function scrollToSection(
   id: string,
-  options?: { reducedMotion?: boolean },
+  options: { reducedMotion: boolean },
 ) {
-  const reduced =
-    options?.reducedMotion ??
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.getElementById(id)?.scrollIntoView({
-    behavior: reduced ? 'auto' : 'smooth',
+    behavior: options.reducedMotion ? 'auto' : 'smooth',
     block: 'start',
   });
 }

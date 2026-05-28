@@ -1,9 +1,5 @@
 export { createWeaveTimeline } from './createWeaveTimeline';
-export {
-  initGsapMotion,
-  reducedMotionMedia,
-  runWithMotion,
-} from './gsapReducedMotion';
+export { runWithMotion } from './gsapReducedMotion';
 export {
   WEAVE_SIGNAL_REVEAL_DELAY_S,
   WEAVE_STEP_DELAYS_MS,

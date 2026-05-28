@@ -355,7 +355,7 @@ export default function App() {
           <MadeWithStitch />
         </main>
 
-        <SiteFooter />
+        <SiteFooter reducedMotion={prefersReducedMotion} />
       </div>
     </div>
   );
