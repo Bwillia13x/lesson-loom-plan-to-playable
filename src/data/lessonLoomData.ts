@@ -92,6 +92,12 @@ export const weaveSteps = [
   'Student App',
 ] as const;
 
+export const studentMissionSteps = [
+  'Select tiles',
+  'Check match',
+  'Reflect',
+] as const;
+
 export const studentActivity = {
   title: 'Fraction Garden',
   mission:

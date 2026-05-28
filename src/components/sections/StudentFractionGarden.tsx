@@ -10,6 +10,8 @@ import {
 import { FractionTileVisual } from '../FractionTileVisual';
 import { IndustrialButton } from '../ui/IndustrialButton';
 import { Panel } from '../ui/Panel';
+import { studentMissionSteps } from '../../data/lessonLoomData';
+import { ProgressRail } from '../ui/ProgressRail';
 import { Section } from '../ui/Section';
 import { StatusPip } from '../ui/StatusPip';
 
@@ -22,7 +24,28 @@ type StudentFractionGardenProps = {
   checkAttempted: boolean;
   showSuccessPulse: boolean;
   studentAppActive?: boolean;
+  reflectionText: string;
+  reflectionSaved: boolean;
+  reflectionTouched: boolean;
+  onReflectionChange: (value: string) => void;
+  onReflectionTouch: () => void;
+  onSaveReflection: () => void;
 };
+
+function studentProgressIndex(
+  selectedCount: number,
+  checkAttempted: boolean,
+  checkSuccess: boolean,
+  reflectionSaved: boolean,
+  reflectionTouched: boolean,
+): number {
+  if (reflectionSaved) return studentMissionSteps.length;
+  if (checkSuccess && (reflectionSaved || reflectionTouched)) {
+    return 2;
+  }
+  if (selectedCount >= 3 || checkAttempted) return 1;
+  return 0;
+}
 
 function GardenBedVisual({ tile }: { tile: FractionTile | undefined }) {
   const parts = tile?.parts ?? 4;
@@ -48,6 +71,12 @@ export function StudentFractionGarden({
   checkAttempted,
   showSuccessPulse,
   studentAppActive = false,
+  reflectionText,
+  reflectionSaved,
+  reflectionTouched,
+  onReflectionChange,
+  onReflectionTouch,
+  onSaveReflection,
 }: StudentFractionGardenProps) {
   const { reduced } = useMotion();
   const [hintVisible, setHintVisible] = useState(false);
@@ -84,6 +113,14 @@ export function StudentFractionGarden({
     selectedTiles[1],
     selectedTiles[2],
   ];
+
+  const progressIndex = studentProgressIndex(
+    selectedTileIds.length,
+    checkAttempted,
+    checkSuccess,
+    reflectionSaved,
+    reflectionTouched,
+  );
 
   return (
     <Section
@@ -136,6 +173,13 @@ export function StudentFractionGarden({
           <p className="text-mono mt-1" style={{ fontSize: '0.8rem', textAlign: 'center' }}>
             {studentActivity.equation}
           </p>
+
+          <ProgressRail
+            activeIndex={progressIndex}
+            steps={studentMissionSteps}
+            ariaLabel="Student mission progress"
+            data-testid="student-progress-rail"
+          />
 
           <div className="tile-bank" role="group" aria-label="Fraction tiles">
             {fractionTiles.map((tile) => {
@@ -225,6 +269,72 @@ export function StudentFractionGarden({
               {studentActivity.success}
             </div>
           )}
+
+          {checkSuccess && (
+            <div className="garden-reflection mt-1" data-testid="student-reflection-panel">
+              <label
+                htmlFor="student-reflection"
+                className="garden-reflection__label"
+                style={{ fontSize: '0.88rem', fontWeight: 600 }}
+              >
+                Reflection
+              </label>
+              <textarea
+                id="student-reflection"
+                className="garden-reflection__input"
+                rows={3}
+                value={reflectionText}
+                placeholder={studentActivity.reflection}
+                aria-describedby="student-reflection-hint"
+                data-testid="student-reflection"
+                style={{
+                  width: '100%',
+                  border: '1px solid var(--ll-line)',
+                  borderRadius: '10px',
+                  padding: '0.75rem',
+                  fontFamily: 'var(--ll-font-ui)',
+                  fontSize: '0.88rem',
+                  resize: 'vertical',
+                  background: 'var(--ll-paper)',
+                  marginTop: '0.35rem',
+                }}
+                onChange={(e) => {
+                  onReflectionChange(e.target.value);
+                  onReflectionTouch();
+                }}
+                onBlur={onReflectionTouch}
+              />
+              <p
+                id="student-reflection-hint"
+                className="garden-reflection__hint"
+                style={{ fontSize: '0.8rem', color: 'var(--ll-muted)' }}
+              >
+                Draft for your exit ticket. Saved only in this demo — no student data leaves
+                your device.
+              </p>
+              <div className="flex-between mt-1">
+                <IndustrialButton
+                  variant="primary"
+                  size="sm"
+                  type="button"
+                  data-testid="student-reflection-save"
+                  onClick={onSaveReflection}
+                >
+                  Save reflection
+                </IndustrialButton>
+                {reflectionSaved && (
+                  <span
+                    role="status"
+                    aria-live="polite"
+                    data-testid="student-reflection-saved"
+                    style={{ fontSize: '0.8rem', color: 'var(--ll-green)' }}
+                  >
+                    Reflection saved
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
         </Panel>
 
         <Panel inset title="Mission">
@@ -238,7 +348,7 @@ export function StudentFractionGarden({
             <strong>Hint:</strong> {studentActivity.hint}
           </p>
           <p className="mt-1 text-mono" style={{ fontSize: '0.75rem' }}>
-            Reflection: {studentActivity.reflection}
+            Exit stem: {studentActivity.reflection}
           </p>
         </Panel>
       </div>

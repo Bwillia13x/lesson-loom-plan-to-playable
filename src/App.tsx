@@ -56,6 +56,9 @@ export default function App() {
   const [checkSuccess, setCheckSuccess] = useState(false);
   const [checkAttempted, setCheckAttempted] = useState(false);
   const [showSuccessPulse, setShowSuccessPulse] = useState(false);
+  const [reflectionText, setReflectionText] = useState('');
+  const [reflectionSaved, setReflectionSaved] = useState(false);
+  const [reflectionTouched, setReflectionTouched] = useState(false);
   const [activeSegment, setActiveSegment] = useState<TimelineId>('partner');
   const [classMode, setClassMode] = useState<'whole' | 'groups'>('whole');
   const [approved, setApproved] = useState(false);
@@ -142,6 +145,8 @@ export default function App() {
     setCheckSuccess(false);
     setCheckAttempted(false);
     setShowSuccessPulse(false);
+    setReflectionSaved(false);
+    setReflectionTouched(false);
     setSelectedTileIds((prev) => {
       if (prev.includes(id)) {
         return prev.filter((x) => x !== id);
@@ -169,6 +174,14 @@ export default function App() {
     setCheckSuccess(false);
     setCheckAttempted(false);
     setShowSuccessPulse(false);
+    setReflectionText('');
+    setReflectionSaved(false);
+    setReflectionTouched(false);
+  };
+
+  const handleSaveReflection = () => {
+    setReflectionSaved(true);
+    setReflectionTouched(true);
   };
 
   const handleExportCopy = (id: string) => {
@@ -196,6 +209,9 @@ export default function App() {
     setCheckSuccess(false);
     setCheckAttempted(false);
     setSelectedTileIds([]);
+    setReflectionText('');
+    setReflectionSaved(false);
+    setReflectionTouched(false);
 
     runWeaveSequence();
     await delay(prefersReducedMotion ? 300 : 1100);
@@ -322,6 +338,12 @@ export default function App() {
             checkAttempted={checkAttempted}
             showSuccessPulse={showSuccessPulse}
             studentAppActive={studentAppActive}
+            reflectionText={reflectionText}
+            reflectionSaved={reflectionSaved}
+            reflectionTouched={reflectionTouched}
+            onReflectionChange={setReflectionText}
+            onReflectionTouch={() => setReflectionTouched(true)}
+            onSaveReflection={handleSaveReflection}
           />
           <TeacherConsole
             activeSegment={activeSegment}
