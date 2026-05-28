@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#faf8f4"/>
+  <rect x="48" y="48" width="1104" height="534" rx="28" fill="#fff" stroke="#e8e4dc" stroke-width="2"/>
+  <rect x="88" y="120" width="420" height="380" rx="20" fill="#f3f0ea" stroke="#d4d0c8"/>
+  <rect x="540" y="120" width="572" height="380" rx="20" fill="#e8f0e4" stroke="#a8c4a0"/>
+  <path d="M508 310 C560 250 600 370 508 310" stroke="#e85d04" stroke-width="4" fill="none"/>
+  <text x="88" y="92" font-family="Georgia, serif" font-size="42" fill="#1c1c1c">Lesson Loom</text>
+  <text x="88" y="132" font-family="system-ui, sans-serif" font-size="22" fill="#6b6b6b">Plan to Playable</text>
+  <text x="540" y="200" font-family="system-ui, sans-serif" font-size="28" font-weight="600" fill="#4f7652">Fraction Garden</text>
+  <text x="540" y="240" font-family="system-ui, sans-serif" font-size="18" fill="#3d3d3d">Grade 5 · Equivalent fractions</text>
+  <rect x="88" y="180" width="380" height="24" rx="4" fill="#e85d04" opacity="0.15"/>
+  <text x="100" y="198" font-family="monospace" font-size="14" fill="#c44d03">Teacher lesson plan</text>
+</svg>

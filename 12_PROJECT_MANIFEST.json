@@ -1,0 +1,79 @@
+{
+  "project": "Lesson Loom — Plan to Playable",
+  "owner": "Drew Williams / PrairieSignal",
+  "created": "2026-05-27",
+  "primary_environment": "Cursor",
+  "primary_model": "Composer 2.5",
+  "prototype_type": "High-fidelity interactive web prototype",
+  "contest": "Google Stitch Challenge on Contra",
+  "recommended_stack": [
+    "React",
+    "TypeScript",
+    "Vite",
+    "CSS variables",
+    "static data"
+  ],
+  "no_build_scope": [
+    "backend",
+    "auth",
+    "database",
+    "real AI calls",
+    "LMS integration",
+    "student profiles",
+    "automated grading"
+  ],
+  "demo_lesson": {
+    "title": "Fraction Garden",
+    "grade": "Grade 5",
+    "subject": "Mathematics",
+    "topic": "Equivalent fractions"
+  },
+  "core_sections": [
+    "Hero",
+    "Lesson Intake",
+    "Lesson Weave",
+    "Teaching Signal Board",
+    "Student App Preview",
+    "Teacher Console",
+    "Differentiation / UDL",
+    "Review & Safety",
+    "Export Pack",
+    "Made with Stitch"
+  ],
+  "definition_of_done": [
+    "Clear concept in under 30 seconds",
+    "Interactive Fraction Garden demo",
+    "Teacher and student modes",
+    "Export pack and Stitch process visible",
+    "Privacy and claim-safety guardrails visible",
+    "Responsive and accessible basics complete",
+    "Build passes"
+  ],
+  "version": "2.0-review-refined",
+  "updated": "2026-05-27",
+  "primary_control_files": [
+    "14_BUILD_EXECUTION_BRIEF.md",
+    "AGENTS.md",
+    "DESIGN.md",
+    "15_COMPONENT_ARCHITECTURE.md",
+    "16_INTERACTION_AND_MOTION_SPEC.md",
+    "17_COPY_DECK.md",
+    "11_COMPOSER_MASTER_PROMPT.md"
+  ],
+  "added_in_v2": [
+    "14_BUILD_EXECUTION_BRIEF.md",
+    "15_COMPONENT_ARCHITECTURE.md",
+    "16_INTERACTION_AND_MOTION_SPEC.md",
+    "17_COPY_DECK.md",
+    "18_RED_TEAM_REVIEW.md",
+    "19_PACKAGE_REVIEW_CHANGELOG.md"
+  ],
+  "implementation_priorities": [
+    "Hero clarity",
+    "Fraction Garden student app",
+    "Lesson Weave interaction",
+    "Teacher Console",
+    "Review and Export Pack",
+    "Responsive/accessibility polish"
+  ]
+}
