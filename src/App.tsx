@@ -302,6 +302,7 @@ export default function App() {
             hasWoven={hasWoven}
             activeWeaveStep={activeWeaveStep}
             onWeave={runWeaveSequence}
+            reducedMotion={prefersReducedMotion}
           />
           <StudentFractionGarden
             selectedTileIds={selectedTileIds}
@@ -311,6 +312,7 @@ export default function App() {
             checkSuccess={checkSuccess}
             checkAttempted={checkAttempted}
             showSuccessPulse={showSuccessPulse}
+            reducedMotion={prefersReducedMotion}
           />
           <TeacherConsole
             activeSegment={activeSegment}

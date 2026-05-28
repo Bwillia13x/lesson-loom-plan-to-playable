@@ -1,4 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { runWithMotion } from '../../motion/gsapReducedMotion';
 import {
   equivalentCanonicalIds,
   fractionTiles,
@@ -19,6 +21,7 @@ type StudentFractionGardenProps = {
   checkSuccess: boolean;
   checkAttempted: boolean;
   showSuccessPulse: boolean;
+  reducedMotion?: boolean;
 };
 
 function GardenBedVisual({ tile }: { tile: FractionTile | undefined }) {
@@ -44,8 +47,33 @@ export function StudentFractionGarden({
   checkSuccess,
   checkAttempted,
   showSuccessPulse,
+  reducedMotion = false,
 }: StudentFractionGardenProps) {
   const [hintVisible, setHintVisible] = useState(false);
+  const successRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const el = successRef.current;
+    if (!showSuccessPulse || !checkSuccess || !el) return;
+
+    const ctx = gsap.context(() => {
+      runWithMotion(
+        reducedMotion,
+        () => {
+          gsap.fromTo(
+            el,
+            { scale: 0.98, opacity: 0.7 },
+            { scale: 1, opacity: 1, duration: 0.6, ease: 'power2.out' },
+          );
+        },
+        () => {
+          gsap.set(el, { scale: 1, opacity: 1 });
+        },
+      );
+    }, successRef);
+
+    return () => ctx.revert();
+  }, [showSuccessPulse, checkSuccess, reducedMotion]);
 
   const selectedTiles = useMemo(
     () => fractionTiles.filter((t) => selectedTileIds.includes(t.id)),
@@ -189,7 +217,8 @@ export function StudentFractionGarden({
 
           {checkSuccess && (
             <div
-              className={`garden-success ${showSuccessPulse ? 'garden-success--pulse' : ''}`}
+              ref={successRef}
+              className="garden-success"
               role="status"
               aria-live="polite"
             >

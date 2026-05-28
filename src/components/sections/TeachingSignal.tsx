@@ -1,4 +1,7 @@
+import { useLayoutEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { teachingSignals } from '../../data/lessonLoomData';
+import { runWithMotion } from '../../motion/gsapReducedMotion';
 import { IndustrialButton } from '../ui/IndustrialButton';
 import { Panel } from '../ui/Panel';
 import { Section } from '../ui/Section';
@@ -8,9 +11,44 @@ type TeachingSignalProps = {
   hasWoven: boolean;
   activeWeaveStep: number;
   onWeave: () => void;
+  reducedMotion?: boolean;
 };
 
-export function TeachingSignal({ hasWoven, activeWeaveStep, onWeave }: TeachingSignalProps) {
+export function TeachingSignal({
+  hasWoven,
+  activeWeaveStep,
+  onWeave,
+  reducedMotion = false,
+}: TeachingSignalProps) {
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const grid = gridRef.current;
+    if (!hasWoven || !grid) return;
+
+    const ctx = gsap.context(() => {
+      const cards = gsap.utils.toArray<HTMLElement>('.signal-card', grid);
+
+      runWithMotion(
+        reducedMotion,
+        () => {
+          gsap.from(cards, {
+            y: 12,
+            autoAlpha: 0,
+            duration: 0.45,
+            stagger: 0.08,
+            ease: 'power2.out',
+          });
+        },
+        () => {
+          gsap.set(cards, { y: 0, autoAlpha: 1 });
+        },
+      );
+    }, grid);
+
+    return () => ctx.revert();
+  }, [hasWoven, reducedMotion]);
+
   return (
     <Section
       id="signals"
@@ -29,7 +67,7 @@ export function TeachingSignal({ hasWoven, activeWeaveStep, onWeave }: TeachingS
         </Panel>
       )}
 
-      <div className="signal-grid">
+      <div ref={gridRef} className="signal-grid">
         {teachingSignals.map((card, index) => (
           <article
             key={card.id}
@@ -40,11 +78,7 @@ export function TeachingSignal({ hasWoven, activeWeaveStep, onWeave }: TeachingS
             ]
               .filter(Boolean)
               .join(' ')}
-            style={
-              hasWoven
-                ? { transitionDelay: `${index * 80}ms` }
-                : { opacity: 0.55 }
-            }
+            style={!hasWoven ? { opacity: 0.55 } : undefined}
           >
             <div className="flex-between">
               <span className="signal-card__label">{card.label}</span>
