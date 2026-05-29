@@ -1,6 +1,7 @@
 import {
   getTeacherSegmentBody,
   misconceptionNotes,
+  teacherPrompts,
   teacherTimeline,
   type TimelineId,
 } from '../../data/lessonLoomData';
@@ -125,13 +126,13 @@ export function TeacherConsole({
             ))}
           </ul>
         </Panel>
-        <Panel title="Segment focus">
+        <Panel title="Discussion prompts">
           <p style={{ fontSize: '0.85rem', color: 'var(--ll-muted)', margin: '0 0 0.5rem' }}>
-            Prompts update with the active timeline segment — same lesson, different beat.
+            Segment prompts update in the active panel above; these questions work across beats.
           </p>
           <ul style={{ margin: 0, paddingLeft: '1.1rem', fontSize: '0.85rem' }}>
-            {segmentBody.prompts.map((prompt) => (
-              <li key={`focus-${prompt}`} style={{ marginBottom: '0.5rem' }}>
+            {teacherPrompts.map((prompt) => (
+              <li key={prompt} style={{ marginBottom: '0.5rem' }}>
                 {prompt}
               </li>
             ))}

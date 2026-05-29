@@ -11,6 +11,7 @@ test('UDL extend lane updates student mission copy', async ({ page }) => {
   await expect(page.getByTestId('student-lane-mission')).toContainText(
     'Create a new equivalent set',
   );
+  await expect(page.getByTestId('student-lane-scaffolds')).toContainText('Open tile bank');
 });
 
 test('teacher segment changes console prompts', async ({ page }) => {

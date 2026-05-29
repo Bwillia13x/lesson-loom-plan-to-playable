@@ -24,6 +24,7 @@ test('golden path: weave → fractions → approve → export copy', async ({ pa
   await expect(page.getByText('Teacher approval recorded')).toBeVisible();
 
   await page.locator('#export').scrollIntoViewIfNeeded();
+  await expect(page.getByTestId('export-approved-pip')).toBeVisible();
   const copyBtn = page.getByTestId('export-copy-stitch-prompt');
   await copyBtn.click();
   await expect(copyBtn).toHaveText('Copied');

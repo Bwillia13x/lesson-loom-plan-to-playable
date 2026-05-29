@@ -88,6 +88,9 @@ For each width:
 - [x] Student mission progress rail. — _e2e/student-progress.spec.ts_
 - [x] Editable lesson plan draft (session). — _e2e/editable-intake.spec.ts_
 - [x] Export pack zip download. — _e2e/export-zip.spec.ts_
+- [x] Export zip includes saved reflection notes. — _e2e/export-zip.spec.ts_
+- [x] Export approved pip when review complete. — _e2e/smoke.spec.ts, e2e/judge-demo.spec.ts_
+- [x] Student lane scaffolds copy. — _e2e/unified-session.spec.ts_
 - [x] Shareable demo URL + hash. — _e2e/demo-url.spec.ts_
 - [x] Source phrase scroll to intake. — _e2e/source-phrase.spec.ts_
 - [x] Source phrase highlight in plan. — _e2e/source-phrase.spec.ts_

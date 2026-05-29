@@ -136,13 +136,22 @@ export function StudentFractionGarden({
       title={studentActivity.title}
       lead={studentActivity.mission}
     >
-      <p
+      <div
         className="student-lane-callout"
         data-testid="student-lane-mission"
         style={{ fontSize: '0.88rem', marginBottom: '1rem', color: 'var(--ll-graphite)' }}
       >
-        <strong>{lane.label} lane:</strong> {lane.taskVariation}
-      </p>
+        <p style={{ margin: '0 0 0.35rem' }}>
+          <strong>{lane.label} lane:</strong> {lane.taskVariation}
+        </p>
+        <p
+          className="text-mono"
+          style={{ margin: 0, fontSize: '0.75rem', color: 'var(--ll-muted)' }}
+          data-testid="student-lane-scaffolds"
+        >
+          Scaffolds: {lane.scaffolds}
+        </p>
+      </div>
       <div className="garden-layout">
         <Panel bracket screws>
           <div className="flex-between" style={{ marginBottom: '1rem' }}>

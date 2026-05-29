@@ -15,4 +15,7 @@ test('judge demo visits signals and UDL with presenter captions', async ({ page 
 
   await expect(page.getByText('Equivalent? Yes!')).toBeVisible({ timeout: 12000 });
   await expect(page.getByText('Teacher approval recorded')).toBeVisible({ timeout: 12000 });
+
+  await page.locator('#export').scrollIntoViewIfNeeded();
+  await expect(page.getByTestId('export-approved-pip')).toBeVisible();
 });

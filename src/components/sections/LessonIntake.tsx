@@ -24,13 +24,18 @@ function PlanHighlightView({
   const parts = text.split(phrase);
   if (parts.length < 2) {
     return (
-      <p className="lesson-plan-highlight-fallback" data-testid="lesson-plan-phrase-highlight">
+      <p
+        id="lesson-plan-phrase-highlight"
+        className="lesson-plan-highlight-fallback"
+        data-testid="lesson-plan-phrase-highlight"
+      >
         Source phrase: <mark className="lesson-plan__phrase--active">{phrase}</mark>
       </p>
     );
   }
   return (
     <p
+      id="lesson-plan-phrase-highlight"
       className="lesson-plan-highlight-view"
       data-testid="lesson-plan-phrase-highlight"
       aria-live="polite"
@@ -159,6 +164,9 @@ export function LessonIntake({
             onChange={(e) => onChange(e.target.value)}
             rows={12}
             aria-label="Pasted lesson plan"
+            aria-describedby={
+              activeSourcePhrase ? 'lesson-plan-phrase-highlight' : undefined
+            }
             data-testid="lesson-plan-draft"
           />
           <p className="text-mono mt-1" style={{ fontSize: '0.72rem', color: 'var(--ll-muted)' }}>
