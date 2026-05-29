@@ -328,7 +328,7 @@ Real Stitch API, LLM extraction, accounts, LMS, live analytics with PII.
 
 ## Acceptance (plan complete when)
 
-- [ ] R1–R6 demonstrable in local dev and covered by e2e where specified  
-- [ ] R7 manual matrix progressed with dated notes  
-- [ ] `npm run verify` green  
-- [ ] No new claim-safety violations  
+- [x] R1–R6 demonstrable in local dev and covered by e2e where specified  
+- [x] R7 manual matrix progressed with dated notes  
+- [x] `npm run verify` green  
+- [x] No new claim-safety violations  

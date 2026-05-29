@@ -27,7 +27,7 @@ Do not paste a fake deploy URL in this repo.
 ## Quick judge path
 
 1. Open live URL.
-2. Click **Run judge demo** (top bar) — auto-weave, fraction success, approval, export.
+2. Click **Run judge demo** (top bar) — auto-weave, teaching signals, fraction success, Extend lane, teacher console, approval, export (presenter captions).
 3. Or manual: **Weave lesson** (hero) → Student tiles → **Check** → **Approve for Classroom Use** → Export **Copy**.
 
 ## Capture screenshots

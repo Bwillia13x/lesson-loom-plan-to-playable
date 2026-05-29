@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { lesson } from '../../data/lessonLoomData';
+import { useMemo, useState } from 'react';
+import { lesson, teachingSignals } from '../../data/lessonLoomData';
 import { parseLessonPlanStub } from '../../utils/parseLessonPlanStub';
 import { IndustrialButton } from '../ui/IndustrialButton';
 import { Panel } from '../ui/Panel';
@@ -11,10 +11,54 @@ type LessonIntakeProps = {
   value: string;
   onChange: (value: string) => void;
   onExtract: () => void;
+  highlightPhraseId: string | null;
 };
 
-export function LessonIntake({ value, onChange, onExtract }: LessonIntakeProps) {
+function PlanHighlightView({
+  text,
+  phrase,
+}: {
+  text: string;
+  phrase: string;
+}) {
+  const parts = text.split(phrase);
+  if (parts.length < 2) {
+    return (
+      <p className="lesson-plan-highlight-fallback" data-testid="lesson-plan-phrase-highlight">
+        Source phrase: <mark className="lesson-plan__phrase--active">{phrase}</mark>
+      </p>
+    );
+  }
+  return (
+    <p
+      className="lesson-plan-highlight-view"
+      data-testid="lesson-plan-phrase-highlight"
+      aria-live="polite"
+    >
+      {parts.map((part, index) => (
+        <span key={`${index}-${part.slice(0, 8)}`}>
+          {part}
+          {index < parts.length - 1 ? (
+            <mark className="lesson-plan__phrase--active">{phrase}</mark>
+          ) : null}
+        </span>
+      ))}
+    </p>
+  );
+}
+
+export function LessonIntake({
+  value,
+  onChange,
+  onExtract,
+  highlightPhraseId,
+}: LessonIntakeProps) {
   const [parserHighlights, setParserHighlights] = useState<string[] | null>(null);
+
+  const activeSourcePhrase = useMemo(() => {
+    if (!highlightPhraseId) return null;
+    return teachingSignals.find((s) => s.id === highlightPhraseId)?.source ?? null;
+  }, [highlightPhraseId]);
 
   const runQuickScan = () => {
     const { highlights } = parseLessonPlanStub(value);
@@ -105,6 +149,9 @@ export function LessonIntake({ value, onChange, onExtract }: LessonIntakeProps) 
           <label htmlFor="lesson-plan-draft" className="sr-only">
             Lesson plan text
           </label>
+          {activeSourcePhrase && (
+            <PlanHighlightView text={value} phrase={activeSourcePhrase} />
+          )}
           <textarea
             id="lesson-plan-draft"
             className="lesson-plan-doc lesson-plan-input"

@@ -1,4 +1,9 @@
-import { differentiation, udlChecks, type SupportLane } from '../../data/lessonLoomData';
+import {
+  differentiation,
+  udlChecks,
+  type SupportLane,
+  type WorkspaceMode,
+} from '../../data/lessonLoomData';
 import { Panel } from '../ui/Panel';
 import { Section } from '../ui/Section';
 import { StatusPip } from '../ui/StatusPip';
@@ -6,6 +11,7 @@ import { StatusPip } from '../ui/StatusPip';
 type DifferentiationUDLProps = {
   activeLane: SupportLane;
   onLaneChange: (lane: SupportLane) => void;
+  workspaceMode?: WorkspaceMode;
 };
 
 const laneConfig: Record<
@@ -17,7 +23,11 @@ const laneConfig: Record<
   extend: { className: 'lane-tab--extend', tone: 'green' },
 };
 
-export function DifferentiationUDL({ activeLane, onLaneChange }: DifferentiationUDLProps) {
+export function DifferentiationUDL({
+  activeLane,
+  onLaneChange,
+  workspaceMode = 'teacher',
+}: DifferentiationUDLProps) {
   const lane = differentiation[activeLane];
 
   return (
@@ -28,6 +38,14 @@ export function DifferentiationUDL({ activeLane, onLaneChange }: Differentiation
       title="Differentiation / UDL layer"
       lead="Three lanes keep the same learning goal while adjusting scaffolds and challenge."
     >
+      {workspaceMode === 'student' && (
+        <div style={{ marginBottom: '1rem' }} data-testid="udl-student-lane-preview">
+          <StatusPip
+            label={`Student app previewing ${lane.label} lane`}
+            tone="cyan"
+          />
+        </div>
+      )}
       <div className="lane-tabs" role="tablist" aria-label="Support lanes">
         {(Object.keys(differentiation) as SupportLane[]).map((key) => {
           const data = differentiation[key];

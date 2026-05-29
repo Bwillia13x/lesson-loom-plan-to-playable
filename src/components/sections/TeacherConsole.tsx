@@ -1,6 +1,6 @@
 import {
+  getTeacherSegmentBody,
   misconceptionNotes,
-  teacherPrompts,
   teacherTimeline,
   type TimelineId,
 } from '../../data/lessonLoomData';
@@ -24,6 +24,7 @@ export function TeacherConsole({
   onClassModeChange,
 }: TeacherConsoleProps) {
   const active = teacherTimeline.find((s) => s.id === activeSegment) ?? teacherTimeline[2];
+  const segmentBody = getTeacherSegmentBody(activeSegment);
 
   const timerDisplay = activeSegment === 'partner' ? '15:00' : active.time.replace(' min', ':00');
 
@@ -87,7 +88,27 @@ export function TeacherConsole({
           </div>
 
           <Panel className="mt-1" title={`Active: ${active.label}`}>
-            <p style={{ fontSize: '0.88rem' }}>{active.detail}</p>
+            <div data-testid="teacher-segment-body">
+            <p style={{ fontSize: '0.88rem', marginBottom: '0.75rem' }}>{active.detail}</p>
+            <h4 style={{ fontSize: '0.85rem', margin: '0 0 0.35rem' }}>{segmentBody.title}</h4>
+            <ul
+              style={{ margin: 0, paddingLeft: '1.1rem', fontSize: '0.85rem' }}
+              data-testid="teacher-segment-prompts"
+            >
+              {segmentBody.prompts.map((prompt) => (
+                <li key={prompt} style={{ marginBottom: '0.4rem' }}>
+                  {prompt}
+                </li>
+              ))}
+            </ul>
+            <p
+              className="text-mono mt-1"
+              style={{ fontSize: '0.72rem', color: 'var(--ll-muted)' }}
+              data-testid="teacher-segment-watch"
+            >
+              Watch: {segmentBody.watch}
+            </p>
+            </div>
           </Panel>
         </div>
       </div>
@@ -104,10 +125,13 @@ export function TeacherConsole({
             ))}
           </ul>
         </Panel>
-        <Panel title="Teacher notes">
+        <Panel title="Segment focus">
+          <p style={{ fontSize: '0.85rem', color: 'var(--ll-muted)', margin: '0 0 0.5rem' }}>
+            Prompts update with the active timeline segment — same lesson, different beat.
+          </p>
           <ul style={{ margin: 0, paddingLeft: '1.1rem', fontSize: '0.85rem' }}>
-            {teacherPrompts.map((prompt) => (
-              <li key={prompt} style={{ marginBottom: '0.5rem' }}>
+            {segmentBody.prompts.map((prompt) => (
+              <li key={`focus-${prompt}`} style={{ marginBottom: '0.5rem' }}>
                 {prompt}
               </li>
             ))}

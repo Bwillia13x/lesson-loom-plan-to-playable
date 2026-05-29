@@ -1,6 +1,6 @@
 # QA acceptance status
 
-Tracked against `08_QA_ACCEPTANCE_CHECKLIST.md`. Last updated: 2026-05-28 (submission hardening: copy-deck, judge-demo console, fonts/theme).
+Tracked against `08_QA_ACCEPTANCE_CHECKLIST.md`. Last updated: 2026-05-29 (unified session: lane coupling, segment bodies, devices mirror, phrase highlight, extended judge demo).
 
 ## Product acceptance
 
@@ -11,7 +11,7 @@ Tracked against `08_QA_ACCEPTANCE_CHECKLIST.md`. Last updated: 2026-05-28 (submi
 - [ ] The prototype does not feel like a generic SaaS landing page. — _manual_
 - [ ] The output feels useful to a teacher. — _manual_
 - [x] The student app feels interactive and visually rich. — _e2e/smoke.spec.ts_
-- [ ] The teacher console feels practical. — _manual_
+- [x] The teacher console feels practical. — _segment-specific prompts in e2e/unified-session.spec.ts; manual polish pass still recommended_
 - [x] The export pack ties the project back to Stitch and build handoff. — _MadeWithStitch + export smoke_
 
 ## Functional checks
@@ -90,6 +90,12 @@ For each width:
 - [x] Export pack zip download. — _e2e/export-zip.spec.ts_
 - [x] Shareable demo URL + hash. — _e2e/demo-url.spec.ts_
 - [x] Source phrase scroll to intake. — _e2e/source-phrase.spec.ts_
+- [x] Source phrase highlight in plan. — _e2e/source-phrase.spec.ts_
+- [x] UDL lane drives student mission copy. — _e2e/unified-session.spec.ts_
+- [x] Teacher segment drives console prompts. — _e2e/unified-session.spec.ts_
+- [x] Devices preview mirrors session. — _e2e/unified-session.spec.ts_
+- [x] Extended judge demo (signals + UDL beats). — _e2e/judge-demo.spec.ts_
+- [x] System map in Made with Stitch. — _data-testid=system-map_
 
 ## Performance checks
 

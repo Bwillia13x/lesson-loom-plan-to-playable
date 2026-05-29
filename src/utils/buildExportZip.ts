@@ -3,17 +3,25 @@ import { exportPack } from '../data/lessonLoomData';
 
 export const EXPORT_ZIP_FILENAME = 'lesson-loom-fraction-garden.zip';
 
-export function buildExportZipBlob(): Blob {
+export type ExportZipOptions = {
+  reflectionSaved?: boolean;
+  reflectionText?: string;
+};
+
+export function buildExportZipBlob(options?: ExportZipOptions): Blob {
   const files: Record<string, Uint8Array> = {};
   for (const file of exportPack) {
     files[file.filename] = strToU8(file.body);
+  }
+  if (options?.reflectionSaved && options.reflectionText?.trim()) {
+    files['reflection-notes.txt'] = strToU8(options.reflectionText.trim());
   }
   const zipped = zipSync(files);
   return new Blob([zipped], { type: 'application/zip' });
 }
 
-export function downloadExportZip(): void {
-  const blob = buildExportZipBlob();
+export function downloadExportZip(options?: ExportZipOptions): void {
+  const blob = buildExportZipBlob(options);
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement('a');
   anchor.href = url;

@@ -2,9 +2,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   exportPack,
   equivalentCanonicalIds,
+  fractionTiles,
   lessonPlanText,
   navSections,
   weaveSteps,
+  type DevicesSnapshot,
   type SupportLane,
   type TimelineId,
   type WorkspaceMode,
@@ -83,6 +85,7 @@ export default function App() {
   const [activeNav, setActiveNav] = useState('hero');
   const [demoRunning, setDemoRunning] = useState(false);
   const [demoCaptionIndex, setDemoCaptionIndex] = useState(0);
+  const [highlightPhraseId, setHighlightPhraseId] = useState<string | null>(null);
   const [weaveLiveMessage, setWeaveLiveMessage] = useState('');
   const uiTimeoutIds = useRef<number[]>([]);
   const weaveTimelineRef = useRef<ReturnType<typeof createWeaveTimeline>>(null);
@@ -94,6 +97,32 @@ export default function App() {
     hasWoven && activeWeaveStep >= weaveSteps.length - 1;
 
   useHashNavigationOnLoad(prefersReducedMotion);
+
+  const devicesSnapshot = useMemo<DevicesSnapshot>(
+    () => ({
+      woven: studentAppActive,
+      workspaceMode,
+      activeSupport,
+      activeSegment,
+      selectedTileLabels: selectedTileIds.map(
+        (id) => fractionTiles.find((t) => t.id === id)?.label ?? id,
+      ),
+    }),
+    [
+      studentAppActive,
+      workspaceMode,
+      activeSupport,
+      activeSegment,
+      selectedTileIds,
+    ],
+  );
+
+  const systemMapStep = useMemo(() => {
+    if (approved) return 4;
+    if (studentAppActive) return 2;
+    if (hasWoven) return 1;
+    return 0;
+  }, [approved, studentAppActive, hasWoven]);
 
   const demoUrlSnapshot = useMemo(
     () => ({
@@ -244,7 +273,10 @@ export default function App() {
   };
 
   const handleDownload = () => {
-    downloadExportZip();
+    downloadExportZip({
+      reflectionSaved,
+      reflectionText,
+    });
     setDownloadNotice('Download started: lesson-loom-fraction-garden.zip');
     const t = window.setTimeout(() => setDownloadNotice(null), 3500);
     uiTimeoutIds.current.push(t);
@@ -302,6 +334,7 @@ export default function App() {
     setCheckSuccess(false);
     setCheckAttempted(false);
     setSelectedTileIds([]);
+    setActiveSupport('core');
     setReflectionText('');
     setReflectionSaved(false);
     setReflectionTouched(false);
@@ -310,29 +343,46 @@ export default function App() {
     setDemoCaptionIndex(1);
     await delay(prefersReducedMotion ? 300 : 1100);
 
-    setWorkspaceMode('student');
-    setSelectedTileIds(CANONICAL_TILES);
     setDemoCaptionIndex(2);
+    scrollTo('signals');
+    await delay(prefersReducedMotion ? 200 : 700);
+
+    setWorkspaceMode('student');
+    setDemoCaptionIndex(3);
     scrollTo('student');
     await delay(400);
+
+    if (!prefersReducedMotion) {
+      document.querySelector<HTMLButtonElement>('[data-testid="tile-one-half"]')?.click();
+      await delay(350);
+      setSelectedTileIds(CANONICAL_TILES);
+    } else {
+      setSelectedTileIds(CANONICAL_TILES);
+    }
 
     setCheckAttempted(true);
     setCheckSuccess(true);
     setShowSuccessPulse(true);
-    setDemoCaptionIndex(3);
+    setDemoCaptionIndex(4);
     await delay(prefersReducedMotion ? 200 : 800);
 
+    setActiveSupport('extend');
+    setDemoCaptionIndex(5);
+    scrollTo('udl');
+    await delay(prefersReducedMotion ? 200 : 700);
+
     setWorkspaceMode('teacher');
-    setDemoCaptionIndex(4);
+    setActiveSegment('partner');
+    setDemoCaptionIndex(6);
     scrollTo('teacher');
     await delay(prefersReducedMotion ? 200 : 600);
 
     scrollTo('review');
     setApproved(true);
-    setDemoCaptionIndex(5);
+    setDemoCaptionIndex(7);
     await delay(300);
 
-    setDemoCaptionIndex(6);
+    setDemoCaptionIndex(8);
     scrollTo('export');
     setDemoRunning(false);
     setDemoCaptionIndex(0);
@@ -425,16 +475,25 @@ export default function App() {
           />
           <LessonIntake
             value={lessonPlanDraft}
-            onChange={setLessonPlanDraft}
+            onChange={(next) => {
+              setLessonPlanDraft(next);
+              setHighlightPhraseId(null);
+            }}
             onExtract={runWeaveSequence}
+            highlightPhraseId={highlightPhraseId}
           />
           <LessonWeave
             hasWoven={hasWoven}
             activeWeaveStep={activeWeaveStep}
             onWeave={runWeaveSequence}
           />
-          <TeachingSignal hasWoven={hasWoven} onWeave={runWeaveSequence} />
+          <TeachingSignal
+            hasWoven={hasWoven}
+            onWeave={runWeaveSequence}
+            onHighlightSource={(signalId) => setHighlightPhraseId(signalId)}
+          />
           <StudentFractionGarden
+            activeSupport={activeSupport}
             selectedTileIds={selectedTileIds}
             onToggleTile={handleToggleTile}
             onReset={handleResetTiles}
@@ -459,17 +518,19 @@ export default function App() {
           <DifferentiationUDL
             activeLane={activeSupport}
             onLaneChange={setActiveSupport}
+            workspaceMode={workspaceMode}
           />
           <ReviewSafety approved={approved} onApprove={() => setApproved(true)} />
           <ExportPackSection
             hasWoven={hasWoven}
+            approved={approved}
             copiedExportId={copiedExportId}
             downloadNotice={downloadNotice}
             onCopy={handleExportCopy}
             onDownload={handleDownload}
           />
-          <ResponsivePreview />
-          <MadeWithStitch />
+          <ResponsivePreview snapshot={devicesSnapshot} />
+          <MadeWithStitch systemMapStep={systemMapStep} />
           <LabsCaseStudy />
         </main>
 
