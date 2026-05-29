@@ -173,6 +173,59 @@ export const teacherTimeline = [
 
 export type TimelineId = (typeof teacherTimeline)[number]['id'];
 
+export type TeacherSegmentBody = {
+  title: string;
+  prompts: string[];
+  watch: string;
+};
+
+export const teacherSegmentBodies: Record<TimelineId, TeacherSegmentBody> = {
+  warmup: {
+    title: 'Warm-up comparisons',
+    prompts: [
+      'Show 1/2, 2/4, and 4/8 side by side without solving yet.',
+      'Ask: “What looks the same? What looks different?”',
+    ],
+    watch: 'Students who only compare numerators or denominators, not the whole.',
+  },
+  guided: {
+    title: 'Guided modeling',
+    prompts: [
+      'Partition one whole in two ways on the board.',
+      'Name the shaded amount, not just the fraction notation.',
+    ],
+    watch: 'Rushing to symbols before the whole is clear.',
+  },
+  partner: {
+    title: 'Partner garden challenge',
+    prompts: [
+      'Pairs build three equivalent garden beds in the app.',
+      'Coach language: “same space, different partitions.”',
+    ],
+    watch: 'Groups that select tiles without checking the whole.',
+  },
+  share: {
+    title: 'Share-out',
+    prompts: [
+      'Invite two models that look different but cover equal space.',
+      'Press for evidence in the garden beds, not labels alone.',
+    ],
+    watch: 'Students who describe steps but not why amounts match.',
+  },
+  exit: {
+    title: 'Exit ticket',
+    prompts: [
+      'Stem: “Two fractions can look different but be equal because…”',
+      'Collect sentence stems; review for precise language tomorrow.',
+    ],
+    watch: 'Incomplete explanations — note for re-teach, not auto-grade.',
+  },
+};
+
+export function getTeacherSegmentBody(segmentId: TimelineId): TeacherSegmentBody {
+  return teacherSegmentBodies[segmentId] ?? teacherSegmentBodies.partner;
+}
+
 export const teacherPrompts = [
   'What stayed the same when the number of pieces changed?',
   'How can two fractions look different but cover the same amount?',
@@ -599,6 +652,14 @@ Use this checklist when facilitating a PrairieSignal Edge–style lab session wi
 ];
 
 export type WorkspaceMode = 'student' | 'teacher';
+
+export type DevicesSnapshot = {
+  woven: boolean;
+  workspaceMode: WorkspaceMode;
+  activeSupport: SupportLane;
+  activeSegment: TimelineId;
+  selectedTileLabels: string[];
+};
 
 export const navSections = [
   { id: 'hero', label: 'Home' },
