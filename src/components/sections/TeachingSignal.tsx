@@ -1,5 +1,5 @@
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
-import { teachingSignals } from '../../data/lessonLoomData';
+import { teachingSignals, type SignalSurfaceLink } from '../../data/lessonLoomData';
 import { useMotion } from '../../motion/motionContext';
 import { runGsapScoped } from '../../motion/runGsapScoped';
 import { useScrollToSection } from '../../motion/useScrollToSection';
@@ -13,6 +13,7 @@ type TeachingSignalProps = {
   hasWoven: boolean;
   onWeave: () => void;
   onHighlightSource: (signalId: string, source: string) => void;
+  onSurfaceLink: (target: SignalSurfaceLink) => void;
 };
 
 const LESSON_PLAN_TEXTAREA_ID = 'lesson-plan-draft';
@@ -21,6 +22,7 @@ export function TeachingSignal({
   hasWoven,
   onWeave,
   onHighlightSource,
+  onSurfaceLink,
 }: TeachingSignalProps) {
   const { reduced } = useMotion();
   const gridRef = useRef<HTMLDivElement>(null);
@@ -121,16 +123,28 @@ export function TeachingSignal({
               </div>
               <p className="signal-card__value">{card.value}</p>
             </div>
-            <button
-              type="button"
-              className="badge badge--source signal-card__source"
-              data-testid={`source-phrase-${card.id}`}
-              onClick={() => handleSourcePhrase(card.id, card.source)}
-              aria-label={`View source phrase in lesson plan: ${card.source}`}
-              disabled={!hasWoven}
-            >
-              Source: {card.source}
-            </button>
+            <div className="signal-card__actions">
+              <button
+                type="button"
+                className="badge badge--source signal-card__source"
+                data-testid={`source-phrase-${card.id}`}
+                onClick={() => handleSourcePhrase(card.id, card.source)}
+                aria-label={`View source phrase in lesson plan: ${card.source}`}
+                disabled={!hasWoven}
+              >
+                Source: {card.source}
+              </button>
+              {hasWoven && card.surfaceLinks?.length ? (
+                <button
+                  type="button"
+                  className="signal-card__lesson-link"
+                  data-testid={`signal-link-${card.id}`}
+                  onClick={() => onSurfaceLink(card.surfaceLinks![0])}
+                >
+                  See in lesson
+                </button>
+              ) : null}
+            </div>
           </article>
         ))}
       </div>

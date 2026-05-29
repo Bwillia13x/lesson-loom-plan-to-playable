@@ -24,13 +24,24 @@ Students will work with a partner to build three examples of equivalent fraction
 
 End with an exit ticket: "Two fractions can look different but be equal because…"`;
 
-export const teachingSignals = [
+export type SignalSurfaceLink = 'student' | 'teacher' | 'udl';
+
+export type TeachingSignalCard = {
+  id: string;
+  label: string;
+  value: string;
+  source: string;
+  surfaceLinks?: SignalSurfaceLink[];
+};
+
+export const teachingSignals: TeachingSignalCard[] = [
   {
     id: 'goal',
     label: 'Learning Goal',
     value:
       'Represent equivalent fractions visually and explain why the values are equal.',
     source: 'different fractions can represent the same amount',
+    surfaceLinks: ['student'],
   },
   {
     id: 'vocab',
@@ -38,6 +49,7 @@ export const teachingSignals = [
     value:
       'Equivalent, whole, numerator, denominator, fraction tile, equal value.',
     source: 'fraction tiles can show the same whole',
+    surfaceLinks: ['student'],
   },
   {
     id: 'prior',
@@ -45,6 +57,7 @@ export const teachingSignals = [
     value:
       'Students have seen basic fractions and can identify halves, quarters, and eighths.',
     source: 'comparing 1/2, 2/4, and 4/8',
+    surfaceLinks: ['student'],
   },
   {
     id: 'misconception',
@@ -52,12 +65,14 @@ export const teachingSignals = [
     value:
       'Students may think a larger denominator always means a larger amount.',
     source: 'different ways',
+    surfaceLinks: ['teacher'],
   },
   {
     id: 'metaphor',
     label: 'Visual Metaphor',
     value: 'Garden beds divided into different numbers of equal plots.',
     source: 'visual models',
+    surfaceLinks: ['student'],
   },
   {
     id: 'interaction',
@@ -65,6 +80,7 @@ export const teachingSignals = [
     value:
       'Students select and compare tiles that cover the same amount of garden space.',
     source: 'work with a partner to build three examples',
+    surfaceLinks: ['student'],
   },
   {
     id: 'assessment',
@@ -72,6 +88,7 @@ export const teachingSignals = [
     value:
       'Warm-up comparison, partner explanation, and exit-ticket sentence stem.',
     source: 'End with an exit ticket',
+    surfaceLinks: ['teacher'],
   },
   {
     id: 'differentiation',
@@ -79,8 +96,9 @@ export const teachingSignals = [
     value:
       'Visual scaffolds for support; create-your-own challenge for extension.',
     source: 'support … and an extension challenge',
+    surfaceLinks: ['udl'],
   },
-] as const;
+];
 
 export const weaveSteps = [
   'Objective',
@@ -695,6 +713,33 @@ export type DevicesSnapshot = {
   approved: boolean;
   classMode: ClassMode;
 };
+
+const laneLabels: Record<SupportLane, string> = {
+  support: 'Support',
+  core: 'Core',
+  extend: 'Extend',
+};
+
+const segmentLabels: Record<TimelineId, string> = {
+  warmup: 'Warm-up',
+  guided: 'Guided demo',
+  partner: 'Partner',
+  share: 'Share-out',
+  exit: 'Exit ticket',
+};
+
+export function sessionSpineSubline(input: {
+  activeSupport: SupportLane;
+  activeSegment: TimelineId;
+  approved: boolean;
+  workspaceMode: WorkspaceMode;
+}): string {
+  const review = input.approved
+    ? 'Teacher-approved draft'
+    : 'Awaiting teacher review';
+  const mode = input.workspaceMode === 'student' ? 'Student view' : 'Teacher view';
+  return `${laneLabels[input.activeSupport]} lane · ${segmentLabels[input.activeSegment]} · ${review} · ${mode}`;
+}
 
 export const navSections = [
   { id: 'hero', label: 'Home' },

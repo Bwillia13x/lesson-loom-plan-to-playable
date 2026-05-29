@@ -17,6 +17,7 @@ type TeacherConsoleProps = {
   onClassModeChange: (mode: ClassMode) => void;
   reflectionSaved: boolean;
   reflectionText: string;
+  surfaceHighlighted?: boolean;
 };
 
 export function TeacherConsole({
@@ -26,6 +27,7 @@ export function TeacherConsole({
   onClassModeChange,
   reflectionSaved,
   reflectionText,
+  surfaceHighlighted = false,
 }: TeacherConsoleProps) {
   const active = teacherTimeline.find((s) => s.id === activeSegment) ?? teacherTimeline[2];
   const segmentBody = getTeacherSegmentBody(activeSegment, classMode);
@@ -40,6 +42,7 @@ export function TeacherConsole({
     <Section
       id="teacher"
       workspace="teacher"
+      className={surfaceHighlighted ? 'll-surface-highlight' : ''}
       eyebrow="Teacher console"
       title="Teacher console — run of show"
       lead="Keep the flow, prompts, misconceptions, and exit ticket visible while students work."

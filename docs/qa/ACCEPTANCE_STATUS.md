@@ -111,6 +111,12 @@ For each width:
 - [x] Reflection excerpt on teacher exit ticket. — _e2e/phase2-session.spec.ts_
 - [x] Zip session-readme approval state. — _e2e/phase2-session.spec.ts, e2e/export-zip.spec.ts_
 - [x] Student groups-mode hint copy. — _e2e/phase2-session.spec.ts_
+- [x] Session spine visible after weave. — _e2e/session-spine.spec.ts_
+- [x] Session spine navigates to export. — _e2e/session-spine.spec.ts_
+- [x] Signal See in lesson scrolls to student. — _e2e/signal-surface-link.spec.ts_
+- [x] Top-bar Scenes menu applies approved preset. — _e2e/judge-scenes.spec.ts_
+- [x] Top-bar Scenes reset demo. — _e2e/judge-scenes.spec.ts_
+- [x] Presenter chrome hides side nav during judge demo. — _e2e/presenter-mode.spec.ts_
 
 ## Performance checks
 

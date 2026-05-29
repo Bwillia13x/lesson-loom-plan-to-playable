@@ -7,10 +7,12 @@ import {
   navSections,
   weaveSteps,
   type DevicesSnapshot,
+  type SignalSurfaceLink,
   type SupportLane,
   type TimelineId,
   type WorkspaceMode,
 } from './data/lessonLoomData';
+import { ClassroomSessionSpine } from './components/ClassroomSessionSpine';
 import {
   judgeDemoPresenterCaptions,
   JUDGE_DEMO_STEP_COUNT,
@@ -89,6 +91,9 @@ export default function App() {
   const [demoRunning, setDemoRunning] = useState(false);
   const [demoCaptionIndex, setDemoCaptionIndex] = useState(0);
   const [highlightPhraseId, setHighlightPhraseId] = useState<string | null>(null);
+  const [highlightSurface, setHighlightSurface] = useState<SignalSurfaceLink | null>(
+    null,
+  );
   const [weaveLiveMessage, setWeaveLiveMessage] = useState('');
   const uiTimeoutIds = useRef<number[]>([]);
   const weaveTimelineRef = useRef<ReturnType<typeof createWeaveTimeline>>(null);
@@ -130,6 +135,19 @@ export default function App() {
     if (hasWoven) return 1;
     return 0;
   }, [approved, studentAppActive, hasWoven]);
+
+  const spineActiveIndex = useMemo(() => {
+    if (approved || activeNav === 'export') return 4;
+    if (activeNav === 'review') return 3;
+    if (
+      studentAppActive &&
+      (activeNav === 'student' || activeNav === 'teacher' || activeNav === 'udl')
+    ) {
+      return 2;
+    }
+    if (hasWoven) return 1;
+    return 0;
+  }, [approved, activeNav, studentAppActive, hasWoven]);
 
   const demoUrlSnapshot = useMemo(
     () => ({
@@ -334,6 +352,29 @@ export default function App() {
     scrollTo('review');
   }, [scrollTo]);
 
+  const handleSignalSurfaceLink = useCallback(
+    (target: SignalSurfaceLink) => {
+      if (target === 'teacher') setWorkspaceMode('teacher');
+      if (target === 'student') setWorkspaceMode('student');
+      const sectionId =
+        target === 'udl' ? 'udl' : target === 'teacher' ? 'teacher' : 'student';
+      setHighlightSurface(target);
+      scrollTo(sectionId);
+      const t = window.setTimeout(() => setHighlightSurface(null), 2000);
+      uiTimeoutIds.current.push(t);
+    },
+    [scrollTo],
+  );
+
+  const handleSpineNavigate = useCallback(
+    (sectionId: string) => {
+      if (sectionId === 'teacher') setWorkspaceMode('teacher');
+      if (sectionId === 'student') setWorkspaceMode('student');
+      scrollTo(sectionId);
+    },
+    [scrollTo],
+  );
+
   const runJudgeDemo = useCallback(async () => {
     if (demoRunning) return;
     setDemoRunning(true);
@@ -407,7 +448,7 @@ export default function App() {
   }, [demoRunning, prefersReducedMotion, runWeaveSequence, scrollTo]);
 
   return (
-    <div className="app-shell">
+    <div className={`app-shell${demoRunning ? ' app-shell--presenter' : ''}`}>
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
@@ -448,6 +489,31 @@ export default function App() {
             mode={workspaceMode}
             onChange={handleWorkspaceModeChange}
           />
+          <div className="app-topbar__scenes" data-testid="judge-scenes">
+            <label htmlFor="judge-scenes-select" className="sr-only">
+              Demo scenes
+            </label>
+            <select
+              id="judge-scenes-select"
+              className="app-topbar__scenes-select"
+              defaultValue=""
+              disabled={demoRunning}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (value === 'reset') applyDemoReset();
+                if (value === 'success') applyDemoSuccessState();
+                if (value === 'approved') applyDemoReviewApproved();
+                e.target.value = '';
+              }}
+            >
+              <option value="" disabled>
+                Scenes
+              </option>
+              <option value="reset">Reset demo</option>
+              <option value="success">Success state</option>
+              <option value="approved">Approved</option>
+            </select>
+          </div>
           <IndustrialButton
             variant="ghost"
             size="sm"
@@ -484,6 +550,16 @@ export default function App() {
             You own the lesson.
           </p>
         </header>
+
+        <ClassroomSessionSpine
+          visible={hasWoven || demoRunning}
+          activeStepIndex={spineActiveIndex}
+          activeSupport={activeSupport}
+          activeSegment={activeSegment}
+          approved={approved}
+          workspaceMode={workspaceMode}
+          onNavigate={handleSpineNavigate}
+        />
 
         {hasWoven && activeWeaveStep >= weaveSteps.length - 1 && (
           <WeaveCompleteBanner
@@ -530,10 +606,12 @@ export default function App() {
             hasWoven={hasWoven}
             onWeave={runWeaveSequence}
             onHighlightSource={(signalId) => setHighlightPhraseId(signalId)}
+            onSurfaceLink={handleSignalSurfaceLink}
           />
           <StudentFractionGarden
             activeSupport={activeSupport}
             classMode={classMode}
+            surfaceHighlighted={highlightSurface === 'student'}
             selectedTileIds={selectedTileIds}
             onToggleTile={handleToggleTile}
             onReset={handleResetTiles}
@@ -556,11 +634,13 @@ export default function App() {
             onClassModeChange={setClassMode}
             reflectionSaved={reflectionSaved}
             reflectionText={reflectionText}
+            surfaceHighlighted={highlightSurface === 'teacher'}
           />
           <DifferentiationUDL
             activeLane={activeSupport}
             onLaneChange={setActiveSupport}
             workspaceMode={workspaceMode}
+            surfaceHighlighted={highlightSurface === 'udl'}
           />
           <ReviewSafety approved={approved} onApprove={() => setApproved(true)} />
           <ExportPackSection

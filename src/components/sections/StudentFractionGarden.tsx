@@ -35,6 +35,7 @@ type StudentFractionGardenProps = {
   onSaveReflection: () => void;
   activeSupport: SupportLane;
   classMode?: ClassMode;
+  surfaceHighlighted?: boolean;
 };
 
 function studentProgressIndex(
@@ -84,6 +85,7 @@ export function StudentFractionGarden({
   onSaveReflection,
   activeSupport,
   classMode = 'whole',
+  surfaceHighlighted = false,
 }: StudentFractionGardenProps) {
   const lane = differentiation[activeSupport];
   const { reduced } = useMotion();
@@ -134,7 +136,12 @@ export function StudentFractionGarden({
     <Section
       id="student"
       workspace="student"
-      className={studentAppActive ? 'll-section--woven-active' : ''}
+      className={[
+        studentAppActive ? 'll-section--woven-active' : '',
+        surfaceHighlighted ? 'll-surface-highlight' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
       eyebrow="Student app"
       title={studentActivity.title}
       lead={studentActivity.mission}

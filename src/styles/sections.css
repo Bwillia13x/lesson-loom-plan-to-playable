@@ -57,6 +57,37 @@
   outline-offset: 2px;
 }
 
+.signal-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.65rem;
+}
+
+.signal-card__lesson-link {
+  font-family: var(--ll-font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.55rem;
+  border: 1px solid var(--ll-line-strong);
+  border-radius: 8px;
+  background: var(--ll-paper);
+  color: var(--ll-graphite);
+  cursor: pointer;
+}
+
+.signal-card__lesson-link:hover {
+  border-color: var(--ll-sage);
+  color: #2d4a3e;
+}
+
+.signal-card__lesson-link:focus-visible {
+  outline: none;
+  box-shadow: var(--ll-focus-ring);
+}
+
 .signal-card__source:disabled {
   cursor: not-allowed;
   opacity: 0.55;
@@ -126,6 +157,11 @@
   box-shadow: 0 0 0 2px var(--ll-orange), 0 8px 20px var(--ll-orange-glow);
 }
 
+.garden-bed--active .garden-bed__plot--filled {
+  background: linear-gradient(180deg, #7cb87a 0%, #5a9a58 100%);
+  border-color: #4a7a48;
+}
+
 .tile-bank {
   display: flex;
   flex-wrap: wrap;
@@ -179,6 +215,10 @@
 .fraction-tile:hover {
   border-color: var(--ll-orange);
   transform: translateY(-1px);
+}
+
+.fraction-tile[aria-pressed='true'] {
+  box-shadow: var(--ll-focus-ring), 0 4px 14px rgba(45, 74, 62, 0.12);
 }
 
 .fraction-tile--selected {
@@ -620,12 +660,22 @@
   margin-bottom: 1rem;
 }
 
+#hero .ll-section__eyebrow {
+  color: var(--ll-eyebrow-hero);
+}
+
 .hero-visual {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 1.25rem;
   align-items: stretch;
+}
+
+@media (max-width: 768px) {
+  .hero-visual {
+    grid-template-columns: 1fr;
+  }
 }
 
 .hero-plan,

@@ -12,6 +12,7 @@ type DifferentiationUDLProps = {
   activeLane: SupportLane;
   onLaneChange: (lane: SupportLane) => void;
   workspaceMode?: WorkspaceMode;
+  surfaceHighlighted?: boolean;
 };
 
 const laneConfig: Record<
@@ -27,6 +28,7 @@ export function DifferentiationUDL({
   activeLane,
   onLaneChange,
   workspaceMode = 'teacher',
+  surfaceHighlighted = false,
 }: DifferentiationUDLProps) {
   const lane = differentiation[activeLane];
 
@@ -34,6 +36,7 @@ export function DifferentiationUDL({
     <Section
       id="udl"
       workspace="teacher"
+      className={surfaceHighlighted ? 'll-surface-highlight' : ''}
       eyebrow="Differentiation"
       title="Differentiation / UDL layer"
       lead="Three lanes keep the same learning goal while adjusting scaffolds and challenge."
