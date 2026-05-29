@@ -680,6 +680,8 @@
 
 .hero-plan,
 .hero-preview {
+  position: relative;
+  z-index: 1;
   min-height: 220px;
 }
 
@@ -739,7 +741,8 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 2;
+  z-index: 0;
+  opacity: 0.92;
 }
 
 .lesson-plan-doc {

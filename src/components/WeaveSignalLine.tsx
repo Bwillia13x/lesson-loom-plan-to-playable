@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 import { useMotion } from '../motion/motionContext';
@@ -12,43 +12,74 @@ type WeaveSignalLineProps = {
   active: boolean;
 };
 
+function applySettledState(
+  gsapApi: typeof gsap,
+  path: SVGPathElement,
+  circle: SVGCircleElement,
+) {
+  gsapApi.set(path, { strokeDasharray: 1, strokeDashoffset: 0 });
+  gsapApi.set(circle, { autoAlpha: 0 });
+}
+
+function applyInactiveState(
+  gsapApi: typeof gsap,
+  path: SVGPathElement,
+  circle: SVGCircleElement,
+) {
+  gsapApi.set(path, { strokeDasharray: 1, strokeDashoffset: 1 });
+  gsapApi.set(circle, { autoAlpha: 0 });
+}
+
 export function WeaveSignalLine({ active }: WeaveSignalLineProps) {
   const { reduced: reducedMotion } = useMotion();
   const svgRef = useRef<SVGSVGElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
   const circleRef = useRef<SVGCircleElement>(null);
-  const [inView, setInView] = useState(true);
+  const introPlayedRef = useRef(false);
 
   useEffect(() => {
-    if (reducedMotion) return;
-    const el = svgRef.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0 },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [reducedMotion]);
+    if (!active) {
+      introPlayedRef.current = false;
+    }
+  }, [active]);
 
   useLayoutEffect(() => {
     const path = pathRef.current;
     const circle = circleRef.current;
     if (!svgRef.current || !path || !circle) return;
 
-    const motionEnabled = active && inView;
+    if (!active) {
+      return runGsapScoped(
+        svgRef,
+        reducedMotion,
+        (gsapApi) => applyInactiveState(gsapApi, path, circle),
+        (gsapApi) => applyInactiveState(gsapApi, path, circle),
+      );
+    }
+
+    if (reducedMotion) {
+      introPlayedRef.current = true;
+      return runGsapScoped(
+        svgRef,
+        reducedMotion,
+        (gsapApi) => applySettledState(gsapApi, path, circle),
+        (gsapApi) => applySettledState(gsapApi, path, circle),
+      );
+    }
+
+    if (introPlayedRef.current) {
+      return runGsapScoped(
+        svgRef,
+        reducedMotion,
+        (gsapApi) => applySettledState(gsapApi, path, circle),
+        (gsapApi) => applySettledState(gsapApi, path, circle),
+      );
+    }
 
     return runGsapScoped(
       svgRef,
       reducedMotion,
       (gsapApi) => {
-        if (!motionEnabled) {
-          gsapApi.set(path, { strokeDasharray: 1, strokeDashoffset: 1 });
-          gsapApi.set(circle, { autoAlpha: 0 });
-          return;
-        }
-
         gsapApi.fromTo(
           path,
           { strokeDasharray: 1, strokeDashoffset: 1 },
@@ -63,19 +94,17 @@ export function WeaveSignalLine({ active }: WeaveSignalLineProps) {
             alignOrigin: [0.5, 0.5],
           },
           duration: 2.5,
-          repeat: 2,
+          repeat: 1,
           ease: 'none',
+          onComplete: () => {
+            gsapApi.set(circle, { autoAlpha: 0 });
+            introPlayedRef.current = true;
+          },
         });
       },
-      (gsapApi) => {
-        gsapApi.set(path, {
-          strokeDasharray: 1,
-          strokeDashoffset: motionEnabled ? 0 : 1,
-        });
-        gsapApi.set(circle, { autoAlpha: motionEnabled ? 1 : 0 });
-      },
+      (gsapApi) => applySettledState(gsapApi, path, circle),
     );
-  }, [active, reducedMotion, inView]);
+  }, [active, reducedMotion]);
 
   return (
     <svg
