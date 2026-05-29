@@ -62,7 +62,7 @@ export const teachingSignals: TeachingSignalCard[] = [
       'Students have seen basic fractions and can identify halves, quarters, and eighths.',
     source: 'comparing 1/2, 2/4, and 4/8',
     surfaceLinks: ['student'],
-    surfaceLane: 'support',
+    surfaceLane: 'core',
   },
   {
     id: 'misconception',

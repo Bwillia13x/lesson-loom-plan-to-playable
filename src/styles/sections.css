@@ -903,11 +903,11 @@
   gap: 1rem;
 }
 
-/* Skip link */
+/* Skip link — off-screen until focused (reliable tab order vs left:-9999px) */
 .skip-link {
-  position: absolute;
-  left: -9999px;
+  position: fixed;
   top: 0;
+  left: var(--ll-nav-w);
   z-index: 100;
   padding: 0.65rem 1rem;
   background: var(--ll-orange);
@@ -915,11 +915,13 @@
   font-weight: 600;
   border-radius: 0 0 8px 8px;
   text-decoration: none;
+  transform: translateY(-120%);
+  transition: transform 0.15s ease;
 }
 
 .skip-link:focus,
 .skip-link:focus-visible {
-  left: var(--ll-nav-w);
+  transform: translateY(0);
   outline: 2px solid #fff;
   outline-offset: 2px;
 }

@@ -147,6 +147,11 @@ export function TeachingSignal({
                     const target = card.surfaceLinks?.[0];
                     if (target) onSurfaceLink(target, card.surfaceLane);
                   }}
+                  aria-label={
+                    card.surfaceLane
+                      ? `See in lesson — opens ${card.surfaceLane} lane`
+                      : 'See in lesson'
+                  }
                 >
                   See in lesson
                 </button>

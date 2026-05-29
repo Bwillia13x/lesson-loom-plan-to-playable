@@ -41,9 +41,9 @@ test('signal See in lesson on student card switches to the card lane', async ({
   await expect(page.getByTestId('student-lane-mission')).toContainText('Core lane');
 });
 
-test('prior knowledge signal opens support lane in student app', async ({ page }) => {
+test('prior knowledge signal opens core lane in student app', async ({ page }) => {
   await weaveToSignals(page);
-  await page.getByTestId('lane-core').click();
+  await page.getByTestId('lane-extend').click();
   await page.getByTestId('signal-link-prior').click();
-  await expect(page.getByTestId('student-lane-mission')).toContainText('Support lane');
+  await expect(page.getByTestId('student-lane-mission')).toContainText('Core lane');
 });

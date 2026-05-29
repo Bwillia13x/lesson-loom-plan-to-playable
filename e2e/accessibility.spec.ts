@@ -11,6 +11,14 @@ test.describe('accessibility affordances', () => {
     await expect(skipLink).toHaveAttribute('href', '#main-content');
   });
 
+  test('skip link moves focus into main content', async ({ page }) => {
+    await page.goto('/');
+    const skipLink = page.getByRole('link', { name: 'Skip to main content' });
+    await skipLink.focus();
+    await skipLink.press('Enter');
+    await expect(page.locator('#main-content')).toBeFocused();
+  });
+
   test('garden hint toggle shows callout', async ({ page }) => {
     await page.getByTestId('workspace-student').click();
     await page.locator('#student').scrollIntoViewIfNeeded();

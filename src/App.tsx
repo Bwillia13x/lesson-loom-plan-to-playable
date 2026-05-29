@@ -542,13 +542,18 @@ export default function App() {
             onClick={() => void runJudgeDemo()}
             disabled={demoRunning}
             data-testid="run-judge-demo"
+            aria-label={demoRunning ? 'Judge demo running' : 'Run judge demo'}
           >
             {demoRunning ? (
               'Running demo…'
             ) : (
               <>
-                <span className="judge-demo-btn__long">Run judge demo</span>
-                <span className="judge-demo-btn__short">Run demo</span>
+                <span className="judge-demo-btn__long" aria-hidden="true">
+                  Run judge demo
+                </span>
+                <span className="judge-demo-btn__short" aria-hidden="true">
+                  Run demo
+                </span>
               </>
             )}
           </IndustrialButton>
@@ -607,7 +612,7 @@ export default function App() {
           />
         )}
 
-        <main id="main-content">
+        <main id="main-content" tabIndex={-1}>
           <HeroLanding
             hasWoven={hasWoven}
             lessonPlanDraft={lessonPlanDraft}
