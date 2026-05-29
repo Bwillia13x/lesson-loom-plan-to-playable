@@ -1,6 +1,6 @@
 # Judge Wow — Phase 3 Design Spec
 
-**Status:** Ready for user review → implementation plan  
+**Status:** Approved — ce-plan at `docs/plans/2026-05-30-002-feat-judge-wow-phase-3-plan.md`  
 **Date:** 2026-05-30  
 **Origin:** Brainstorming session (post Phase 1 unified session + Phase 2 coupling/submission automation)  
 **Prior work:** `2026-05-29-unified-system-wow-design.md`, `2026-05-29-judge-wow-phase-2-design.md` (largely shipped on `main`)
@@ -252,4 +252,6 @@ Phases I–L; e2e for spine visibility, signal link scroll, scenes menu, present
 
 ## Next step
 
-User reviews this spec → approve → implement via `docs/superpowers/plans/2026-05-30-judge-wow-phase-3.md`.
+Implement via:
+- **Decision plan:** `docs/plans/2026-05-30-002-feat-judge-wow-phase-3-plan.md` (requirements, KTDs, U1–U10)
+- **Execution checklist:** `docs/superpowers/plans/2026-05-30-judge-wow-phase-3.md` (step-level tasks)
