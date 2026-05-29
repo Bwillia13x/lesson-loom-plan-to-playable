@@ -398,7 +398,7 @@ In `App.tsx` ensure:
 ```typescript
 const systemMapStep = useMemo(() => {
   if (approved) return 4;
-  if (studentAppActive) return 2;
+  if (studentAppActive) return 3;
   if (hasWoven) return 1;
   return 0;
 }, [approved, studentAppActive, hasWoven]);

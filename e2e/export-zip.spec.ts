@@ -16,6 +16,9 @@ test('export pack download triggers zip with expected filename', async ({ page }
   const fs = await import('node:fs');
   const stat = fs.statSync(path!);
   expect(stat.size).toBeGreaterThan(100);
+  const { unzipSync } = await import('fflate');
+  const archive = unzipSync(new Uint8Array(fs.readFileSync(path!)));
+  expect(Object.keys(archive)).toContain('session-readme.txt');
 });
 
 const CANONICAL_TILES = ['one-half', 'two-fourths', 'three-sixths'];
@@ -48,6 +51,10 @@ test('export zip includes saved reflection notes', async ({ page }) => {
   const fs = await import('node:fs');
   const { unzipSync } = await import('fflate');
   const archive = unzipSync(new Uint8Array(fs.readFileSync(path!)));
+  expect(Object.keys(archive)).toContain('session-readme.txt');
+  expect(new TextDecoder().decode(archive['session-readme.txt'])).toContain(
+    'pending',
+  );
   expect(Object.keys(archive)).toContain('reflection-notes.txt');
   expect(new TextDecoder().decode(archive['reflection-notes.txt'])).toContain(
     'Zip reflection',

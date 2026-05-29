@@ -105,6 +105,10 @@ For each width:
 - [x] Devices mirror approval state. — _e2e/unified-session.spec.ts_
 - [x] Export zip teacher-console-notes when reflection saved. — _e2e/export-zip.spec.ts_
 - [x] Judge demo progress rail. — _e2e/judge-demo.spec.ts_
+- [x] System map Review before approval, Export after. — _e2e/phase2-session.spec.ts_
+- [x] Reflection excerpt on teacher exit ticket. — _e2e/phase2-session.spec.ts_
+- [x] Zip session-readme approval state. — _e2e/phase2-session.spec.ts, e2e/export-zip.spec.ts_
+- [x] Student groups-mode hint copy. — _e2e/phase2-session.spec.ts_
 
 ## Performance checks
 

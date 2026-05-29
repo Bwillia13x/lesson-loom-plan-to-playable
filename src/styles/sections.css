@@ -147,10 +147,14 @@
   flex-direction: column;
   align-items: center;
   gap: 0.35rem;
+  box-shadow:
+    0 2px 0 rgba(26, 35, 50, 0.06),
+    0 4px 12px rgba(26, 35, 50, 0.04);
   transition:
     border-color 0.15s,
     background 0.15s,
-    transform 0.15s;
+    transform 0.15s,
+    box-shadow 0.15s;
 }
 
 .fraction-tile__visual {
@@ -180,7 +184,9 @@
 .fraction-tile--selected {
   border-color: var(--ll-orange);
   background: var(--ll-orange-soft);
-  box-shadow: 0 0 0 1px var(--ll-orange);
+  box-shadow:
+    0 0 0 2px var(--ll-sage),
+    0 6px 16px rgba(45, 74, 62, 0.15);
 }
 
 .fraction-tile--success {
@@ -635,18 +641,6 @@
 .hero-preview {
   transform: translateY(-4px);
   box-shadow: 0 16px 48px rgba(45, 74, 62, 0.12);
-}
-
-.fraction-tile {
-  box-shadow:
-    0 2px 0 rgba(26, 35, 50, 0.06),
-    0 4px 12px rgba(26, 35, 50, 0.04);
-}
-
-.fraction-tile--selected {
-  box-shadow:
-    0 0 0 2px var(--ll-sage),
-    0 6px 16px rgba(45, 74, 62, 0.15);
 }
 
 .export-gate {

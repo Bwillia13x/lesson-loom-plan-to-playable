@@ -6,6 +6,7 @@ export const EXPORT_ZIP_FILENAME = 'lesson-loom-fraction-garden.zip';
 export type ExportZipOptions = {
   reflectionSaved?: boolean;
   reflectionText?: string;
+  approved?: boolean;
 };
 
 export function buildExportZipBlob(options?: ExportZipOptions): Blob {
@@ -13,6 +14,15 @@ export function buildExportZipBlob(options?: ExportZipOptions): Blob {
   for (const file of exportPack) {
     files[file.filename] = strToU8(file.body);
   }
+
+  const reviewLine = options?.approved
+    ? 'Teacher review: marked approved in this prototype session.'
+    : 'Teacher review: pending — complete review before classroom handoff.';
+
+  files['session-readme.txt'] = strToU8(
+    `Lesson Loom export pack (demo)\n${reviewLine}\nNo student data included.\n`,
+  );
+
   if (options?.reflectionSaved && options.reflectionText?.trim()) {
     const reflection = options.reflectionText.trim();
     files['reflection-notes.txt'] = strToU8(reflection);

@@ -126,7 +126,7 @@ export default function App() {
 
   const systemMapStep = useMemo(() => {
     if (approved) return 4;
-    if (studentAppActive) return 2;
+    if (studentAppActive) return 3;
     if (hasWoven) return 1;
     return 0;
   }, [approved, studentAppActive, hasWoven]);
@@ -283,6 +283,7 @@ export default function App() {
     downloadExportZip({
       reflectionSaved,
       reflectionText,
+      approved,
     });
     setDownloadNotice('Download started: lesson-loom-fraction-garden.zip');
     const t = window.setTimeout(() => setDownloadNotice(null), 3500);
@@ -389,6 +390,9 @@ export default function App() {
       setDemoCaptionIndex(7);
       await delay(500);
       setClassMode('whole');
+    } else {
+      setDemoCaptionIndex(7);
+      await delay(200);
     }
 
     scrollTo('review');
@@ -529,6 +533,7 @@ export default function App() {
           />
           <StudentFractionGarden
             activeSupport={activeSupport}
+            classMode={classMode}
             selectedTileIds={selectedTileIds}
             onToggleTile={handleToggleTile}
             onReset={handleResetTiles}

@@ -7,6 +7,7 @@ import {
   fractionTiles,
   studentActivity,
   type FractionTile,
+  type ClassMode,
   type SupportLane,
 } from '../../data/lessonLoomData';
 import { FractionTileVisual } from '../FractionTileVisual';
@@ -33,6 +34,7 @@ type StudentFractionGardenProps = {
   onReflectionTouch: () => void;
   onSaveReflection: () => void;
   activeSupport: SupportLane;
+  classMode?: ClassMode;
 };
 
 function studentProgressIndex(
@@ -81,6 +83,7 @@ export function StudentFractionGarden({
   onReflectionTouch,
   onSaveReflection,
   activeSupport,
+  classMode = 'whole',
 }: StudentFractionGardenProps) {
   const lane = differentiation[activeSupport];
   const { reduced } = useMotion();
@@ -151,6 +154,15 @@ export function StudentFractionGarden({
         >
           Scaffolds: {lane.scaffolds}
         </p>
+        {classMode === 'groups' && (
+          <p
+            className="text-mono"
+            style={{ margin: '0.5rem 0 0', fontSize: '0.75rem', color: 'var(--ll-muted)' }}
+            data-testid="student-groups-hint"
+          >
+            Talk with your partner about equal parts, not just matching numbers.
+          </p>
+        )}
       </div>
       <div className="garden-layout">
         <Panel bracket screws>
