@@ -52,4 +52,8 @@ test('export zip includes saved reflection notes', async ({ page }) => {
   expect(new TextDecoder().decode(archive['reflection-notes.txt'])).toContain(
     'Zip reflection',
   );
+  expect(Object.keys(archive)).toContain('teacher-console-notes.txt');
+  expect(new TextDecoder().decode(archive['teacher-console-notes.txt'])).toContain(
+    'Exit ticket reflection',
+  );
 });

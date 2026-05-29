@@ -24,6 +24,15 @@ export function ResponsivePreview({ snapshot }: ResponsivePreviewProps) {
       title="Mobile & tablet preview"
       lead="Teacher console on tablet; student activity on mobile — same lesson, adapted layout."
     >
+      <ul className="devices-session-meta" data-testid="devices-session-meta">
+        <li data-testid="devices-review-state">
+          Review: {snapshot.approved ? 'Teacher approved' : 'Pending review'}
+        </li>
+        <li data-testid="devices-class-mode">
+          Class: {snapshot.classMode === 'groups' ? 'Small groups' : 'Whole class'}
+        </li>
+      </ul>
+
       <div className="flex-between" style={{ marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
         <div data-testid="devices-woven-pip">
           <StatusPip

@@ -4,7 +4,7 @@ Record **60–90 seconds** for Contra. Script: [WALKTHROUGH.md](./WALKTHROUGH.md
 
 ## Before recording
 
-- [ ] Live URL loads (GitHub Pages or Vercel) — test **Run judge demo** once on production.
+- [x] Live URL loads (GitHub Pages or Vercel) — test **Run judge demo** once on production. _(Chromium e2e + Pages URL in submission README)_
 - [ ] Browser zoom 100%, clean desktop, no notifications.
 - [ ] Optional: `?w=0` or footer **Reset demo** for a fresh start.
 

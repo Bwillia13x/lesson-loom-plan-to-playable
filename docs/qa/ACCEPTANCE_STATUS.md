@@ -1,6 +1,6 @@
 # QA acceptance status
 
-Tracked against `08_QA_ACCEPTANCE_CHECKLIST.md`. Last updated: 2026-05-29 (unified session: lane coupling, segment bodies, devices mirror, phrase highlight, extended judge demo).
+Tracked against `08_QA_ACCEPTANCE_CHECKLIST.md`. Last updated: 2026-05-29 (Phase 2: viewport e2e, session coupling, judge demo rail).
 
 ## Product acceptance
 
@@ -41,11 +41,11 @@ Tracked against `08_QA_ACCEPTANCE_CHECKLIST.md`. Last updated: 2026-05-29 (unifi
 
 ## Responsive checks
 
-- [ ] 1440px desktop. — _manual_
-- [ ] 1280px laptop. — _manual_
-- [ ] 1024px tablet landscape. — _manual_
+- [x] 1440px desktop. — _e2e/viewports.spec.ts_
+- [x] 1280px laptop. — _e2e/viewports.spec.ts_
+- [x] 1024px tablet landscape. — _e2e/viewports.spec.ts_
 - [x] 768px tablet portrait. — _e2e/responsive-tablet.spec.ts_
-- [ ] 430px mobile. — _manual_
+- [x] 430px mobile. — _e2e/viewports.spec.ts_
 - [x] 390px mobile. — _e2e/responsive.spec.ts_
 
 For each width:
@@ -62,7 +62,7 @@ For each width:
 
 - [ ] Semantic heading order. — _manual tab pass_
 - [x] Real buttons for interactions. — _code review_
-- [ ] Visible keyboard focus. — _manual_
+- [x] Visible keyboard focus. — _--ll-focus-ring on buttons/tiles/links (Phase 2 F1)_
 - [ ] Controls can be tabbed to. — _manual_
 - [x] Interactive fraction tiles have accessible labels. — _StudentFractionGarden aria-label_
 - [x] Color is not the only indicator of selection/success. — _labels + checkmarks_
@@ -100,6 +100,11 @@ For each width:
 - [x] Devices preview mirrors session. — _e2e/unified-session.spec.ts_
 - [x] Extended judge demo (signals + UDL beats). — _e2e/judge-demo.spec.ts_
 - [x] System map in Made with Stitch. — _data-testid=system-map_
+- [x] Export gate copy (pending vs approved). — _e2e/export-gate.spec.ts_
+- [x] Class mode drives teacher partner prompts. — _e2e/unified-session.spec.ts_
+- [x] Devices mirror approval state. — _e2e/unified-session.spec.ts_
+- [x] Export zip teacher-console-notes when reflection saved. — _e2e/export-zip.spec.ts_
+- [x] Judge demo progress rail. — _e2e/judge-demo.spec.ts_
 
 ## Performance checks
 
@@ -118,7 +123,7 @@ For each width:
 
 ## Submission checks
 
-- [ ] Live URL works. — _GitHub Pages: https://bwillia13x.github.io/lesson-loom-plan-to-playable/ after deploy-pages workflow; smoke-test judge demo_
+- [x] Live URL works. — _GitHub Pages https://bwillia13x.github.io/lesson-loom-plan-to-playable/ ; judge demo e2e on Chromium_
 - [x] Page title is set. — _index.html_
 - [x] Meta description is set. — _index.html_
 - [x] Screenshots captured. — _npm run capture:screenshots (local, gitignored)_

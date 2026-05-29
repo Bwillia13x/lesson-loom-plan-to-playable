@@ -3,19 +3,20 @@ import {
   misconceptionNotes,
   teacherPrompts,
   teacherTimeline,
+  type ClassMode,
   type TimelineId,
 } from '../../data/lessonLoomData';
 import { Panel } from '../ui/Panel';
 import { Section } from '../ui/Section';
 import { StatusPip } from '../ui/StatusPip';
 
-type ClassMode = 'whole' | 'groups';
-
 type TeacherConsoleProps = {
   activeSegment: TimelineId;
   onSegmentChange: (id: TimelineId) => void;
   classMode: ClassMode;
   onClassModeChange: (mode: ClassMode) => void;
+  reflectionSaved: boolean;
+  reflectionText: string;
 };
 
 export function TeacherConsole({
@@ -23,9 +24,15 @@ export function TeacherConsole({
   onSegmentChange,
   classMode,
   onClassModeChange,
+  reflectionSaved,
+  reflectionText,
 }: TeacherConsoleProps) {
   const active = teacherTimeline.find((s) => s.id === activeSegment) ?? teacherTimeline[2];
-  const segmentBody = getTeacherSegmentBody(activeSegment);
+  const segmentBody = getTeacherSegmentBody(activeSegment, classMode);
+  const reflectionNote =
+    reflectionSaved && activeSegment === 'exit' && reflectionText.trim()
+      ? `Demo reflection on file: “${reflectionText.trim().slice(0, 120)}${reflectionText.length > 120 ? '…' : ''}”`
+      : null;
 
   const timerDisplay = activeSegment === 'partner' ? '15:00' : active.time.replace(' min', ':00');
 
@@ -109,6 +116,11 @@ export function TeacherConsole({
             >
               Watch: {segmentBody.watch}
             </p>
+            {reflectionNote && (
+              <p className="teacher-reflection-note" data-testid="teacher-reflection-note">
+                {reflectionNote}
+              </p>
+            )}
             </div>
           </Panel>
         </div>

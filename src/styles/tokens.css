@@ -35,6 +35,7 @@
     'Liberation Mono', monospace;
   --ll-max: 1240px;
   --ll-nav-w: 72px;
+  --ll-focus-ring: 0 0 0 3px rgba(45, 74, 62, 0.35);
 }
 
 *,

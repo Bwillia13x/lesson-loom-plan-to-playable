@@ -328,3 +328,13 @@
   color: var(--ll-line-strong);
   font-size: 0.65rem;
 }
+
+button:focus-visible,
+.fraction-tile:focus-visible,
+a:focus-visible,
+.app-nav__link:focus-visible,
+.mode-toggle__btn:focus-visible,
+.timeline__segment:focus-visible {
+  outline: none;
+  box-shadow: var(--ll-focus-ring);
+}

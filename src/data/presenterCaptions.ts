@@ -7,6 +7,9 @@ export const judgeDemoPresenterCaptions = [
   'Checking equivalent fractions — same garden space.',
   'Differentiation: Extend lane adjusts the student mission.',
   'Switching to the teacher console — pacing and prompts.',
+  'Whole class or small groups — the console adapts pacing prompts.',
   'Recording teacher review and classroom approval.',
   'Opening the teacher-reviewed export pack.',
 ] as const;
+
+export const JUDGE_DEMO_STEP_COUNT = judgeDemoPresenterCaptions.length;

@@ -627,6 +627,70 @@
   min-height: 220px;
 }
 
+.hero-plan {
+  box-shadow: 0 12px 40px rgba(26, 35, 50, 0.08);
+  border: 1px solid var(--ll-line-strong);
+}
+
+.hero-preview {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(45, 74, 62, 0.12);
+}
+
+.fraction-tile {
+  box-shadow:
+    0 2px 0 rgba(26, 35, 50, 0.06),
+    0 4px 12px rgba(26, 35, 50, 0.04);
+}
+
+.fraction-tile--selected {
+  box-shadow:
+    0 0 0 2px var(--ll-sage),
+    0 6px 16px rgba(45, 74, 62, 0.15);
+}
+
+.export-gate {
+  font-size: 0.78rem;
+  color: var(--ll-graphite);
+  padding: 0.65rem 0.85rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  background: var(--ll-paper-inset);
+  border: 1px solid var(--ll-line);
+}
+
+.export-gate--approved {
+  background: var(--ll-green-soft);
+  border-color: rgba(22, 163, 74, 0.25);
+}
+
+.teacher-reflection-note {
+  font-size: 0.82rem;
+  color: var(--ll-muted);
+  margin-top: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  background: var(--ll-paper-inset);
+  border-left: 3px solid var(--ll-sage);
+}
+
+.weave-banner__session {
+  font-size: 0.72rem;
+  color: var(--ll-muted);
+  margin-top: 0.35rem;
+}
+
+.devices-session-meta {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  font-size: 0.72rem;
+  color: var(--ll-muted);
+}
+
 .hero-weave-svg {
   position: absolute;
   inset: 0;

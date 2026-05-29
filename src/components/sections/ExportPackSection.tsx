@@ -1,4 +1,4 @@
-import { exportPack } from '../../data/lessonLoomData';
+import { exportGateCopy, exportPack } from '../../data/lessonLoomData';
 import { IndustrialButton } from '../ui/IndustrialButton';
 import { Section } from '../ui/Section';
 import { StatusPip } from '../ui/StatusPip';
@@ -55,6 +55,19 @@ export function ExportPackSection({
       {downloadNotice && (
         <p className="export-notice" role="status" aria-live="polite" data-testid="export-download-notice">
           {downloadNotice}
+        </p>
+      )}
+
+      {approved ? (
+        <p
+          className="export-gate export-gate--approved text-mono"
+          data-testid="export-gate-approved"
+        >
+          {exportGateCopy.approved}
+        </p>
+      ) : (
+        <p className="export-gate text-mono" data-testid="export-gate-pending">
+          {exportGateCopy.pending}
         </p>
       )}
 

@@ -222,8 +222,41 @@ export const teacherSegmentBodies: Record<TimelineId, TeacherSegmentBody> = {
   },
 };
 
-export function getTeacherSegmentBody(segmentId: TimelineId): TeacherSegmentBody {
-  return teacherSegmentBodies[segmentId] ?? teacherSegmentBodies.partner;
+export type ClassMode = 'whole' | 'groups';
+
+export const exportGateCopy = {
+  pending:
+    'Complete teacher review before classroom handoff. Exports remain preview drafts.',
+  approved: 'Teacher reviewed this draft. Artifacts are ready for your workflow.',
+} as const;
+
+export const teacherSegmentClassOverrides: Partial<
+  Record<ClassMode, Partial<Record<TimelineId, { watch?: string; prompts?: string[] }>>>
+> = {
+  groups: {
+    partner: {
+      watch:
+        'Circulate pairs; listen for equal parts language, not just matching numbers.',
+      prompts: [
+        'Partner A models one bed; Partner B builds an equivalent with different denominators.',
+        'Switch roles and justify why the beds show the same amount.',
+      ],
+    },
+  },
+};
+
+export function getTeacherSegmentBody(
+  segmentId: TimelineId,
+  classMode: ClassMode = 'whole',
+): TeacherSegmentBody {
+  const base = teacherSegmentBodies[segmentId] ?? teacherSegmentBodies.partner;
+  const override = teacherSegmentClassOverrides[classMode]?.[segmentId];
+  if (!override) return base;
+  return {
+    ...base,
+    watch: override.watch ?? base.watch,
+    prompts: override.prompts ?? base.prompts,
+  };
 }
 
 export const teacherPrompts = [
@@ -659,6 +692,8 @@ export type DevicesSnapshot = {
   activeSupport: SupportLane;
   activeSegment: TimelineId;
   selectedTileLabels: string[];
+  approved: boolean;
+  classMode: ClassMode;
 };
 
 export const navSections = [

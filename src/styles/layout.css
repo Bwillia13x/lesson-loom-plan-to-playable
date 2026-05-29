@@ -67,6 +67,21 @@
   min-width: 0;
 }
 
+.judge-demo-rail {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--ll-graphite);
+  max-width: min(36ch, 40vw);
+}
+
+.judge-demo-rail__caption {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .app-topbar {
   position: sticky;
   top: 0;
@@ -75,6 +90,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  flex-wrap: wrap;
   padding: 0.75rem 1.5rem;
   background: rgba(250, 248, 244, 0.92);
   backdrop-filter: blur(10px);

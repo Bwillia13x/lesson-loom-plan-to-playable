@@ -5,6 +5,8 @@ test('judge demo visits signals and UDL with presenter captions', async ({ page 
 
   await page.getByTestId('run-judge-demo').click();
 
+  await expect(page.getByTestId('judge-demo-rail')).toBeVisible();
+
   const caption = page.getByTestId('presenter-caption');
   await expect(caption).toBeVisible();
   await expect(caption).toContainText(/teaching signal|Weaving/i);

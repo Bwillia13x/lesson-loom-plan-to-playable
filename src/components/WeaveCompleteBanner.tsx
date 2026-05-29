@@ -1,13 +1,21 @@
 import { IndustrialButton } from './ui/IndustrialButton';
 import { StatusPip } from './ui/StatusPip';
 
+import type { SupportLane } from '../data/lessonLoomData';
+
 type WeaveCompleteBannerProps = {
+  activeSupport: SupportLane;
+  approved: boolean;
+  checkSuccess: boolean;
   onStudent: () => void;
   onTeacher: () => void;
   onExport: () => void;
 };
 
 export function WeaveCompleteBanner({
+  activeSupport,
+  approved,
+  checkSuccess,
   onStudent,
   onTeacher,
   onExport,
@@ -27,6 +35,10 @@ export function WeaveCompleteBanner({
         <p>
           Teaching signal extracted. Explore the student app, teacher console, or export
           pack.
+        </p>
+        <p className="weave-banner__session text-mono" data-testid="weave-banner-session">
+          Lane: {activeSupport} · {approved ? 'Approved' : 'Review pending'}
+          {checkSuccess ? ' · Equivalence complete' : ''}
         </p>
       </div>
       <div className="weave-complete-banner__actions">

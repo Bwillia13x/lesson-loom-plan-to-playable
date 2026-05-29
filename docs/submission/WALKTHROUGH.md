@@ -15,7 +15,7 @@ Click a **Source** badge on any signal card — the matching phrase highlights i
 
 The lesson becomes Fraction Garden: a student-facing activity where learners build garden beds that look different but use the same amount of space. They compare 1/2, 2/4, and 4/8 visually, use hints, and finish with a reflection.
 
-The teacher console keeps the lesson practical: warm-up, guided model, partner challenge, share-out, exit ticket, misconception notes, and prompts.
+The teacher console keeps the lesson practical: warm-up, guided model, partner challenge, share-out, exit ticket, misconception notes, and prompts. Toggle **Small Groups** to see partner prompts adapt for rotations.
 
 The differentiation panel gives support, core, and extension options. Switch lanes and watch the **student mission** update — same lesson, different scaffolds. The devices preview mirrors the live session (woven state, lane, timeline segment).
 

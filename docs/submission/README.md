@@ -42,6 +42,21 @@ Output: `submission-screenshots/01-hero.png` … `06-mobile-student.png`.
 
 Screenshots are gitignored by default; generate locally before submitting or attach from CI artifacts.
 
+## Screenshot artifacts
+
+After `npm run capture:screenshots`, expect:
+
+| File | Section |
+|------|---------|
+| `submission-screenshots/01-hero.png` | Hero |
+| `submission-screenshots/02-weave.png` | Lesson Weave |
+| `submission-screenshots/03-student.png` | Fraction Garden |
+| `submission-screenshots/04-teacher.png` | Teacher Console |
+| `submission-screenshots/05-export.png` | Export Pack |
+| `submission-screenshots/06-mobile-student.png` | Student @ 390px |
+
+Commit screenshots only if repo policy allows binaries; otherwise gitignore and attach to Contra upload.
+
 ## Walkthrough video
 
 Record 60–90s following [WALKTHROUGH.md](./WALKTHROUGH.md). Suggested flow: hero → weave → teaching signals → fraction garden → teacher console → review/export → Made with Stitch.

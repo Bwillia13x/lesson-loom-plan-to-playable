@@ -14,7 +14,11 @@ export function buildExportZipBlob(options?: ExportZipOptions): Blob {
     files[file.filename] = strToU8(file.body);
   }
   if (options?.reflectionSaved && options.reflectionText?.trim()) {
-    files['reflection-notes.txt'] = strToU8(options.reflectionText.trim());
+    const reflection = options.reflectionText.trim();
+    files['reflection-notes.txt'] = strToU8(reflection);
+    files['teacher-console-notes.txt'] = strToU8(
+      `Exit ticket reflection (demo, no student data):\n${reflection}\n`,
+    );
   }
   const zipped = zipSync(files);
   return new Blob([zipped], { type: 'application/zip' });

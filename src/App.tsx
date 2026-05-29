@@ -11,7 +11,10 @@ import {
   type TimelineId,
   type WorkspaceMode,
 } from './data/lessonLoomData';
-import { judgeDemoPresenterCaptions } from './data/presenterCaptions';
+import {
+  judgeDemoPresenterCaptions,
+  JUDGE_DEMO_STEP_COUNT,
+} from './data/presenterCaptions';
 import { useDemoUrlState, readDemoUrlOnLoad } from './hooks/useDemoUrlState';
 import { useHashNavigationOnLoad } from './hooks/useHashNavigation';
 import { SiteFooter } from './components/SiteFooter';
@@ -107,6 +110,8 @@ export default function App() {
       selectedTileLabels: selectedTileIds.map(
         (id) => fractionTiles.find((t) => t.id === id)?.label ?? id,
       ),
+      approved,
+      classMode,
     }),
     [
       studentAppActive,
@@ -114,6 +119,8 @@ export default function App() {
       activeSupport,
       activeSegment,
       selectedTileIds,
+      approved,
+      classMode,
     ],
   );
 
@@ -377,12 +384,19 @@ export default function App() {
     scrollTo('teacher');
     await delay(prefersReducedMotion ? 200 : 600);
 
+    if (!prefersReducedMotion) {
+      setClassMode('groups');
+      setDemoCaptionIndex(7);
+      await delay(500);
+      setClassMode('whole');
+    }
+
     scrollTo('review');
     setApproved(true);
-    setDemoCaptionIndex(7);
+    setDemoCaptionIndex(8);
     await delay(300);
 
-    setDemoCaptionIndex(8);
+    setDemoCaptionIndex(9);
     scrollTo('export');
     setDemoRunning(false);
     setDemoCaptionIndex(0);
@@ -439,6 +453,24 @@ export default function App() {
           >
             {demoRunning ? 'Running demo…' : 'Run judge demo'}
           </IndustrialButton>
+          {demoRunning && (
+            <div
+              className="judge-demo-rail"
+              data-testid="judge-demo-rail"
+              aria-live="polite"
+            >
+              <span className="sr-only">
+                Demo step {demoCaptionIndex + 1} of {JUDGE_DEMO_STEP_COUNT}
+              </span>
+              <span aria-hidden="true">
+                {demoCaptionIndex + 1}/{JUDGE_DEMO_STEP_COUNT}
+              </span>
+              <span className="judge-demo-rail__caption">
+                {judgeDemoPresenterCaptions[demoCaptionIndex] ??
+                  judgeDemoPresenterCaptions[0]}
+              </span>
+            </div>
+          )}
           <div className="app-topbar__status">
             <StatusPip label="All systems operational" tone="green" />
           </div>
@@ -451,6 +483,9 @@ export default function App() {
 
         {hasWoven && activeWeaveStep >= weaveSteps.length - 1 && (
           <WeaveCompleteBanner
+            activeSupport={activeSupport}
+            approved={approved}
+            checkSuccess={checkSuccess}
             onStudent={() => {
               setWorkspaceMode('student');
               scrollTo('student');
@@ -514,6 +549,8 @@ export default function App() {
             onSegmentChange={setActiveSegment}
             classMode={classMode}
             onClassModeChange={setClassMode}
+            reflectionSaved={reflectionSaved}
+            reflectionText={reflectionText}
           />
           <DifferentiationUDL
             activeLane={activeSupport}
