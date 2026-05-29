@@ -1,5 +1,7 @@
 # QA acceptance status
 
+**Phase 3 manual evidence:** See `docs/qa/MANUAL_PASS_2026-05-30.md` after human pass.
+
 Tracked against `08_QA_ACCEPTANCE_CHECKLIST.md`. Last updated: 2026-05-29 (Phase 2: viewport e2e, session coupling, judge demo rail).
 
 ## Product acceptance

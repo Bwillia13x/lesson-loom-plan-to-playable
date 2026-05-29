@@ -24,3 +24,18 @@ Record **60–90 seconds** for Contra. Script: [WALKTHROUGH.md](./WALKTHROUGH.md
 - [ ] Add video URL to this file and [README.md](./README.md) if hosting externally.
 
 **Video URL:** _paste here after upload_
+
+## Phase 3 recording beats (≤90s)
+
+| Sec | Beat | On screen |
+|-----|------|-----------|
+| 0–8 | Hook | Hero headline + plan preview |
+| 8–18 | Weave | Click Weave or Run judge demo start |
+| 18–28 | Signals | Teaching signal board + optional phrase highlight |
+| 28–45 | Student | Fraction Garden success + Extend lane if manual |
+| 45–58 | Teacher | Console segment + class mode if showing groups |
+| 58–68 | UDL | Support/Core/Extend toggle |
+| 68–78 | Review | Approve for classroom use |
+| 78–90 | Export + Stitch | Export pack + system map |
+
+**Tip:** Enable presenter mode (Phase L) or fullscreen browser to hide side nav.
