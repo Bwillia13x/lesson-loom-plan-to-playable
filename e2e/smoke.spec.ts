@@ -24,6 +24,7 @@ test('golden path: weave → fractions → approve → export copy', async ({ pa
   await expect(page.getByText('Teacher approval recorded')).toBeVisible();
 
   await page.locator('#export').scrollIntoViewIfNeeded();
+  await expect(page.getByTestId('export-approved-pip')).toBeVisible();
   const copyBtn = page.getByTestId('export-copy-stitch-prompt');
   await copyBtn.click();
   await expect(copyBtn).toHaveText('Copied');
@@ -34,10 +35,13 @@ test('UDL lanes switch content', async ({ page }) => {
   await page.locator('#udl').scrollIntoViewIfNeeded();
 
   await page.getByTestId('lane-support').click();
-  await expect(page.getByText('Pre-divided garden beds')).toBeVisible();
+  await expect(page.locator('#udl')).toContainText('Pre-divided garden beds');
 
   await page.getByTestId('lane-extend').click();
-  await expect(page.getByText('Create a new equivalent set')).toBeVisible();
+  await expect(page.locator('#udl')).toContainText('Create a new equivalent set');
+
+  await page.locator('#student').scrollIntoViewIfNeeded();
+  await expect(page.getByTestId('student-lane-mission')).toContainText('Extend lane');
 });
 
 test('run judge demo completes key states', async ({ page }) => {

@@ -12,18 +12,24 @@ import { StatusPip } from '../ui/StatusPip';
 type TeachingSignalProps = {
   hasWoven: boolean;
   onWeave: () => void;
+  onHighlightSource: (signalId: string, source: string) => void;
 };
 
 const LESSON_PLAN_TEXTAREA_ID = 'lesson-plan-draft';
 
-export function TeachingSignal({ hasWoven, onWeave }: TeachingSignalProps) {
+export function TeachingSignal({
+  hasWoven,
+  onWeave,
+  onHighlightSource,
+}: TeachingSignalProps) {
   const { reduced } = useMotion();
   const gridRef = useRef<HTMLDivElement>(null);
   const scrollToSection = useScrollToSection();
   const [sourceAnnouncement, setSourceAnnouncement] = useState('');
 
   const handleSourcePhrase = useCallback(
-    (source: string) => {
+    (signalId: string, source: string) => {
+      onHighlightSource(signalId, source);
       scrollToSection('intake');
       document
         .getElementById(LESSON_PLAN_TEXTAREA_ID)
@@ -32,7 +38,7 @@ export function TeachingSignal({ hasWoven, onWeave }: TeachingSignalProps) {
         `Source phrase in lesson plan: ${source}`,
       );
     },
-    [scrollToSection],
+    [onHighlightSource, scrollToSection],
   );
 
   useLayoutEffect(() => {
@@ -119,7 +125,7 @@ export function TeachingSignal({ hasWoven, onWeave }: TeachingSignalProps) {
               type="button"
               className="badge badge--source signal-card__source"
               data-testid={`source-phrase-${card.id}`}
-              onClick={() => handleSourcePhrase(card.source)}
+              onClick={() => handleSourcePhrase(card.id, card.source)}
               aria-label={`View source phrase in lesson plan: ${card.source}`}
               disabled={!hasWoven}
             >

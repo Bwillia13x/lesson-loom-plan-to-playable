@@ -2,9 +2,11 @@
 export const judgeDemoPresenterCaptions = [
   'Resetting the demo for a clean judge walkthrough.',
   'Weaving the lesson plan into a teaching signal.',
+  'Teaching signal cards trace back to phrases in the plan.',
   'Opening the student Fraction Garden workspace.',
   'Checking equivalent fractions — same garden space.',
-  'Switching to the teacher console view.',
+  'Differentiation: Extend lane adjusts the student mission.',
+  'Switching to the teacher console — pacing and prompts.',
   'Recording teacher review and classroom approval.',
   'Opening the teacher-reviewed export pack.',
 ] as const;

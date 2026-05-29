@@ -28,3 +28,11 @@ test('demo URL: tiles and approval hydrate fraction check', async ({ page }) => 
     timeout: 3000,
   });
 });
+
+test('demo URL: support lane hydrates student mission', async ({ page }) => {
+  await page.goto('/?w=1&support=extend#student');
+
+  await expect(page.locator('#student')).toHaveClass(/ll-section--woven-active/);
+  await expect(page.getByTestId('student-lane-mission')).toContainText('Extend lane');
+  await expect(page.getByTestId('student-lane-scaffolds')).toContainText('Open tile bank');
+});

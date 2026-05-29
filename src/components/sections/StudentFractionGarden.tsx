@@ -2,10 +2,12 @@ import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useMotion } from '../../motion/motionContext';
 import { runGsapScoped } from '../../motion/runGsapScoped';
 import {
+  differentiation,
   equivalentCanonicalIds,
   fractionTiles,
   studentActivity,
   type FractionTile,
+  type SupportLane,
 } from '../../data/lessonLoomData';
 import { FractionTileVisual } from '../FractionTileVisual';
 import { IndustrialButton } from '../ui/IndustrialButton';
@@ -30,6 +32,7 @@ type StudentFractionGardenProps = {
   onReflectionChange: (value: string) => void;
   onReflectionTouch: () => void;
   onSaveReflection: () => void;
+  activeSupport: SupportLane;
 };
 
 function studentProgressIndex(
@@ -77,7 +80,9 @@ export function StudentFractionGarden({
   onReflectionChange,
   onReflectionTouch,
   onSaveReflection,
+  activeSupport,
 }: StudentFractionGardenProps) {
+  const lane = differentiation[activeSupport];
   const { reduced } = useMotion();
   const [hintVisible, setHintVisible] = useState(false);
   const successRef = useRef<HTMLDivElement>(null);
@@ -131,6 +136,22 @@ export function StudentFractionGarden({
       title={studentActivity.title}
       lead={studentActivity.mission}
     >
+      <div
+        className="student-lane-callout"
+        data-testid="student-lane-mission"
+        style={{ fontSize: '0.88rem', marginBottom: '1rem', color: 'var(--ll-graphite)' }}
+      >
+        <p style={{ margin: '0 0 0.35rem' }}>
+          <strong>{lane.label} lane:</strong> {lane.taskVariation}
+        </p>
+        <p
+          className="text-mono"
+          style={{ margin: 0, fontSize: '0.75rem', color: 'var(--ll-muted)' }}
+          data-testid="student-lane-scaffolds"
+        >
+          Scaffolds: {lane.scaffolds}
+        </p>
+      </div>
       <div className="garden-layout">
         <Panel bracket screws>
           <div className="flex-between" style={{ marginBottom: '1rem' }}>

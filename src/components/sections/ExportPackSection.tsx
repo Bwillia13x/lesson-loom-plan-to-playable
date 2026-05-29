@@ -5,6 +5,7 @@ import { StatusPip } from '../ui/StatusPip';
 
 type ExportPackSectionProps = {
   hasWoven: boolean;
+  approved: boolean;
   copiedExportId: string | null;
   downloadNotice: string | null;
   onCopy: (id: string) => void;
@@ -13,6 +14,7 @@ type ExportPackSectionProps = {
 
 export function ExportPackSection({
   hasWoven,
+  approved,
   copiedExportId,
   downloadNotice,
   onCopy,
@@ -24,13 +26,21 @@ export function ExportPackSection({
       eyebrow="Export pack"
       title="Export pack — build passport"
       lead="Stitch-ready artifacts for regenerating the lesson interface, design rules, teacher guide, and printable fallback."
+      className={approved ? 'export-section--approved' : undefined}
     >
       <div className="flex-between" style={{ marginBottom: '1.25rem' }}>
-        <StatusPip
-          label={hasWoven ? 'All files generated' : 'Preview artifacts'}
-          tone={hasWoven ? 'green' : 'amber'}
-          pulse={hasWoven}
-        />
+        <div className="export-pack-status" data-testid="export-pack-status">
+          <StatusPip
+            label={hasWoven ? 'All files generated' : 'Preview artifacts'}
+            tone={hasWoven ? 'green' : 'amber'}
+            pulse={hasWoven}
+          />
+          {approved && (
+            <span data-testid="export-approved-pip">
+              <StatusPip label="Teacher-reviewed draft" tone="green" />
+            </span>
+          )}
+        </div>
         <IndustrialButton
           variant="primary"
           size="lg"

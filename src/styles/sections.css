@@ -481,6 +481,93 @@
   min-height: 200px;
 }
 
+.device-frame--live {
+  box-shadow:
+    var(--ll-shadow),
+    0 0 0 2px var(--ll-sage-soft);
+}
+
+.lesson-plan-highlight-view,
+.lesson-plan-highlight-fallback {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  margin-bottom: 0.65rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--ll-radius-sm);
+  background: var(--ll-sage-soft);
+  border: 1px solid var(--ll-sage);
+}
+
+.lesson-plan__phrase--active {
+  background: var(--ll-gold-soft);
+  color: var(--ll-ink);
+  padding: 0 0.15em;
+  border-radius: 2px;
+}
+
+.export-pack-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.export-section--approved {
+  box-shadow: inset 0 0 0 1px var(--ll-sage);
+}
+
+.system-map {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+  margin-bottom: 1.25rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--ll-radius-md);
+  border: 1px dashed var(--ll-line);
+  background: var(--ll-paper-elevated);
+}
+
+.system-map__node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 3.5rem;
+  opacity: 0.45;
+}
+
+.system-map__node--active {
+  opacity: 1;
+}
+
+.system-map__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ll-muted);
+}
+
+.system-map__node--active .system-map__dot {
+  background: var(--ll-sage);
+  box-shadow: 0 0 0 3px var(--ll-sage-soft);
+}
+
+.system-map__label {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ll-muted);
+  font-family: var(--ll-font-mono);
+}
+
+.system-map__node--active .system-map__label {
+  color: var(--ll-ink);
+  font-weight: 600;
+}
+
 /* Hero */
 .hero-grid {
   display: grid;
