@@ -96,6 +96,7 @@ export default function App() {
   );
   const [weaveLiveMessage, setWeaveLiveMessage] = useState('');
   const uiTimeoutIds = useRef<number[]>([]);
+  const highlightSurfaceTimeoutRef = useRef<number | null>(null);
   const weaveTimelineRef = useRef<ReturnType<typeof createWeaveTimeline>>(null);
   const prevHasWovenRef = useRef(false);
 
@@ -179,6 +180,11 @@ export default function App() {
   const clearUiTimeouts = () => {
     uiTimeoutIds.current.forEach((t) => window.clearTimeout(t));
     uiTimeoutIds.current = [];
+    if (highlightSurfaceTimeoutRef.current !== null) {
+      window.clearTimeout(highlightSurfaceTimeoutRef.current);
+      highlightSurfaceTimeoutRef.current = null;
+    }
+    setHighlightSurface(null);
   };
 
   const runWeaveSequence = useCallback(() => {
@@ -358,10 +364,15 @@ export default function App() {
       if (target === 'student') setWorkspaceMode('student');
       const sectionId =
         target === 'udl' ? 'udl' : target === 'teacher' ? 'teacher' : 'student';
+      if (highlightSurfaceTimeoutRef.current !== null) {
+        window.clearTimeout(highlightSurfaceTimeoutRef.current);
+      }
       setHighlightSurface(target);
       scrollTo(sectionId);
-      const t = window.setTimeout(() => setHighlightSurface(null), 2000);
-      uiTimeoutIds.current.push(t);
+      highlightSurfaceTimeoutRef.current = window.setTimeout(() => {
+        setHighlightSurface(null);
+        highlightSurfaceTimeoutRef.current = null;
+      }, 2000);
     },
     [scrollTo],
   );
@@ -379,6 +390,7 @@ export default function App() {
     if (demoRunning) return;
     setDemoRunning(true);
     setDemoCaptionIndex(0);
+    setHighlightSurface(null);
     setApproved(false);
     setCheckSuccess(false);
     setCheckAttempted(false);
@@ -477,7 +489,11 @@ export default function App() {
         ))}
       </nav>
 
-      <div className="app-main" data-workspace-mode={workspaceMode}>
+      <div
+        className="app-main"
+        data-workspace-mode={workspaceMode}
+        data-session-spine={hasWoven || demoRunning ? 'true' : undefined}
+      >
         <header className="app-topbar">
           <div>
             <div className="app-topbar__title">Lesson Loom</div>

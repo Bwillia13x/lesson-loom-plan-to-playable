@@ -2,7 +2,7 @@
 
 **Phase 3 manual evidence:** See `docs/qa/MANUAL_PASS_2026-05-30.md` after human pass.
 
-Tracked against `08_QA_ACCEPTANCE_CHECKLIST.md`. Last updated: 2026-05-29 (Phase 2: viewport e2e, session coupling, judge demo rail).
+Tracked against `08_QA_ACCEPTANCE_CHECKLIST.md`. Last updated: 2026-05-30 (Phase 3: session spine, signal surface links, judge Scenes, presenter chrome).
 
 ## Product acceptance
 
@@ -117,6 +117,10 @@ For each width:
 - [x] Top-bar Scenes menu applies approved preset. — _e2e/judge-scenes.spec.ts_
 - [x] Top-bar Scenes reset demo. — _e2e/judge-scenes.spec.ts_
 - [x] Presenter chrome hides side nav during judge demo. — _e2e/presenter-mode.spec.ts_
+- [x] Signal link scrolls to teacher console. — _e2e/signal-surface-link.spec.ts_
+- [x] Signal link scrolls to UDL section. — _e2e/signal-surface-link.spec.ts_
+- [x] Session spine shows live subline after weave. — _e2e/session-spine.spec.ts_
+- [x] Session spine lesson pip respects teacher mode. — _e2e/session-spine.spec.ts_
 
 ## Performance checks
 

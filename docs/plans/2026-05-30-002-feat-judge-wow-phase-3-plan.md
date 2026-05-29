@@ -1,6 +1,6 @@
 ---
 title: "feat: Judge Wow Phase 3 — visible unified session & submission closure"
-status: active
+status: completed
 date: 2026-05-30
 type: feat
 origin: docs/superpowers/specs/2026-05-30-judge-wow-phase-3-design.md

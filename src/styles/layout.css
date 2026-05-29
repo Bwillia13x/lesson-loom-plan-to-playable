@@ -67,6 +67,10 @@
   min-width: 0;
 }
 
+.app-main[data-session-spine='true'] .ll-section {
+  scroll-margin-top: 8rem;
+}
+
 .judge-demo-rail {
   display: flex;
   gap: 0.75rem;
@@ -319,6 +323,11 @@
 .session-spine__pip:hover {
   border-color: var(--ll-line-strong);
   color: var(--ll-ink);
+}
+
+.session-spine__pip:focus-visible {
+  outline: none;
+  box-shadow: var(--ll-focus-ring);
 }
 
 .session-spine__pip--active {

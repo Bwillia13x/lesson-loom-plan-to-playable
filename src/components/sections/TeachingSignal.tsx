@@ -134,12 +134,15 @@ export function TeachingSignal({
               >
                 Source: {card.source}
               </button>
-              {hasWoven && card.surfaceLinks?.length ? (
+              {hasWoven && card.surfaceLinks?.[0] ? (
                 <button
                   type="button"
                   className="signal-card__lesson-link"
                   data-testid={`signal-link-${card.id}`}
-                  onClick={() => onSurfaceLink(card.surfaceLinks![0])}
+                  onClick={() => {
+                    const target = card.surfaceLinks?.[0];
+                    if (target) onSurfaceLink(target);
+                  }}
                 >
                   See in lesson
                 </button>
