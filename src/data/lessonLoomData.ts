@@ -32,6 +32,8 @@ export type TeachingSignalCard = {
   value: string;
   source: string;
   surfaceLinks?: SignalSurfaceLink[];
+  /** Lane to show when "See in lesson" targets student or UDL surfaces */
+  surfaceLane?: SupportLane;
 };
 
 export const teachingSignals: TeachingSignalCard[] = [
@@ -42,6 +44,7 @@ export const teachingSignals: TeachingSignalCard[] = [
       'Represent equivalent fractions visually and explain why the values are equal.',
     source: 'different fractions can represent the same amount',
     surfaceLinks: ['student'],
+    surfaceLane: 'core',
   },
   {
     id: 'vocab',
@@ -50,6 +53,7 @@ export const teachingSignals: TeachingSignalCard[] = [
       'Equivalent, whole, numerator, denominator, fraction tile, equal value.',
     source: 'fraction tiles can show the same whole',
     surfaceLinks: ['student'],
+    surfaceLane: 'core',
   },
   {
     id: 'prior',
@@ -58,6 +62,7 @@ export const teachingSignals: TeachingSignalCard[] = [
       'Students have seen basic fractions and can identify halves, quarters, and eighths.',
     source: 'comparing 1/2, 2/4, and 4/8',
     surfaceLinks: ['student'],
+    surfaceLane: 'core',
   },
   {
     id: 'misconception',
@@ -73,6 +78,7 @@ export const teachingSignals: TeachingSignalCard[] = [
     value: 'Garden beds divided into different numbers of equal plots.',
     source: 'visual models',
     surfaceLinks: ['student'],
+    surfaceLane: 'core',
   },
   {
     id: 'interaction',
@@ -81,6 +87,7 @@ export const teachingSignals: TeachingSignalCard[] = [
       'Students select and compare tiles that cover the same amount of garden space.',
     source: 'work with a partner to build three examples',
     surfaceLinks: ['student'],
+    surfaceLane: 'core',
   },
   {
     id: 'assessment',
@@ -97,6 +104,7 @@ export const teachingSignals: TeachingSignalCard[] = [
       'Visual scaffolds for support; create-your-own challenge for extension.',
     source: 'support … and an extension challenge',
     surfaceLinks: ['udl'],
+    surfaceLane: 'support',
   },
 ];
 

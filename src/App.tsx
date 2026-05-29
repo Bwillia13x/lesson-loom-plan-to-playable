@@ -359,9 +359,15 @@ export default function App() {
   }, [scrollTo]);
 
   const handleSignalSurfaceLink = useCallback(
-    (target: SignalSurfaceLink) => {
+    (target: SignalSurfaceLink, lane?: SupportLane) => {
       if (target === 'teacher') setWorkspaceMode('teacher');
-      if (target === 'student') setWorkspaceMode('student');
+      if (target === 'student') {
+        setWorkspaceMode('student');
+        setActiveSupport(lane ?? 'core');
+      }
+      if (target === 'udl') {
+        setActiveSupport(lane ?? 'support');
+      }
       const sectionId =
         target === 'udl' ? 'udl' : target === 'teacher' ? 'teacher' : 'student';
       if (highlightSurfaceTimeoutRef.current !== null) {
@@ -536,8 +542,20 @@ export default function App() {
             onClick={() => void runJudgeDemo()}
             disabled={demoRunning}
             data-testid="run-judge-demo"
+            aria-label={demoRunning ? 'Judge demo running' : 'Run judge demo'}
           >
-            {demoRunning ? 'Running demo…' : 'Run judge demo'}
+            {demoRunning ? (
+              'Running demo…'
+            ) : (
+              <>
+                <span className="judge-demo-btn__long" aria-hidden="true">
+                  Run judge demo
+                </span>
+                <span className="judge-demo-btn__short" aria-hidden="true">
+                  Run demo
+                </span>
+              </>
+            )}
           </IndustrialButton>
           {demoRunning && (
             <div
@@ -594,7 +612,7 @@ export default function App() {
           />
         )}
 
-        <main id="main-content">
+        <main id="main-content" tabIndex={-1}>
           <HeroLanding
             hasWoven={hasWoven}
             lessonPlanDraft={lessonPlanDraft}

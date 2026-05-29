@@ -32,9 +32,8 @@ test('run judge demo has no unexpected console errors', async ({ page }) => {
   await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 5000 });
   await expect(page.getByText('Equivalent? Yes!')).toBeVisible({ timeout: 10000 });
   await expect(page.getByText('Teacher approval recorded')).toBeVisible({ timeout: 10000 });
-  await expect(page.getByTestId('run-judge-demo')).toHaveText('Run judge demo', {
-    timeout: 10000,
-  });
+  await expect(page.getByTestId('judge-demo-rail')).toBeHidden({ timeout: 15000 });
+  await expect(page.getByTestId('run-judge-demo')).toBeEnabled();
 
   const failures = [...consoleErrors, ...pageErrors];
   expect(

@@ -86,6 +86,25 @@
   white-space: nowrap;
 }
 
+.judge-demo-btn__short {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .judge-demo-btn__long {
+    display: none;
+  }
+
+  .judge-demo-btn__short {
+    display: inline;
+  }
+
+  .app-topbar {
+    gap: 0.65rem;
+    padding-inline: 1rem;
+  }
+}
+
 .app-topbar {
   position: sticky;
   top: 0;

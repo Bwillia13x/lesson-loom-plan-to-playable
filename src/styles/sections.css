@@ -222,11 +222,20 @@
 }
 
 .fraction-tile--selected {
-  border-color: var(--ll-orange);
+  border-color: var(--ll-orange-deep);
+  border-width: 2px;
   background: var(--ll-orange-soft);
   box-shadow:
     0 0 0 2px var(--ll-sage),
     0 6px 16px rgba(45, 74, 62, 0.15);
+  transform: translateY(-1px);
+}
+
+.fraction-tile__selected-mark {
+  font-size: 0.55rem;
+  line-height: 1;
+  color: var(--ll-orange-deep);
+  align-self: flex-start;
 }
 
 .fraction-tile--success {
@@ -680,6 +689,8 @@
 
 .hero-plan,
 .hero-preview {
+  position: relative;
+  z-index: 1;
   min-height: 220px;
 }
 
@@ -739,7 +750,8 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 2;
+  z-index: 0;
+  opacity: 0.92;
 }
 
 .lesson-plan-doc {
@@ -891,11 +903,11 @@
   gap: 1rem;
 }
 
-/* Skip link */
+/* Skip link — off-screen until focused (reliable tab order vs left:-9999px) */
 .skip-link {
-  position: absolute;
-  left: -9999px;
+  position: fixed;
   top: 0;
+  left: var(--ll-nav-w);
   z-index: 100;
   padding: 0.65rem 1rem;
   background: var(--ll-orange);
@@ -903,11 +915,13 @@
   font-weight: 600;
   border-radius: 0 0 8px 8px;
   text-decoration: none;
+  transform: translateY(-120%);
+  transition: transform 0.15s ease;
 }
 
 .skip-link:focus,
 .skip-link:focus-visible {
-  left: var(--ll-nav-w);
+  transform: translateY(0);
   outline: 2px solid #fff;
   outline-offset: 2px;
 }
