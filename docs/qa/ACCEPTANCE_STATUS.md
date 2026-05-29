@@ -92,6 +92,7 @@ For each width:
 - [x] Export approved pip when review complete. — _e2e/smoke.spec.ts, e2e/judge-demo.spec.ts_
 - [x] Student lane scaffolds copy. — _e2e/unified-session.spec.ts_
 - [x] Shareable demo URL + hash. — _e2e/demo-url.spec.ts_
+- [x] Demo URL support lane hydrates student copy. — _e2e/demo-url.spec.ts_
 - [x] Source phrase scroll to intake. — _e2e/source-phrase.spec.ts_
 - [x] Source phrase highlight in plan. — _e2e/source-phrase.spec.ts_
 - [x] UDL lane drives student mission copy. — _e2e/unified-session.spec.ts_

@@ -1,6 +1,6 @@
 ---
 title: "feat: Unified system wow — classroom session coupling & judge narrative"
-status: active
+status: completed
 date: 2026-05-29
 type: feat
 origin: docs/superpowers/specs/2026-05-29-unified-system-wow-design.md
