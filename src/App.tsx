@@ -359,9 +359,15 @@ export default function App() {
   }, [scrollTo]);
 
   const handleSignalSurfaceLink = useCallback(
-    (target: SignalSurfaceLink) => {
+    (target: SignalSurfaceLink, lane?: SupportLane) => {
       if (target === 'teacher') setWorkspaceMode('teacher');
-      if (target === 'student') setWorkspaceMode('student');
+      if (target === 'student') {
+        setWorkspaceMode('student');
+        setActiveSupport(lane ?? 'core');
+      }
+      if (target === 'udl') {
+        setActiveSupport(lane ?? 'support');
+      }
       const sectionId =
         target === 'udl' ? 'udl' : target === 'teacher' ? 'teacher' : 'student';
       if (highlightSurfaceTimeoutRef.current !== null) {
@@ -537,7 +543,14 @@ export default function App() {
             disabled={demoRunning}
             data-testid="run-judge-demo"
           >
-            {demoRunning ? 'Running demo…' : 'Run judge demo'}
+            {demoRunning ? (
+              'Running demo…'
+            ) : (
+              <>
+                <span className="judge-demo-btn__long">Run judge demo</span>
+                <span className="judge-demo-btn__short">Run demo</span>
+              </>
+            )}
           </IndustrialButton>
           {demoRunning && (
             <div

@@ -222,11 +222,20 @@
 }
 
 .fraction-tile--selected {
-  border-color: var(--ll-orange);
+  border-color: var(--ll-orange-deep);
+  border-width: 2px;
   background: var(--ll-orange-soft);
   box-shadow:
     0 0 0 2px var(--ll-sage),
     0 6px 16px rgba(45, 74, 62, 0.15);
+  transform: translateY(-1px);
+}
+
+.fraction-tile__selected-mark {
+  font-size: 0.55rem;
+  line-height: 1;
+  color: var(--ll-orange-deep);
+  align-self: flex-start;
 }
 
 .fraction-tile--success {

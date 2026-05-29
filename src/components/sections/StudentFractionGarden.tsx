@@ -251,9 +251,16 @@ export function StudentFractionGarden({
                   onClick={() => onToggleTile(tile.id)}
                 >
                   <FractionTileVisual tile={tile} />
-                  {success && (
-                    <span className="fraction-tile__check" aria-hidden="true">
-                      ✓
+                  {selected && (
+                    <span
+                      className={
+                        success
+                          ? 'fraction-tile__check'
+                          : 'fraction-tile__selected-mark'
+                      }
+                      aria-hidden="true"
+                    >
+                      {success ? '✓' : '●'}
                     </span>
                   )}
                   <span>{tile.label}</span>

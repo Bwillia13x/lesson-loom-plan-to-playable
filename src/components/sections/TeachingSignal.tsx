@@ -1,5 +1,9 @@
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
-import { teachingSignals, type SignalSurfaceLink } from '../../data/lessonLoomData';
+import {
+  teachingSignals,
+  type SignalSurfaceLink,
+  type SupportLane,
+} from '../../data/lessonLoomData';
 import { useMotion } from '../../motion/motionContext';
 import { runGsapScoped } from '../../motion/runGsapScoped';
 import { useScrollToSection } from '../../motion/useScrollToSection';
@@ -13,7 +17,7 @@ type TeachingSignalProps = {
   hasWoven: boolean;
   onWeave: () => void;
   onHighlightSource: (signalId: string, source: string) => void;
-  onSurfaceLink: (target: SignalSurfaceLink) => void;
+  onSurfaceLink: (target: SignalSurfaceLink, lane?: SupportLane) => void;
 };
 
 const LESSON_PLAN_TEXTAREA_ID = 'lesson-plan-draft';
@@ -141,7 +145,7 @@ export function TeachingSignal({
                   data-testid={`signal-link-${card.id}`}
                   onClick={() => {
                     const target = card.surfaceLinks?.[0];
-                    if (target) onSurfaceLink(target);
+                    if (target) onSurfaceLink(target, card.surfaceLane);
                   }}
                 >
                   See in lesson
