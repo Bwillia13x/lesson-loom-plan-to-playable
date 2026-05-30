@@ -68,7 +68,7 @@ If the build fails on Vercel, run `npm run build` locally — `vercel.json` mirr
 ## Quick judge path
 
 1. Open live URL.
-2. Click **Run judge demo** (top bar) — auto-weave, teaching signals, fraction success, Extend lane, teacher console, approval, export (presenter captions).
+2. Click **Run judge demo** (hero secondary CTA or top bar) — auto-weave, teaching signals, fraction success, Extend lane, teacher console, approval, export (presenter captions).
 3. Or manual: **Weave lesson** (hero) → Student tiles → **Check** → **Approve for Classroom Use** → Export **Copy**.
 
 ## Capture screenshots
@@ -98,7 +98,9 @@ After `npm run capture:screenshots`, expect:
 
 **Last captured:** 2026-05-30 on `main` @ `4a9ba91` (`npm run capture:screenshots` exit 0; PNGs local only, gitignored).
 
-**After plan 007 design polish:** Re-run `npm run capture:screenshots` from `feat/frontend-design-polish-007` to refresh the six artifacts above. Polish wave changes the hero/eyebrow contrast, fraction-garden gold success state, StatusPip tones, and `.app-nav` chrome — visual baselines drift accordingly. PNGs stay gitignored.
+**After plan 008 submission polish (`feat/submission-polish-008`):** Re-run `npm run capture:screenshots` before recording the walkthrough. UI changes include hero **Run judge demo** CTA, removed topbar status pip / duplicate trust line, and removal of the Labs vendor section. PNGs stay gitignored.
+
+**After plan 007 design polish:** Re-run capture again after merging `feat/frontend-design-polish-007` if that branch lands separately (StatusPip tones, `--ll-orange*` cleanup, hero scanline).
 
 
 Commit screenshots only if repo policy allows binaries; otherwise gitignore and attach to Contra upload.

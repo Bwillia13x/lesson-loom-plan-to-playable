@@ -70,6 +70,7 @@ After the repo is imported on Vercel and the first deploy succeeds:
 - [ ] **Human:** Click **Run judge demo** — auto-weave through export milestones.
 - [ ] **Human:** Open shareable student deep link: `?w=1#student` on the same host.
 - [ ] **Human:** Optional manual path: **Weave lesson** (hero) → student tiles → **Check** → **Approve for Classroom Use** → export **Copy**.
+- [ ] **Human:** Scroll hero → Made with Stitch on the live URL — confirm no `PrairieSignal` / vendor mailto on the walkthrough surface (plan 008; `LabsCaseStudy` removed).
 
 Do **not** paste a fake deploy URL or mark the above as done in git without running the checks.
 
