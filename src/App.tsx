@@ -294,13 +294,20 @@ export default function App() {
   };
 
   const handleExportCopy = (id: string) => {
+    if (!hasWoven) return;
     const file = exportPack.find((f) => f.id === id);
-    if (file && navigator.clipboard?.writeText) {
-      void navigator.clipboard.writeText(file.body);
-    }
-    setCopiedExportId(id);
-    const t = window.setTimeout(() => setCopiedExportId(null), 1500);
-    uiTimeoutIds.current.push(t);
+    if (!file || !navigator.clipboard?.writeText) return;
+
+    void navigator.clipboard
+      .writeText(`${file.title}\n\n${file.body}`)
+      .then(() => {
+        setCopiedExportId(id);
+        const t = window.setTimeout(() => setCopiedExportId(null), 1500);
+        uiTimeoutIds.current.push(t);
+      })
+      .catch(() => {
+        /* clipboard denied — do not show Copied */
+      });
   };
 
   const handleDownload = () => {

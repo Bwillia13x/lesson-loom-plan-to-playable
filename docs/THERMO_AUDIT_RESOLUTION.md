@@ -1,7 +1,8 @@
 # Thermo audit — resolution checklist
 
 **Remediation date:** 2026-05-29  
-**Re-audit:** Run `/thermos` on the commit that includes this file and confirm no open **Must fix** rows.
+**Doc sync:** 2026-05-29 (`e2eddfc` baseline — judge-path restore + verify 53/53)  
+**Re-audit:** Run `/thermos` on current `main` and confirm no open **Must fix** rows.
 
 ---
 
@@ -9,23 +10,23 @@
 
 | ID | Finding | Status | Evidence |
 |----|---------|--------|----------|
-| B1 | No critical judge-path blockers | **Resolved** | `npm run verify` (smoke 3/3, e2e 9/9 after teacher tab test) |
-| B2 | Tab arrow-key roving missing | **Resolved** | `src/utils/tabRoving.ts`; UDL + Teacher `onKeyDown` |
-| B3 | E2e used `.focus()` only | **Resolved** | UDL test uses `ArrowRight`; teacher test added |
+| B1 | No critical judge-path blockers | **Resolved** | `npm run verify` — smoke 3/3, e2e 53/53 (excludes capture) |
+| B2 | Tab arrow-key roving missing | **Resolved** | [`src/utils/tabRoving.ts`](../src/utils/tabRoving.ts); UDL + Teacher `onKeyDown` |
+| B3 | E2e used `.focus()` only | **Resolved** | UDL `ArrowRight`; teacher timeline test in `e2e/accessibility.spec.ts` |
 | B4 | No teacher tab e2e | **Resolved** | `e2e/accessibility.spec.ts` teacher timeline test |
 | B5 | README / verify mismatch | **Resolved** | `README.md` documents full verify + Playwright install |
 | B6 | CI ≠ local verify | **Resolved** | `.github/workflows/ci.yml` runs `npm run verify` |
-| B7 | `handleExportCopy` no `hasWoven` guard | **Resolved** | `useLessonLoomFlow.ts` |
-| B8 | Clipboard “Copied” on failure | **Resolved** | try/catch; Copied only on success |
+| B7 | `handleExportCopy` no `hasWoven` guard | **Resolved** | [`src/App.tsx`](../src/App.tsx) `handleExportCopy` early return + UI `disabled={!hasWoven}` |
+| B8 | Clipboard “Copied” on failure | **Resolved** | `App.tsx` try/catch; Copied only on clipboard success |
 | B9 | Orange weave banner border | **Resolved** | `var(--ll-line)` in `components-sections.css` |
-| B10 | Export download enabled pre-weave | **Resolved** | `disabled={!hasWoven}` + handler guard |
-| B11 | “Live” on dimmed signal cards | **Resolved** | Hidden when `isDimmed` |
-| B12 | 8th signal card stuck dim | **Resolved** | `FINAL_SIGNAL_STEP = teachingSignals.length - 1` |
-| B13 | Shared timer ref | **Resolved** | `weaveTimers` vs `uiTimers` |
+| B10 | Export copy enabled pre-weave | **Resolved** | `ExportPackSection` `disabled={!hasWoven}` + handler guard |
+| B11 | “Live” on dimmed signal cards | **Resolved** | Hidden when `isDimmed` in `TeachingSignal.tsx` |
+| B12 | 8th signal card stuck dim | **Resolved** | Final weave step = `teachingSignals.length - 1` in `App.tsx` |
+| B13 | Shared timer ref | **Resolved** | `weaveTimelineRef` + `uiTimeoutIds` in `App.tsx` |
 | B14 | Duplicate `weave-lesson` test id | **Resolved** | `weave-lesson-hero` / `weave-lesson-panel` |
 | B15 | Weave Lesson casing | **Resolved** | Deck casing `Weave lesson` |
 | B26 | XSS in export previews | **Accepted** | Static text in `<pre>`; no change needed |
-| B27 | APPLICATION_COMPLETE optimistic on tabs | **Resolved** | Doc updated with roving detail |
+| B27 | APPLICATION_COMPLETE optimistic on tabs | **Resolved** | Doc + e2e cover tab roving |
 
 ---
 
@@ -33,25 +34,32 @@
 
 | ID | Finding | Status | Notes |
 |----|---------|--------|-------|
-| Q1 | `styles.css` monolith >1k | **Resolved** | Split: `tokens`, `base`, `layout`, `components-shared` (554), `components-sections` (633) |
-| Q2 | `App.tsx` god-object | **Resolved** | `useLessonLoomFlow.ts`; `App.tsx` ~165 lines |
-| Q3 | `hasWoven` prop drilling | **Deferred** | Acceptable for prototype; hook centralizes logic |
+| Q1 | `styles.css` monolith >1k | **Resolved** | Active chain: `index.css` → `tokens`, `base`, `layout`, `motion`, `components-shared` (554), `components-sections` (634). Orphan `sections.css` **removed**. |
+| Q2 | `App.tsx` god-object | **Deferred** | [`src/App.tsx`](../src/App.tsx) ~713 lines holds demo URL, GSAP weave, judge demo, spine — acceptable for Stitch prototype after judge-path restore |
+| Q3 | `hasWoven` prop drilling | **Deferred** | Props from `App.tsx`; acceptable for single-page demo |
 | Q4 | Duplicate weave test id | **Resolved** | See B14 |
 | Q5 | 8th card dim logic | **Resolved** | See B12 |
 | Q6 | Four weave entry points | **Accepted** | Intentional demo affordances |
 | Q7 | Hero bypasses `Section` | **Resolved** | `HeroLanding` uses `Section` + `titleAs="h1"` |
-| Q8 | `IndustrialButton` name | **Resolved** | `Button.tsx` |
+| Q8 | `IndustrialButton` name | **Resolved** | [`IndustrialButton.tsx`](../src/components/ui/IndustrialButton.tsx) re-exports [`Button.tsx`](../src/components/ui/Button.tsx); prefer `Button` in new code |
 | Q9 | `laneConfig.tone` unused | **Resolved** | Wired to `StatusPip` on UDL tabs |
 | Q10 | `equivalentHalfIds` dead | **Resolved** | Removed from data module |
-| Q11 | E2e copy-locked | **Mitigated** | Primary paths use testids; some copy assertions remain |
+| Q11 | E2e copy-locked | **Mitigated** | Primary paths use testids; [`e2e/helpers.ts`](../e2e/helpers.ts) `weaveFromHero()` |
 | Q12 | Judge demo long timeouts | **Accepted** | Tests pass; timeouts guard async demo |
+
+---
+
+## Architecture note (post-rebase)
+
+After merging upstream judge-path features (`e2eddfc`), application state lives in **`App.tsx`** (not a separate flow hook). A prior `useLessonLoomFlow.ts` experiment was **removed** to avoid dead code drift.
 
 ---
 
 ## Intentional limitations (not defects)
 
-- Demo zip download shows notice only; no real archive.
+- Export zip is a **demo** archive via `fflate` (`lesson-loom-fraction-garden.zip`); not a production pipeline.
 - `ResponsivePreview` is static device chrome, not live iframe preview.
+- `primitives.css` is not in the import chain (legacy); active styles use split partials.
 - `07_CONTENT_MODEL_AND_SAMPLE_DATA.md` may still mention legacy `equivalentHalfIds` in examples (planning doc only).
 
 ---
@@ -64,7 +72,7 @@ npx playwright install chromium
 npm run verify
 ```
 
-Expected: build, lint, typecheck, smoke, and e2e all pass.
+Expected: build, lint, typecheck, smoke (3), and e2e (53) all pass.
 
 ---
 
@@ -73,6 +81,7 @@ Expected: build, lint, typecheck, smoke, and e2e all pass.
 Thermo re-run should show:
 
 - No critical functional or security issues on judge path.
-- No duplicate `weave-lesson` test ids; no banned trust strings in `src/`.
-- Tab pattern includes keyboard roving or honest `role="group"` downgrade.
-- No single CSS file over 1,000 lines in `src/styles/`.
+- No duplicate `weave-lesson` test ids on one element; no banned trust strings in `src/`.
+- Tab pattern includes keyboard roving on UDL + teacher timelines.
+- No **imported** CSS file over 1,000 lines under `src/styles/`.
+- `npm run verify` green on the audited commit.
