@@ -16,49 +16,53 @@ CI runs the same gate on push to `main` (`.github/workflows/ci.yml`).
 
 These items are **not** automated in CI and must be completed before Contra submission:
 
-1. **Production deploy URL** — After [GitHub Pages](../../README.md#deploy-github-pages) workflow succeeds (or Vercel), confirm the live URL below and smoke-test **Run judge demo** on that host.
+1. **Production deploy URL** — After [Vercel](#one-time-import-on-vercel-required-for-deploys) imports the repo, confirm the live URL below and smoke-test **Run judge demo** on that host.
 2. **Walkthrough video (60–90s)** — Record following [WALKTHROUGH.md](./WALKTHROUGH.md). Suggested arc: hero → weave → teaching signals → Fraction Garden → teacher console → review/export → Made with Stitch.
 3. **Safari / Mobile Safari** — Playwright covers Chromium only; spot-check on Safari if available before posting.
 4. **Final challenge rules** — Re-read official Stitch / Contra requirements manually before submit.
 
 Do not paste a fake deploy URL in this repo.
 
-### One-time: enable GitHub Pages (required for deploy workflow)
+### One-time: import on Vercel (required for deploys)
 
-The [Deploy GitHub Pages](../../.github/workflows/deploy-pages.yml) workflow runs on every push to `main` and via **workflow_dispatch**. Until Pages is enabled in repo Settings, the **build** job usually succeeds while the public site stays **404** (observed on baseline `4a9ba91`).
+Lesson Loom deploys via the **Vercel GitHub integration** — every push to `main` auto-builds and publishes. No deploy workflow file is checked in; `vercel.json` (root) configures framework, output, SPA rewrites, and security headers.
 
-**Enable (founder, one time):**
+**Import (founder, one time):**
 
-1. Open the repo on GitHub → **Settings** → **Pages**.
-2. Under **Build and deployment**, set **Source** to **GitHub Actions** (not “Deploy from a branch”).
-3. Save. No branch-based `gh-pages` branch is required for this workflow.
+1. Open [vercel.com/new](https://vercel.com/new) → **Import Git Repository** → select `Bwillia13x/lesson-loom-plan-to-playable`.
+2. Confirm auto-detected settings (from `vercel.json`):
+   - **Framework preset:** Vite
+   - **Build command:** `npm run build`
+   - **Output directory:** `dist`
+   - **Install command:** `npm ci` (default)
+3. Leave **Environment Variables** empty — no secrets are required for the static prototype.
+4. Click **Deploy**. Vercel returns the production URL on success.
 
-**Deploy:**
+**Subsequent deploys:**
 
-1. **Actions** → **Deploy GitHub Pages** → open the latest run → **Re-run all jobs**,  
-   **or** push an empty commit / any commit to `main` to trigger `on: push`.
-2. Wait for both jobs: **build** (Vite with `VITE_BASE_PATH: /<repo-name>/`) then **deploy** (`deploy-pages@v4`).
-3. When green, GitHub shows the environment URL on the deploy job (also under **Settings → Pages**).
+- Push to `main` → Vercel builds and promotes to production automatically.
+- Pull requests get unique preview URLs (no manual step).
+- Manual rebuild: `vercel --prod` from a local checkout, or **Redeploy** in the Vercel dashboard.
 
 **Expected URL pattern:**
 
-- `https://<github-user>.github.io/<repository-name>/`
-- This repo: https://bwillia13x.github.io/lesson-loom-plan-to-playable/
+- `https://lesson-loom.vercel.app` (default; based on `package.json` name).
+- May resolve as `https://lesson-loom-<team-slug>.vercel.app` depending on team prefix.
+- Update [`docs/submission/CONTRA_COPY.md`](./CONTRA_COPY.md) and the Live demo section below with the actual assigned URL after first deploy.
 
 **Live smoke (human, before Contra):**
 
-1. Open the Pages URL — confirm HTML loads (not “There isn’t a GitHub Pages site here”).
+1. Open the Vercel URL — confirm HTML loads.
 2. Click **Run judge demo** in the top bar; confirm auto-weave through export.
 3. Open shareable student deep link: `?w=1#student` on the same host.
 4. Optional manual path: **Weave lesson** (hero `weave-lesson-hero`) → student tiles → **Check** → **Approve for Classroom Use** → export **Copy**.
 
-If deploy logs show permission errors, confirm **Settings → Actions → General** allows workflows and that the `github-pages` environment exists after first Pages enable.
+If the build fails on Vercel, run `npm run build` locally — `vercel.json` mirrors the local script, so a green local build typically means a green Vercel build.
 
 ## Live demo
 
-- **URL (GitHub Pages):** https://bwillia13x.github.io/lesson-loom-plan-to-playable/ _(after Pages is enabled + deploy succeeds)_
-- **Shareable demo:** https://bwillia13x.github.io/lesson-loom-plan-to-playable/?w=1#student
-- **Alt:** Vercel — see [README deploy](../../README.md#deploy-vercel). Re-verify URL after first Pages deploy (Settings → Pages → GitHub Actions).
+- **URL (Vercel):** https://lesson-loom.vercel.app _(update with actual alias after first deploy)_
+- **Shareable demo:** `<live-url>/?w=1#student`
 - **Repo:** https://github.com/Bwillia13x/lesson-loom-plan-to-playable
 
 ## Quick judge path

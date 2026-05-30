@@ -4,7 +4,7 @@ Record **60–90 seconds** for Contra. Script: [WALKTHROUGH.md](./WALKTHROUGH.md
 
 ## Before recording
 
-- [ ] Live URL loads (GitHub Pages or Vercel) — test **Run judge demo** once on production. _Human-verified after Pages enable; 404 until Settings → Pages → GitHub Actions. See [SUBMISSION_READINESS.md](./SUBMISSION_READINESS.md)._
+- [ ] Live URL loads (Vercel) — test **Run judge demo** once on production. _Human-verified after first Vercel import; assigned URL pattern `https://lesson-loom.vercel.app` (or your team alias). See [SUBMISSION_READINESS.md](./SUBMISSION_READINESS.md)._
 - [ ] Browser zoom 100%, clean desktop, no notifications.
 - [ ] Optional: `?w=0` or footer **Reset demo** for a fresh start.
 

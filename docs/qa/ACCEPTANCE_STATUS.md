@@ -141,7 +141,7 @@ For each width:
 
 ## Submission checks
 
-- [ ] Live URL works. — _human verifies after enabling GitHub Pages: https://bwillia13x.github.io/lesson-loom-plan-to-playable/ (404 until Settings → Pages → GitHub Actions). Judge demo e2e green on Chromium against local build._
+- [ ] Live URL works. — _human verifies after first Vercel import: https://lesson-loom.vercel.app (or your team alias). Update this row with the actual URL Vercel assigns. Judge demo e2e green on Chromium against local build._
 - [x] Page title is set. — _index.html_
 - [x] Meta description is set. — _index.html_
 - [x] Screenshots captured. — _npm run capture:screenshots (local, gitignored)_

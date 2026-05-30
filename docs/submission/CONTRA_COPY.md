@@ -2,7 +2,7 @@
 
 ## Live demo
 
-- https://bwillia13x.github.io/lesson-loom-plan-to-playable/
+- https://lesson-loom.vercel.app
 - Judge path: open URL → **Run judge demo** (top bar)
 
 ## Post

@@ -19,7 +19,7 @@ These items are done in-repo or automatable without founder attestation:
 | Submission assets index | [`docs/submission/README.md`](./README.md) |
 | Screenshot capture script | `npm run capture:screenshots` → `01-hero.png`, `02-teaching-signals.png`, `03-fraction-garden.png`, `04-teacher-console.png`, `05-review-export.png`, `06-mobile-student.png` under `submission-screenshots/` (local; gitignored; **last run 2026-05-30 @ `4a9ba91`**) |
 | CI parity | `.github/workflows/ci.yml` runs same `verify` as local |
-| Pages workflow | [`.github/workflows/deploy-pages.yml`](../../.github/workflows/deploy-pages.yml) — build + deploy jobs; **no workflow change required** unless a concrete bug is found |
+| Vercel deploy config | [`vercel.json`](../../vercel.json) — framework=vite, output=`dist`, SPA rewrite, security headers; auto-deploys on push to `main` once the repo is imported on Vercel |
 
 Agents must **not** check boxes in [`docs/qa/MANUAL_PASS_2026-05-30.md`](../qa/MANUAL_PASS_2026-05-30.md), root README submission checklist rows, or `08_QA_ACCEPTANCE_CHECKLIST.md` as passed without a human tester.
 
@@ -31,8 +31,8 @@ Complete these before Contra / Stitch submit:
 
 | Step | Action | Doc |
 |------|--------|-----|
-| 1 | Enable GitHub Pages (Settings → **GitHub Actions** source) | [Pages playbook](./README.md#one-time-enable-github-pages-required-for-deploy-workflow) below |
-| 2 | Re-run **Deploy GitHub Pages** workflow; confirm live URL (not 404) | [Live demo](./README.md#live-demo) |
+| 1 | Import repo on Vercel (vercel.com/new → import `Bwillia13x/lesson-loom-plan-to-playable`) | [Vercel import playbook](./README.md#one-time-import-on-vercel-required-for-deploys) |
+| 2 | Confirm production URL after first deploy; update Live demo + CONTRA_COPY with actual alias | [Live demo](./README.md#live-demo) |
 | 3 | Live smoke: open URL → **Run judge demo**; optional `?w=1#student` | [Live URL checklist](#live-url-checklist) |
 | 4 | Complete manual QA (real browser; check boxes yourself) | [`docs/qa/MANUAL_PASS_2026-05-30.md`](../qa/MANUAL_PASS_2026-05-30.md) |
 | 5 | Record 60–90s walkthrough; paste video URL in MANUAL_PASS | [`docs/submission/WALKTHROUGH.md`](./WALKTHROUGH.md) |
@@ -40,7 +40,7 @@ Complete these before Contra / Stitch submit:
 | 7 | Re-read official Stitch / Contra rules | Submission README manual steps |
 | 8 | Flip plan 005 to `completed` in frontmatter | After U8 only — **not** by agents alone |
 
-Until Pages is enabled, the deploy job may **build successfully** while the site returns **404** at the public URL (observed on baseline `4a9ba91`).
+The Vercel GitHub integration is the only deploy path; there is no `.github/workflows/deploy-pages.yml` (removed in plan 006 follow-up). Subsequent pushes to `main` auto-redeploy.
 
 ---
 
@@ -64,9 +64,9 @@ Judge-facing run instructions: [root `README.md`](../../README.md).
 
 ## Live URL checklist
 
-After Pages is enabled and **Deploy GitHub Pages** succeeds:
+After the repo is imported on Vercel and the first deploy succeeds:
 
-- [ ] **Human:** Open https://bwillia13x.github.io/lesson-loom-plan-to-playable/ — page loads (not GitHub 404).
+- [ ] **Human:** Open the Vercel production URL (default pattern `https://lesson-loom.vercel.app`; team alias may vary) — page loads.
 - [ ] **Human:** Click **Run judge demo** — auto-weave through export milestones.
 - [ ] **Human:** Open shareable student deep link: `?w=1#student` on the same host.
 - [ ] **Human:** Optional manual path: **Weave lesson** (hero) → student tiles → **Check** → **Approve for Classroom Use** → export **Copy**.
