@@ -8,7 +8,8 @@ type HeroLandingProps = {
   hasWoven: boolean;
   lessonPlanDraft: string;
   onWeave: () => void;
-  onViewDemo: () => void;
+  onRunJudgeDemo: () => void;
+  demoRunning: boolean;
 };
 
 function heroPlanPreview(draft: string): string {
@@ -20,7 +21,8 @@ export function HeroLanding({
   hasWoven,
   lessonPlanDraft,
   onWeave,
-  onViewDemo,
+  onRunJudgeDemo,
+  demoRunning,
 }: HeroLandingProps) {
   return (
     <section id="hero" className="ll-section" aria-labelledby="hero-title">
@@ -47,8 +49,15 @@ export function HeroLanding({
             >
               Weave lesson
             </Button>
-            <Button variant="secondary" size="lg" onClick={onViewDemo}>
-              View student app
+            <Button
+              variant="secondary"
+              size="lg"
+              onClick={() => void onRunJudgeDemo()}
+              disabled={demoRunning}
+              data-testid="run-judge-demo-hero"
+              aria-label={demoRunning ? 'Judge demo running' : 'Run judge demo'}
+            >
+              {demoRunning ? 'Running demo…' : 'Run judge demo'}
             </Button>
           </div>
           <p className="text-mono hero-trust-line">

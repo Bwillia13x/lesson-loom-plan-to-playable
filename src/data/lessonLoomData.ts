@@ -759,5 +759,4 @@ export const navSections = [
   { id: 'export', label: 'Export' },
   { id: 'devices', label: 'Devices' },
   { id: 'stitch', label: 'Stitch' },
-  { id: 'labs', label: 'Labs' },
 ] as const;
