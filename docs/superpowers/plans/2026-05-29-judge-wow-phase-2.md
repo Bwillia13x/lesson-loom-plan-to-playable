@@ -101,7 +101,7 @@ In `docs/qa/ACCEPTANCE_STATUS.md`, update responsive section:
 Under Submission checks, set Live URL entry to:
 
 ```markdown
-- [x] Live URL works. — _manual 2026-05-29: https://bwillia13x.github.io/lesson-loom-plan-to-playable/ loads; judge demo e2e green_
+- [x] Live URL works. — _manual 2026-05-29: https://bwillia13x.github.io/lesson-loom-plan-to-playable/ _(obsolete URL — superseded by Vercel deploy per plan 006)_ loads; judge demo e2e green_
 ```
 
 (Adjust date/URL if deploy differs.)

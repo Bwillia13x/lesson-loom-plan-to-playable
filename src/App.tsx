@@ -25,14 +25,12 @@ import { ExportPackSection } from './components/sections/ExportPackSection';
 import { HeroLanding } from './components/sections/HeroLanding';
 import { LessonIntake } from './components/sections/LessonIntake';
 import { LessonWeave } from './components/sections/LessonWeave';
-import { LabsCaseStudy } from './components/sections/LabsCaseStudy';
 import { MadeWithStitch } from './components/sections/MadeWithStitch';
 import { ResponsivePreview } from './components/sections/ResponsivePreview';
 import { ReviewSafety } from './components/sections/ReviewSafety';
 import { StudentFractionGarden } from './components/sections/StudentFractionGarden';
 import { TeacherConsole } from './components/sections/TeacherConsole';
 import { TeachingSignal } from './components/sections/TeachingSignal';
-import { StatusPip } from './components/ui/StatusPip';
 import { WorkspaceModeToggle } from './components/ui/WorkspaceModeToggle';
 import { useWeaveSequence } from './motion/useWeaveSequence';
 import { LessonLoomSessionProvider } from './context/LessonLoomSessionContext';
@@ -51,7 +49,6 @@ const navIcons: Record<string, string> = {
   export: '⬇',
   devices: '▭',
   stitch: '✦',
-  labs: '◆',
 };
 
 const urlOnLoad = readDemoUrlOnLoad();
@@ -413,14 +410,6 @@ export default function App() {
             onSceneApproved={applyDemoReviewApproved}
             onRunJudgeDemo={runJudgeDemo}
           />
-          <div className="app-topbar__status">
-            <StatusPip label="All systems operational" tone="green" />
-          </div>
-          <p className="app-topbar__trust">
-            Teacher first. Always.
-            <br />
-            You own the lesson.
-          </p>
         </header>
 
         <ClassroomSessionSpine
@@ -462,10 +451,8 @@ export default function App() {
             hasWoven={hasWoven}
             lessonPlanDraft={lessonPlanDraft}
             onWeave={runWeaveSequence}
-            onViewDemo={() => {
-              setWorkspaceMode('student');
-              scrollTo('student');
-            }}
+            onRunJudgeDemo={runJudgeDemo}
+            demoRunning={demoRunning}
           />
           <LessonIntake
             value={lessonPlanDraft}
@@ -528,7 +515,6 @@ export default function App() {
           />
           <ResponsivePreview snapshot={devicesSnapshot} />
           <MadeWithStitch systemMapStep={systemMapStep} />
-          <LabsCaseStudy />
         </main>
         </LessonLoomSessionProvider>
 

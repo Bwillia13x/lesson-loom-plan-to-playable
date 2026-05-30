@@ -1,6 +1,6 @@
 # Lesson Loom — Application Complete
 
-**Date:** 2026-05-30 (post-merge plan 004 @ `160e4cc` + plan 005 on `main` @ `4a9ba91`; verify **58/58** e2e + smoke)  
+**Date:** 2026-05-30 (post-merge plan 004 @ `160e4cc` + plan 005 on `main` @ `4a9ba91`; plan 008 submission polish on `feat/submission-polish-008`; verify **58/58** e2e + smoke)  
 **Workspace:** `lesson-loom-agent-context-pack-v2`  
 **Attestation:** Cursor agent session (completion gate, Thermo fixes, judge-path restore)  
 **Thermo resolution:** See [`docs/THERMO_AUDIT_RESOLUTION.md`](THERMO_AUDIT_RESOLUTION.md)  
@@ -65,7 +65,7 @@
 
 ### Desktop (~1280px)
 
-- Hero **Weave lesson** / **View student app**; trust line present.
+- Hero **Weave lesson** / **Run judge demo** (`run-judge-demo-hero`); single trust line present.
 - Pre-weave: student tiles and export copy **disabled**; lock notices visible.
 - Post-weave: banner, session spine, signals, student garden, teacher console, UDL, review, export zip.
 - **Run judge demo:** presenter mode, captions, auto path through export.
@@ -97,6 +97,12 @@ Frontend design polish wave per [`docs/plans/2026-05-30-007-feat-frontend-design
 - **U3** — Garden success state migrated from green to gold (`--ll-gold-soft` bg + `--ll-graphite` text, ~10.7:1 AA); `.garden-bed--active` gained an inner-highlight inset for non-color signaling; secondary UDL panel dropped `screws` per KTD3.
 - **U4** — All 7 literal + 4 dynamic `tone="cyan"`/`tone="orange"` StatusPip call sites migrated to `lavender`/`sage`/`gold` semantics; `'orange'` and `'cyan'` retained in the union with `@deprecated` JSDoc; `.app-nav` background flattened to `var(--ll-paper-warm)`.
 - **U5** — Doc cleanup; `npm run capture:screenshots` recommended after this polish wave to refresh `submission-screenshots/*.png` (artifacts remain gitignored).
+
+---
+
+## Plan 008 — product-lens submission polish (2026-05-30)
+
+Branch `feat/submission-polish-008`: URL drift notes in historical plans; full removal of `LabsCaseStudy` / PrairieSignal from walkthrough; vendor-agnostic `workshop-checklist` export body; dropped “All systems operational” status pip and duplicate topbar trust line; hero secondary **Run judge demo** (`data-testid="run-judge-demo-hero"`). StatusPip orange/cyan remap deferred to plan 007.
 
 ---
 

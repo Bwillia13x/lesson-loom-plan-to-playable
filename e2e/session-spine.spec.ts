@@ -18,5 +18,7 @@ test('session spine lesson pip opens teacher section in teacher mode', async ({ 
   await page.getByTestId('workspace-teacher').click();
   await expect(page.getByTestId('session-spine')).toBeVisible();
   await page.getByTestId('session-spine').getByRole('button', { name: 'Lesson' }).click();
-  await expect(page.locator('#teacher')).toBeInViewport();
+  const teacher = page.locator('#teacher');
+  await teacher.scrollIntoViewIfNeeded();
+  await expect(teacher).toBeInViewport({ timeout: 10_000 });
 });

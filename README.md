@@ -86,7 +86,7 @@ Open `http://127.0.0.1:5173` (or the URL printed in the terminal).
 
 ## Judge demo (60s)
 
-Click **Run judge demo** in the top bar to auto-weave, open Fraction Garden with `1/2`, `2/4`, `3/6`, approve for classroom use, and land on the export pack.
+Click **Run judge demo** in the hero or top bar to auto-weave, open Fraction Garden with `1/2`, `2/4`, `3/6`, approve for classroom use, and land on the export pack.
 
 Or walk manually:
 

@@ -672,7 +672,7 @@ Download builds \`lesson-loom-fraction-garden.zip\` from \`exportPack\` bodies i
       'Facilitator checklist: review learning goal, misconception watch, UDL lanes, approval gate, printable fallback.',
     body: `# Workshop Checklist — From Static Lesson to Interactive Interface
 
-Use this checklist when facilitating a PrairieSignal Edge–style lab session with Lesson Loom.
+Use this checklist when facilitating a workshop session with Lesson Loom.
 
 ## Before the session
 
@@ -701,7 +701,7 @@ Use this checklist when facilitating a PrairieSignal Edge–style lab session wi
 ## After the workshop
 
 - [ ] Capture one takeaway for your team (workflow, UX, or policy question).
-- [ ] Optional: contact PrairieSignal Labs with inquiry about pilot or custom lesson interface work.
+- [ ] Optional: capture follow-up questions for your teaching team or workshop facilitator.
 
 > Internal prototype / public demo — not a production LMS or official curriculum tool.
 `,
@@ -759,5 +759,4 @@ export const navSections = [
   { id: 'export', label: 'Export' },
   { id: 'devices', label: 'Devices' },
   { id: 'stitch', label: 'Stitch' },
-  { id: 'labs', label: 'Labs' },
 ] as const;
