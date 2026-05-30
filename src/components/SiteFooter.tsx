@@ -1,6 +1,6 @@
 import { navSections } from '../data/lessonLoomData';
 import { useScrollToSection } from '../motion/useScrollToSection';
-import { IndustrialButton } from './ui/IndustrialButton';
+import { Button } from './ui/Button';
 
 type SiteFooterProps = {
   onResetDemo: () => void;
@@ -37,30 +37,30 @@ export function SiteFooter({
       </nav>
       <div className="site-footer__presets" aria-label="Demo presets">
         <span className="site-footer__presets-label">Demo presets</span>
-        <IndustrialButton
+        <Button
           variant="ghost"
           size="sm"
           data-testid="demo-preset-reset"
           onClick={onResetDemo}
         >
           Reset demo
-        </IndustrialButton>
-        <IndustrialButton
+        </Button>
+        <Button
           variant="ghost"
           size="sm"
           data-testid="demo-preset-success"
           onClick={onSuccessState}
         >
           Success state
-        </IndustrialButton>
-        <IndustrialButton
+        </Button>
+        <Button
           variant="ghost"
           size="sm"
           data-testid="demo-preset-approved"
           onClick={onReviewApproved}
         >
           Review approved
-        </IndustrialButton>
+        </Button>
       </div>
     </footer>
   );

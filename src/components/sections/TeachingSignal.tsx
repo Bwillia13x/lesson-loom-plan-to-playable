@@ -8,13 +8,13 @@ import { useMotion } from '../../motion/motionContext';
 import { runGsapScoped } from '../../motion/runGsapScoped';
 import { useScrollToSection } from '../../motion/useScrollToSection';
 import { WEAVE_SIGNAL_REVEAL_DELAY_S } from '../../motion/weaveTiming';
-import { IndustrialButton } from '../ui/IndustrialButton';
+import { useLessonLoomSession } from '../../context/LessonLoomSessionContext';
+import { Button } from '../ui/Button';
 import { Panel } from '../ui/Panel';
 import { Section } from '../ui/Section';
 import { StatusPip } from '../ui/StatusPip';
 
 type TeachingSignalProps = {
-  hasWoven: boolean;
   onWeave: () => void;
   onHighlightSource: (signalId: string, source: string) => void;
   onSurfaceLink: (target: SignalSurfaceLink, lane?: SupportLane) => void;
@@ -23,11 +23,11 @@ type TeachingSignalProps = {
 const LESSON_PLAN_TEXTAREA_ID = 'lesson-plan-draft';
 
 export function TeachingSignal({
-  hasWoven,
   onWeave,
   onHighlightSource,
   onSurfaceLink,
 }: TeachingSignalProps) {
+  const { hasWoven } = useLessonLoomSession();
   const { reduced } = useMotion();
   const gridRef = useRef<HTMLDivElement>(null);
   const scrollToSection = useScrollToSection();
@@ -100,9 +100,9 @@ export function TeachingSignal({
           <p style={{ fontSize: '0.88rem', margin: '0 0 0.75rem' }}>
             Extract the teaching signal from your lesson plan to reveal grounded cards.
           </p>
-          <IndustrialButton variant="primary" onClick={onWeave}>
+          <Button variant="primary" onClick={onWeave}>
             Weave lesson to unlock
-          </IndustrialButton>
+          </Button>
         </Panel>
       )}
 

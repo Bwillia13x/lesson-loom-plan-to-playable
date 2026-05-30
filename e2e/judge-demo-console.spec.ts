@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { waitForJudgeDemoMilestones } from './helpers';
 
 /** Known non-fatal console noise in dev / Playwright (extend if new benign cases appear). */
 const BENIGN_CONSOLE_PATTERNS = [
@@ -28,12 +29,7 @@ test('run judge demo has no unexpected console errors', async ({ page }) => {
 
   await page.goto('/');
 
-  await page.getByTestId('run-judge-demo').click();
-  await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 5000 });
-  await expect(page.getByText('Equivalent? Yes!')).toBeVisible({ timeout: 10000 });
-  await expect(page.getByText('Teacher approval recorded')).toBeVisible({ timeout: 10000 });
-  await expect(page.getByTestId('judge-demo-rail')).toBeHidden({ timeout: 15000 });
-  await expect(page.getByTestId('run-judge-demo')).toBeEnabled();
+  await waitForJudgeDemoMilestones(page);
 
   const failures = [...consoleErrors, ...pageErrors];
   expect(

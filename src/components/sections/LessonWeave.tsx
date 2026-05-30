@@ -1,5 +1,5 @@
 import { weaveSteps } from '../../data/lessonLoomData';
-import { IndustrialButton } from '../ui/IndustrialButton';
+import { Button } from '../ui/Button';
 import { Panel } from '../ui/Panel';
 import { Section } from '../ui/Section';
 import { StatusPip } from '../ui/StatusPip';
@@ -119,13 +119,13 @@ export function LessonWeave({ hasWoven, activeWeaveStep, onWeave }: LessonWeaveP
             pulse={hasWoven && activeWeaveStep < weaveSteps.length - 1}
           />
           {!hasWoven && (
-            <IndustrialButton
+            <Button
               variant="primary"
               onClick={onWeave}
               data-testid="weave-lesson-panel"
             >
               Weave lesson
-            </IndustrialButton>
+            </Button>
           )}
         </div>
       </Panel>

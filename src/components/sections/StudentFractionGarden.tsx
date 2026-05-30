@@ -11,12 +11,13 @@ import {
   type SupportLane,
 } from '../../data/lessonLoomData';
 import { FractionTileVisual } from '../FractionTileVisual';
-import { IndustrialButton } from '../ui/IndustrialButton';
+import { Button } from '../ui/Button';
 import { Panel } from '../ui/Panel';
 import { studentMissionSteps } from '../../data/lessonLoomData';
 import { ProgressRail } from '../ui/ProgressRail';
 import { Section } from '../ui/Section';
 import { StatusPip } from '../ui/StatusPip';
+import { useLessonLoomSession } from '../../context/LessonLoomSessionContext';
 
 type StudentFractionGardenProps = {
   selectedTileIds: string[];
@@ -26,7 +27,6 @@ type StudentFractionGardenProps = {
   checkSuccess: boolean;
   checkAttempted: boolean;
   showSuccessPulse: boolean;
-  studentAppActive?: boolean;
   reflectionText: string;
   reflectionSaved: boolean;
   reflectionTouched: boolean;
@@ -76,7 +76,6 @@ export function StudentFractionGarden({
   checkSuccess,
   checkAttempted,
   showSuccessPulse,
-  studentAppActive = false,
   reflectionText,
   reflectionSaved,
   reflectionTouched,
@@ -87,6 +86,7 @@ export function StudentFractionGarden({
   classMode = 'whole',
   surfaceHighlighted = false,
 }: StudentFractionGardenProps) {
+  const { studentAppActive } = useLessonLoomSession();
   const lane = differentiation[activeSupport];
   const { reduced } = useMotion();
   const [hintVisible, setHintVisible] = useState(false);
@@ -282,10 +282,10 @@ export function StudentFractionGarden({
           </div>
 
           <div className="flex-between mt-1">
-            <IndustrialButton variant="ghost" size="sm" onClick={onReset}>
+            <Button variant="ghost" size="sm" onClick={onReset}>
               Reset
-            </IndustrialButton>
-            <IndustrialButton
+            </Button>
+            <Button
               variant="secondary"
               size="sm"
               type="button"
@@ -295,15 +295,15 @@ export function StudentFractionGarden({
               onClick={() => setHintVisible((v) => !v)}
             >
               {hintVisible ? 'Hide hint' : 'Hint'}
-            </IndustrialButton>
-            <IndustrialButton
+            </Button>
+            <Button
               variant="primary"
               size="sm"
               onClick={onCheck}
               data-testid="fraction-check"
             >
               Check
-            </IndustrialButton>
+            </Button>
           </div>
 
           {checkAttempted && !checkSuccess && (
@@ -373,7 +373,7 @@ export function StudentFractionGarden({
                 your device.
               </p>
               <div className="flex-between mt-1">
-                <IndustrialButton
+                <Button
                   variant="primary"
                   size="sm"
                   type="button"
@@ -381,7 +381,7 @@ export function StudentFractionGarden({
                   onClick={onSaveReflection}
                 >
                   Save reflection
-                </IndustrialButton>
+                </Button>
                 {reflectionSaved && (
                   <span
                     role="status"

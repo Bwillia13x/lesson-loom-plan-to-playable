@@ -1,25 +1,8 @@
-import { expect, test } from '@playwright/test';
+import { test } from '@playwright/test';
+import { waitForJudgeDemoMilestones } from './helpers';
 
 test('judge demo visits signals and UDL with presenter captions', async ({ page }) => {
   await page.goto('/');
 
-  await page.getByTestId('run-judge-demo').click();
-
-  await expect(page.getByTestId('judge-demo-rail')).toBeVisible();
-
-  const caption = page.getByTestId('presenter-caption');
-  await expect(caption).toBeVisible();
-  await expect(caption).toContainText(/teaching signal|Weaving/i);
-
-  await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 8000 });
-
-  await expect
-    .poll(async () => caption.textContent(), { timeout: 20_000 })
-    .toMatch(/Extend|Differentiation/i);
-
-  await expect(page.getByText('Equivalent? Yes!')).toBeVisible({ timeout: 12000 });
-  await expect(page.getByText('Teacher approval recorded')).toBeVisible({ timeout: 12000 });
-
-  await page.locator('#export').scrollIntoViewIfNeeded();
-  await expect(page.getByTestId('export-approved-pip')).toBeVisible();
+  await waitForJudgeDemoMilestones(page, { includeExport: true });
 });

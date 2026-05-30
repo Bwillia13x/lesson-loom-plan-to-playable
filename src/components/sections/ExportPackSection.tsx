@@ -1,12 +1,10 @@
 import { exportGateCopy, exportPack } from '../../data/lessonLoomData';
-import { IndustrialButton } from '../ui/IndustrialButton';
+import { useLessonLoomSession } from '../../context/LessonLoomSessionContext';
+import { Button } from '../ui/Button';
 import { Section } from '../ui/Section';
 import { StatusPip } from '../ui/StatusPip';
 
 type ExportPackSectionProps = {
-  hasWoven: boolean;
-  studentAppActive: boolean;
-  approved: boolean;
   copiedExportId: string | null;
   downloadNotice: string | null;
   onCopy: (id: string) => void;
@@ -14,14 +12,12 @@ type ExportPackSectionProps = {
 };
 
 export function ExportPackSection({
-  hasWoven,
-  studentAppActive,
-  approved,
   copiedExportId,
   downloadNotice,
   onCopy,
   onDownload,
 }: ExportPackSectionProps) {
+  const { hasWoven, studentAppActive, approved } = useLessonLoomSession();
   return (
     <Section
       id="export"
@@ -49,7 +45,7 @@ export function ExportPackSection({
             </span>
           )}
         </div>
-        <IndustrialButton
+        <Button
           variant="primary"
           size="lg"
           type="button"
@@ -57,7 +53,7 @@ export function ExportPackSection({
           onClick={onDownload}
         >
           Download Pack (.zip)
-        </IndustrialButton>
+        </Button>
       </div>
 
       {downloadNotice && (
@@ -99,7 +95,7 @@ export function ExportPackSection({
               <span className="export-card__ext">{file.ext}</span>
             </div>
             <pre className="export-card__preview">{file.preview}</pre>
-            <IndustrialButton
+            <Button
               variant="secondary"
               size="sm"
               disabled={!hasWoven}
@@ -108,7 +104,7 @@ export function ExportPackSection({
               data-testid={`export-copy-${file.id}`}
             >
               {copiedExportId === file.id ? 'Copied' : 'Copy'}
-            </IndustrialButton>
+            </Button>
           </article>
         ))}
       </div>

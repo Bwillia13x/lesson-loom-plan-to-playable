@@ -1,6 +1,6 @@
 import { safetyCards } from '../../data/lessonLoomData';
 import { PrintableFallback } from './PrintableFallback';
-import { IndustrialButton } from '../ui/IndustrialButton';
+import { Button } from '../ui/Button';
 import { Panel } from '../ui/Panel';
 import { Section } from '../ui/Section';
 import { StatusPip } from '../ui/StatusPip';
@@ -73,7 +73,7 @@ export function ReviewSafety({ approved, onApprove }: ReviewSafetyProps) {
             This interactive lesson interface is a <strong>teacher-reviewed draft</strong>.
             Approve only after you verify goals, timing, and classroom fit.
           </p>
-          <IndustrialButton
+          <Button
             variant="primary"
             size="lg"
             onClick={onApprove}
@@ -81,7 +81,7 @@ export function ReviewSafety({ approved, onApprove }: ReviewSafetyProps) {
             data-testid="approve-classroom"
           >
             {approved ? 'Approved for Classroom Use' : 'Approve for Classroom Use'}
-          </IndustrialButton>
+          </Button>
           {approved && (
             <p
               className="garden-success mt-1"

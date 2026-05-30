@@ -1,5 +1,5 @@
 import { lesson } from '../../data/lessonLoomData';
-import { IndustrialButton } from '../ui/IndustrialButton';
+import { Button } from '../ui/Button';
 import { Panel } from '../ui/Panel';
 import { StatusPip } from '../ui/StatusPip';
 import { WeaveSignalLine } from '../WeaveSignalLine';
@@ -39,17 +39,17 @@ export function HeroLanding({
 
         <div className="flex-between gap-1" style={{ marginBottom: '2rem' }}>
           <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-            <IndustrialButton
+            <Button
               variant="primary"
               size="lg"
               onClick={onWeave}
               data-testid="weave-lesson-hero"
             >
               Weave lesson
-            </IndustrialButton>
-            <IndustrialButton variant="secondary" size="lg" onClick={onViewDemo}>
+            </Button>
+            <Button variant="secondary" size="lg" onClick={onViewDemo}>
               View student app
-            </IndustrialButton>
+            </Button>
           </div>
           <p className="text-mono" style={{ fontSize: '0.75rem', color: 'var(--ll-muted)' }}>
             Teacher-reviewed draft. No student accounts or personal data required.

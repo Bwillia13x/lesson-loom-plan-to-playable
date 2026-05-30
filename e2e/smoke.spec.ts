@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { weaveFromHero } from './helpers';
+import { waitForJudgeDemoMilestones, weaveFromHero } from './helpers';
 
 test('golden path: weave → fractions → approve → export copy', async ({ page }) => {
   await page.goto('/');
@@ -59,12 +59,7 @@ test('UDL lanes switch content', async ({ page }) => {
 test('run judge demo completes key states', async ({ page }) => {
   await page.goto('/');
 
-  await page.getByTestId('run-judge-demo').click();
-  await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 5000 });
-  await expect(page.getByTestId('fraction-equivalent-status')).toHaveText('Equivalent? Yes!', {
-    timeout: 8000,
-  });
-  await expect(page.getByTestId('review-recorded')).toBeVisible({ timeout: 8000 });
+  await waitForJudgeDemoMilestones(page);
 
   await page.getByTestId('export-download').click();
   await expect(page.getByTestId('export-download-notice')).toBeVisible();

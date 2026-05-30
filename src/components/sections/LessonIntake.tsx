@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { lesson, teachingSignals } from '../../data/lessonLoomData';
 import { parseLessonPlanStub } from '../../utils/parseLessonPlanStub';
-import { IndustrialButton } from '../ui/IndustrialButton';
+import { Button } from '../ui/Button';
 import { Panel } from '../ui/Panel';
 import { Section } from '../ui/Section';
 
@@ -185,7 +185,7 @@ export function LessonIntake({
                   Demo parser — not AI
                 </p>
               </div>
-              <IndustrialButton
+              <Button
                 variant="secondary"
                 size="sm"
                 type="button"
@@ -193,7 +193,7 @@ export function LessonIntake({
                 onClick={runQuickScan}
               >
                 Quick scan (demo)
-              </IndustrialButton>
+              </Button>
             </div>
             {parserHighlights && (
               <ul
@@ -211,14 +211,14 @@ export function LessonIntake({
       </div>
 
       <div className="mt-2">
-        <IndustrialButton
+        <Button
           variant="primary"
           size="lg"
           data-testid="weave-lesson-intake"
           onClick={onExtract}
         >
           Extract Teaching Signal
-        </IndustrialButton>
+        </Button>
         <p className="text-mono mt-1" style={{ fontSize: '0.72rem', color: 'var(--ll-muted)' }}>
           Source of truth: teacher-provided lesson plan
         </p>

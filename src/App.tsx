@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   exportPack,
-  equivalentCanonicalIds,
   fractionTiles,
   lessonPlanText,
   navSections,
@@ -12,11 +11,9 @@ import {
   type TimelineId,
   type WorkspaceMode,
 } from './data/lessonLoomData';
+import { JudgeDemoTopbar, PresenterCaption } from './demo/JudgeDemoTopbar';
+import { useLessonLoomDemo } from './demo/useLessonLoomDemo';
 import { ClassroomSessionSpine } from './components/ClassroomSessionSpine';
-import {
-  judgeDemoPresenterCaptions,
-  JUDGE_DEMO_STEP_COUNT,
-} from './data/presenterCaptions';
 import { useDemoUrlState, readDemoUrlOnLoad } from './hooks/useDemoUrlState';
 import { useHashNavigationOnLoad } from './hooks/useHashNavigation';
 import { SiteFooter } from './components/SiteFooter';
@@ -35,13 +32,12 @@ import { ReviewSafety } from './components/sections/ReviewSafety';
 import { StudentFractionGarden } from './components/sections/StudentFractionGarden';
 import { TeacherConsole } from './components/sections/TeacherConsole';
 import { TeachingSignal } from './components/sections/TeachingSignal';
-import { IndustrialButton } from './components/ui/IndustrialButton';
 import { StatusPip } from './components/ui/StatusPip';
 import { WorkspaceModeToggle } from './components/ui/WorkspaceModeToggle';
 import { createWeaveTimeline } from './motion/createWeaveTimeline';
+import { LessonLoomSessionProvider } from './context/LessonLoomSessionContext';
 import { downloadExportZip } from './utils/buildExportZip';
 import { isEquivalentTileSelection } from './utils/fractionCheck';
-import { delay } from './utils/scroll';
 
 const navIcons: Record<string, string> = {
   hero: '⌂',
@@ -58,7 +54,6 @@ const navIcons: Record<string, string> = {
   labs: '◆',
 };
 
-const CANONICAL_TILES = equivalentCanonicalIds;
 const urlOnLoad = readDemoUrlOnLoad();
 
 export default function App() {
@@ -88,8 +83,6 @@ export default function App() {
   const [classMode, setClassMode] = useState<'whole' | 'groups'>('whole');
   const [approved, setApproved] = useState(urlOnLoad?.approved ?? false);
   const [activeNav, setActiveNav] = useState('hero');
-  const [demoRunning, setDemoRunning] = useState(false);
-  const [demoCaptionIndex, setDemoCaptionIndex] = useState(0);
   const [highlightPhraseId, setHighlightPhraseId] = useState<string | null>(null);
   const [highlightSurface, setHighlightSurface] = useState<SignalSurfaceLink | null>(
     null,
@@ -199,6 +192,39 @@ export default function App() {
       prefersReducedMotion,
     );
   }, [prefersReducedMotion, scrollTo]);
+
+  const {
+    demoRunning,
+    demoCaptionIndex,
+    applyDemoReset,
+    applyDemoSuccessState,
+    applyDemoReviewApproved,
+    runJudgeDemo,
+  } = useLessonLoomDemo(() => ({
+    clearWeaveTimeline,
+    clearUiTimeouts,
+    setHasWoven,
+    setActiveWeaveStep,
+    setWorkspaceMode,
+    setActiveSupport,
+    setSelectedTileIds,
+    setCopiedExportId,
+    setDownloadNotice,
+    setCheckSuccess,
+    setCheckAttempted,
+    setShowSuccessPulse,
+    setReflectionText,
+    setReflectionSaved,
+    setReflectionTouched,
+    setApproved,
+    setWeaveLiveMessage,
+    scrollTo,
+    prefersReducedMotion,
+    runWeaveSequence,
+    setHighlightSurface,
+    setActiveSegment,
+    setClassMode,
+  }));
 
   useEffect(
     () => () => {
@@ -321,50 +347,6 @@ export default function App() {
     uiTimeoutIds.current.push(t);
   };
 
-  const applyDemoReset = useCallback(() => {
-    clearWeaveTimeline();
-    clearUiTimeouts();
-    setHasWoven(false);
-    setActiveWeaveStep(0);
-    setWorkspaceMode('student');
-    setActiveSupport('core');
-    setSelectedTileIds([]);
-    setCopiedExportId(null);
-    setDownloadNotice(null);
-    setCheckSuccess(false);
-    setCheckAttempted(false);
-    setShowSuccessPulse(false);
-    setReflectionText('');
-    setReflectionSaved(false);
-    setReflectionTouched(false);
-    setApproved(false);
-    setDemoCaptionIndex(0);
-    setWeaveLiveMessage('');
-  }, []);
-
-  const applyDemoSuccessState = useCallback(() => {
-    clearWeaveTimeline();
-    clearUiTimeouts();
-    setHasWoven(true);
-    setActiveWeaveStep(weaveSteps.length - 1);
-    setWorkspaceMode('student');
-    setSelectedTileIds([...CANONICAL_TILES]);
-    setCheckAttempted(true);
-    setCheckSuccess(true);
-    setShowSuccessPulse(true);
-    setWeaveLiveMessage(
-      'Lesson woven. Teaching signal extracted and ready to explore.',
-    );
-    scrollTo('student');
-  }, [scrollTo]);
-
-  const applyDemoReviewApproved = useCallback(() => {
-    setHasWoven(true);
-    setActiveWeaveStep(weaveSteps.length - 1);
-    setApproved(true);
-    scrollTo('review');
-  }, [scrollTo]);
-
   const handleSignalSurfaceLink = useCallback(
     (target: SignalSurfaceLink, lane?: SupportLane) => {
       if (target === 'teacher') setWorkspaceMode('teacher');
@@ -398,79 +380,6 @@ export default function App() {
     },
     [scrollTo],
   );
-
-  const runJudgeDemo = useCallback(async () => {
-    if (demoRunning) return;
-    setDemoRunning(true);
-    setDemoCaptionIndex(0);
-    setHighlightSurface(null);
-    setApproved(false);
-    setCheckSuccess(false);
-    setCheckAttempted(false);
-    setSelectedTileIds([]);
-    setActiveSupport('core');
-    setReflectionText('');
-    setReflectionSaved(false);
-    setReflectionTouched(false);
-
-    runWeaveSequence();
-    setDemoCaptionIndex(1);
-    await delay(prefersReducedMotion ? 300 : 1100);
-
-    setDemoCaptionIndex(2);
-    scrollTo('signals');
-    await delay(prefersReducedMotion ? 200 : 700);
-
-    setWorkspaceMode('student');
-    setDemoCaptionIndex(3);
-    scrollTo('student');
-    await delay(400);
-
-    if (!prefersReducedMotion) {
-      document.querySelector<HTMLButtonElement>('[data-testid="tile-one-half"]')?.click();
-      await delay(350);
-      setSelectedTileIds(CANONICAL_TILES);
-    } else {
-      setSelectedTileIds(CANONICAL_TILES);
-    }
-
-    setCheckAttempted(true);
-    setCheckSuccess(true);
-    setShowSuccessPulse(true);
-    setDemoCaptionIndex(4);
-    await delay(prefersReducedMotion ? 200 : 800);
-
-    setActiveSupport('extend');
-    setDemoCaptionIndex(5);
-    scrollTo('udl');
-    await delay(prefersReducedMotion ? 400 : 1200);
-
-    setWorkspaceMode('teacher');
-    setActiveSegment('partner');
-    setDemoCaptionIndex(6);
-    scrollTo('teacher');
-    await delay(prefersReducedMotion ? 200 : 600);
-
-    if (!prefersReducedMotion) {
-      setClassMode('groups');
-      setDemoCaptionIndex(7);
-      await delay(500);
-      setClassMode('whole');
-    } else {
-      setDemoCaptionIndex(7);
-      await delay(200);
-    }
-
-    scrollTo('review');
-    setApproved(true);
-    setDemoCaptionIndex(8);
-    await delay(300);
-
-    setDemoCaptionIndex(9);
-    scrollTo('export');
-    await delay(prefersReducedMotion ? 200 : 400);
-    setDemoRunning(false);
-  }, [demoRunning, prefersReducedMotion, runWeaveSequence, scrollTo]);
 
   return (
     <div className={`app-shell${demoRunning ? ' app-shell--presenter' : ''}`}>
@@ -518,70 +427,14 @@ export default function App() {
             mode={workspaceMode}
             onChange={handleWorkspaceModeChange}
           />
-          <div className="app-topbar__scenes" data-testid="judge-scenes">
-            <label htmlFor="judge-scenes-select" className="sr-only">
-              Demo scenes
-            </label>
-            <select
-              id="judge-scenes-select"
-              className="app-topbar__scenes-select"
-              defaultValue=""
-              disabled={demoRunning}
-              onChange={(e) => {
-                const value = e.target.value;
-                if (value === 'reset') applyDemoReset();
-                if (value === 'success') applyDemoSuccessState();
-                if (value === 'approved') applyDemoReviewApproved();
-                e.target.value = '';
-              }}
-            >
-              <option value="" disabled>
-                Scenes
-              </option>
-              <option value="reset">Reset demo</option>
-              <option value="success">Success state</option>
-              <option value="approved">Approved</option>
-            </select>
-          </div>
-          <IndustrialButton
-            variant="ghost"
-            size="sm"
-            onClick={() => void runJudgeDemo()}
-            disabled={demoRunning}
-            data-testid="run-judge-demo"
-            aria-label={demoRunning ? 'Judge demo running' : 'Run judge demo'}
-          >
-            {demoRunning ? (
-              'Running demo…'
-            ) : (
-              <>
-                <span className="judge-demo-btn__long" aria-hidden="true">
-                  Run judge demo
-                </span>
-                <span className="judge-demo-btn__short" aria-hidden="true">
-                  Run demo
-                </span>
-              </>
-            )}
-          </IndustrialButton>
-          {demoRunning && (
-            <div
-              className="judge-demo-rail"
-              data-testid="judge-demo-rail"
-              aria-live="polite"
-            >
-              <span className="sr-only">
-                Demo step {demoCaptionIndex + 1} of {JUDGE_DEMO_STEP_COUNT}
-              </span>
-              <span aria-hidden="true">
-                {demoCaptionIndex + 1}/{JUDGE_DEMO_STEP_COUNT}
-              </span>
-              <span className="judge-demo-rail__caption">
-                {judgeDemoPresenterCaptions[demoCaptionIndex] ??
-                  judgeDemoPresenterCaptions[0]}
-              </span>
-            </div>
-          )}
+          <JudgeDemoTopbar
+            demoRunning={demoRunning}
+            demoCaptionIndex={demoCaptionIndex}
+            onSceneReset={applyDemoReset}
+            onSceneSuccess={applyDemoSuccessState}
+            onSceneApproved={applyDemoReviewApproved}
+            onRunJudgeDemo={runJudgeDemo}
+          />
           <div className="app-topbar__status">
             <StatusPip label="All systems operational" tone="green" />
           </div>
@@ -619,6 +472,13 @@ export default function App() {
           />
         )}
 
+        <LessonLoomSessionProvider
+          hasWoven={hasWoven}
+          studentAppActive={studentAppActive}
+          approved={approved}
+          workspaceMode={workspaceMode}
+          activeSupport={activeSupport}
+        >
         <main id="main-content" tabIndex={-1}>
           <HeroLanding
             hasWoven={hasWoven}
@@ -644,7 +504,6 @@ export default function App() {
             onWeave={runWeaveSequence}
           />
           <TeachingSignal
-            hasWoven={hasWoven}
             onWeave={runWeaveSequence}
             onHighlightSource={(signalId) => setHighlightPhraseId(signalId)}
             onSurfaceLink={handleSignalSurfaceLink}
@@ -660,7 +519,6 @@ export default function App() {
             checkSuccess={checkSuccess}
             checkAttempted={checkAttempted}
             showSuccessPulse={showSuccessPulse}
-            studentAppActive={studentAppActive}
             reflectionText={reflectionText}
             reflectionSaved={reflectionSaved}
             reflectionTouched={reflectionTouched}
@@ -685,9 +543,6 @@ export default function App() {
           />
           <ReviewSafety approved={approved} onApprove={() => setApproved(true)} />
           <ExportPackSection
-            hasWoven={hasWoven}
-            studentAppActive={studentAppActive}
-            approved={approved}
             copiedExportId={copiedExportId}
             downloadNotice={downloadNotice}
             onCopy={handleExportCopy}
@@ -697,6 +552,7 @@ export default function App() {
           <MadeWithStitch systemMapStep={systemMapStep} />
           <LabsCaseStudy />
         </main>
+        </LessonLoomSessionProvider>
 
         <SiteFooter
           onResetDemo={applyDemoReset}
@@ -705,17 +561,7 @@ export default function App() {
         />
       </div>
 
-      {demoRunning && (
-        <div
-          className="presenter-caption"
-          data-testid="presenter-caption"
-          role="status"
-          aria-live="polite"
-        >
-          {judgeDemoPresenterCaptions[demoCaptionIndex] ??
-            judgeDemoPresenterCaptions[0]}
-        </div>
-      )}
+      <PresenterCaption visible={demoRunning} captionIndex={demoCaptionIndex} />
     </div>
   );
 }

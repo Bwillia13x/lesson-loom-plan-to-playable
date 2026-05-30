@@ -47,17 +47,17 @@
 | ID | Finding | Status | Notes |
 |----|---------|--------|-------|
 | Q1 | `styles.css` monolith >1k | **Resolved** | Active chain: `index.css` → `tokens`, `base`, `layout`, `motion`, `components-shared` (554), `components-sections` (634). Orphan `sections.css` **removed**. |
-| Q2 | `App.tsx` god-object | **Deferred** | [`src/App.tsx`](../src/App.tsx) ~713 lines holds demo URL, GSAP weave, judge demo, spine — acceptable for Stitch prototype after judge-path restore |
-| Q3 | `hasWoven` prop drilling | **Deferred** | Props from `App.tsx`; acceptable for single-page demo |
+| Q2 | `App.tsx` god-object | **Partially resolved** | Judge demo + topbar extracted to [`src/demo/`](../src/demo/) (2026-05-30); [`src/App.tsx`](../src/App.tsx) ~563 lines. Full weave/state split still deferred. |
+| Q3 | `hasWoven` prop drilling | **Resolved** | [`LessonLoomSessionContext`](../src/context/LessonLoomSessionContext.tsx) for export/student/signal shells; state remains in `App.tsx`. |
 | Q4 | Duplicate weave test id | **Resolved** | See B14 |
 | Q5 | 8th card dim logic | **Resolved** | See B12 |
 | Q6 | Four weave entry points | **Accepted** | Intentional demo affordances |
 | Q7 | Hero bypasses `Section` | **Resolved** | `HeroLanding` uses `Section` + `titleAs="h1"` |
-| Q8 | `IndustrialButton` name | **Resolved** | [`IndustrialButton.tsx`](../src/components/ui/IndustrialButton.tsx) re-exports [`Button.tsx`](../src/components/ui/Button.tsx); prefer `Button` in new code |
+| Q8 | `IndustrialButton` name | **Resolved** | Section components use `Button`; [`IndustrialButton.tsx`](../src/components/ui/IndustrialButton.tsx) re-export kept for `App.tsx` topbar |
 | Q9 | `laneConfig.tone` unused | **Resolved** | Wired to `StatusPip` on UDL tabs |
 | Q10 | `equivalentHalfIds` dead | **Resolved** | Alias removed; use `equivalentCanonicalIds` |
 | Q11 | E2e copy-locked | **Resolved** | Hero-weave flows use [`e2e/helpers.ts`](../e2e/helpers.ts) `weaveFromHero()` |
-| Q12 | Judge demo long timeouts | **Accepted** | Tests pass; timeouts guard async demo |
+| Q12 | Judge demo long timeouts | **Resolved** | [`e2e/helpers.ts`](../e2e/helpers.ts) `waitForJudgeDemoMilestones` chains testid expects; max 15s with GSAP comments only. |
 
 ---
 
@@ -71,7 +71,7 @@ After merging upstream judge-path features (`e2eddfc`), application state lives 
 
 - Export zip is a **demo** archive via `fflate` (`lesson-loom-fraction-garden.zip`); not a production pipeline.
 - `ResponsivePreview` is static device chrome, not live iframe preview.
-- `primitives.css` is not in the import chain (legacy reference only); active styles use split partials in `src/styles/`.
+- Legacy `primitives.css` archived under `docs/archive/styles/` (2026-05-30); not in the import chain. Active styles use split partials in `src/styles/`.
 - Demo zip remains download-enabled pre-weave by design (`e2e/export-zip.spec.ts`); copy cards stay `hasWoven`-gated.
 - Planning pack examples use `equivalentCanonicalIds` (aligned with `lessonLoomData.ts`).
 
