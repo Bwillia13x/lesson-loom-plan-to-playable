@@ -34,7 +34,7 @@ import { TeacherConsole } from './components/sections/TeacherConsole';
 import { TeachingSignal } from './components/sections/TeachingSignal';
 import { StatusPip } from './components/ui/StatusPip';
 import { WorkspaceModeToggle } from './components/ui/WorkspaceModeToggle';
-import { createWeaveTimeline } from './motion/createWeaveTimeline';
+import { useWeaveSequence } from './motion/useWeaveSequence';
 import { LessonLoomSessionProvider } from './context/LessonLoomSessionContext';
 import { downloadExportZip } from './utils/buildExportZip';
 import { isEquivalentTileSelection } from './utils/fractionCheck';
@@ -90,9 +90,6 @@ export default function App() {
   const [weaveLiveMessage, setWeaveLiveMessage] = useState('');
   const uiTimeoutIds = useRef<number[]>([]);
   const highlightSurfaceTimeoutRef = useRef<number | null>(null);
-  const weaveTimelineRef = useRef<ReturnType<typeof createWeaveTimeline>>(null);
-  const prevHasWovenRef = useRef(false);
-
   const { reduced: prefersReducedMotion } = useMotion();
   const scrollTo = useScrollToSection();
   const studentAppActive =
@@ -163,14 +160,7 @@ export default function App() {
 
   useDemoUrlState({ snapshot: demoUrlSnapshot });
 
-  const clearWeaveTimeline = () => {
-    if (weaveTimelineRef.current) {
-      weaveTimelineRef.current.kill();
-      weaveTimelineRef.current = null;
-    }
-  };
-
-  const clearUiTimeouts = () => {
+  const clearUiTimeouts = useCallback(() => {
     uiTimeoutIds.current.forEach((t) => window.clearTimeout(t));
     uiTimeoutIds.current = [];
     if (highlightSurfaceTimeoutRef.current !== null) {
@@ -178,20 +168,17 @@ export default function App() {
       highlightSurfaceTimeoutRef.current = null;
     }
     setHighlightSurface(null);
-  };
+  }, []);
 
-  const runWeaveSequence = useCallback(() => {
-    clearWeaveTimeline();
-    clearUiTimeouts();
-    setHasWoven(true);
-    setActiveWeaveStep(-1);
-    scrollTo('weave');
-
-    weaveTimelineRef.current = createWeaveTimeline(
-      setActiveWeaveStep,
-      prefersReducedMotion,
-    );
-  }, [prefersReducedMotion, scrollTo]);
+  const { runWeaveSequence, cancelWeave: clearWeaveTimeline } = useWeaveSequence({
+    hasWoven,
+    prefersReducedMotion,
+    scrollTo,
+    setHasWoven,
+    setActiveWeaveStep,
+    setWeaveLiveMessage,
+    onBeforeWeave: clearUiTimeouts,
+  });
 
   const {
     demoRunning,
@@ -231,17 +218,8 @@ export default function App() {
       clearWeaveTimeline();
       clearUiTimeouts();
     },
-    [],
+    [clearWeaveTimeline, clearUiTimeouts],
   );
-
-  useEffect(() => {
-    if (hasWoven && !prevHasWovenRef.current) {
-      setWeaveLiveMessage(
-        'Lesson woven. Teaching signal extracted and ready to explore.',
-      );
-    }
-    prevHasWovenRef.current = hasWoven;
-  }, [hasWoven]);
 
   useEffect(() => {
     const initialTiles = urlOnLoad?.tiles;

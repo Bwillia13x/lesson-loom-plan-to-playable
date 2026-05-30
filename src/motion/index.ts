@@ -8,6 +8,7 @@ export {
 } from './gsapReducedMotion';
 export { runGsapScoped } from './runGsapScoped';
 export { useScrollToSection } from './useScrollToSection';
+export { useWeaveSequence } from './useWeaveSequence';
 export {
   WEAVE_SIGNAL_REVEAL_DELAY_S,
   WEAVE_STEP_DELAYS_MS,
