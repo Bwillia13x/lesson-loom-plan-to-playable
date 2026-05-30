@@ -179,7 +179,14 @@ Recommended structure:
 src/
   App.tsx
   main.tsx
-  styles.css
+  styles/
+    index.css
+    tokens.css
+    base.css
+    layout.css
+    motion.css
+    components-shared.css
+    components-sections.css
   data/
     lessonLoomData.ts
   components/
@@ -267,10 +274,21 @@ At the end, provide:
 - Use subagent-driven development for major completion work: one implementer subagent per task, then spec compliance review, then code quality review (in that order).
 - Prefer dispatching subagents to execute implementation plans instead of a single long agent run.
 - For final quality assessment, audit the Lesson Loom app against `AGENTS.md` and the context pack; do not run `tls-final-excellence-orchestrator` (TLS-only).
+- Only create commits or push to remote when the user explicitly asks; do not commit proactively.
+- Run `/thermos` re-audits only after `npm run verify` is green on the current commit.
+- Prefer parallel remediation when resolving multi-item Thermo or audit finding lists.
+- When doc-vs-code drift is identified, fix it in the repo (docs and/or code) rather than only reporting it.
+- Near handoff, review and complete remaining items before commit/push; run final Thermo in a fresh session with a scoped prompt.
+- Scope Thermo and ship-readiness audits to application code (`src/`, `e2e/`, `package.json`, CI workflows), not planning-pack archives or external submission media unless UI copy is affected.
 
 ## Learned Workspace Facts
 
 - This workspace is the Lesson Loom Google Stitch / Contra prototype, not a TLS repository.
 - Application completion is tracked in `docs/APPLICATION_COMPLETE.md`; Thermos audit remediation is tracked in `docs/THERMO_AUDIT_RESOLUTION.md`.
-- Styles live under `src/styles/` (tokens, base, layout, components-shared, components-sections); use `03_DESIGN.md` palette, not industrial orange/cyan.
-- `npm run verify` runs build, lint, typecheck, smoke, and full e2e; CI uses the same script after Playwright browser install.
+- Styles load via `src/styles/index.css` (tokens, base, layout, motion, components-shared, components-sections); orphan `sections.css` was removed; use `03_DESIGN.md` palette, not industrial orange/cyan.
+- `npm run verify` is the release gate (build, lint, typecheck, smoke 3/3, e2e 53/53 excluding capture); CI runs the same script after Playwright browser install.
+- Application state, GSAP weave, demo URL hydration, and `runJudgeDemo` live in `src/App.tsx` (~720 lines); `useLessonLoomFlow` was removed; `IndustrialButton` re-exports `Button`—preserve full judge-path UI (presenter mode, scenes menu, session spine, export zip) when merging or refactoring.
+- Thermo ship-readiness re-audit: 2026-05-29 @ `476d80d` — verdict Ship with notes, 0 Must-fix, verify 53/53; recorded in `docs/THERMO_AUDIT_RESOLUTION.md`. Monolithic `App.tsx` remains an accepted Q2 deferral unless explicitly requested.
+- Weave CTAs use `weave-lesson-hero`, `weave-lesson-panel`, and `weave-lesson-intake` (not a shared `weave-lesson` on one element).
+- Export copy is `hasWoven`-gated; `handleExportCopy` shows Copied only on clipboard success. Demo zip via `fflate` stays download-enabled even pre-weave by design (`e2e/export-zip.spec.ts`).
+- `e2e/helpers.ts` provides `weaveFromHero()` for specs that need hero weave before downstream steps; prefer it over duplicating hero-weave waits (Q11).

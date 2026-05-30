@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import path from 'node:path';
+import { weaveFromHero } from './helpers';
 
 const outDir = path.join(process.cwd(), 'submission-screenshots');
 
@@ -19,8 +20,7 @@ test('capture submission screenshots', async ({ page }) => {
     fullPage: false,
   });
 
-  await page.locator('#hero').getByTestId('weave-lesson-hero').click();
-  await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 5000 });
+  await weaveFromHero(page, { bannerTimeoutMs: 5000 });
 
   await page.locator('#signals').scrollIntoViewIfNeeded();
   await pause(page, 300);

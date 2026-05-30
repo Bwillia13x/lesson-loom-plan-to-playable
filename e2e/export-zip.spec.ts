@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { weaveFromHero } from './helpers';
 
 test('export pack download triggers zip with expected filename', async ({ page }) => {
   await page.goto('/');
@@ -26,8 +27,7 @@ const CANONICAL_TILES = ['one-half', 'two-fourths', 'three-sixths'];
 test('export zip includes saved reflection notes', async ({ page }) => {
   await page.goto('/');
 
-  await page.locator('#hero').getByTestId('weave-lesson-hero').click();
-  await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 4000 });
+  await weaveFromHero(page, { bannerTimeoutMs: 4000 });
 
   await page.getByTestId('workspace-student').click();
   await page.locator('#student').scrollIntoViewIfNeeded();

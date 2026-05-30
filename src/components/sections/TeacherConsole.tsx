@@ -54,6 +54,8 @@ export function TeacherConsole({
           <button
             type="button"
             className={`mode-toggle__btn ${classMode === 'whole' ? 'mode-toggle__btn--active' : ''}`}
+            aria-pressed={classMode === 'whole'}
+            data-testid="class-mode-whole"
             onClick={() => onClassModeChange('whole')}
           >
             Whole Class
@@ -61,6 +63,8 @@ export function TeacherConsole({
           <button
             type="button"
             className={`mode-toggle__btn ${classMode === 'groups' ? 'mode-toggle__btn--active' : ''}`}
+            aria-pressed={classMode === 'groups'}
+            data-testid="class-mode-groups"
             onClick={() => onClassModeChange('groups')}
           >
             Small Groups

@@ -2,7 +2,19 @@
 
 **Remediation date:** 2026-05-29  
 **Doc sync:** 2026-05-29 (`e2eddfc` baseline — judge-path restore + verify 53/53)  
-**Re-audit:** Run `/thermos` on current `main` and confirm no open **Must fix** rows.
+**Re-audit:** 2026-05-29 @ `476d80d` — `/thermos` parallel pass; **0 Must-fix**; verify green (smoke 3/3, e2e 53/53).
+
+### Post-polish (2026-05-30)
+
+| Item | Status |
+|------|--------|
+| Q11 e2e `weaveFromHero()` adoption | **Resolved** — hero-weave specs use shared helper with configurable banner timeout |
+| Orphan `src/styles.css` shim | **Removed** — entry is `src/styles/index.css` via `main.tsx` |
+| Q10 `equivalentHalfIds` alias | **Removed** — `equivalentCanonicalIds` only |
+| Teacher class-mode `aria-pressed` | **Resolved** — parity with workspace toggle + e2e |
+| Export lock notice | **Clarified** — copy gated by weave; demo zip remains available pre-weave |
+| Export status pip | **Tightened** — “All files generated” when `studentAppActive` |
+| Alternate weave e2e | **Resolved** — `e2e/weave-entry-points.spec.ts` (panel + intake) |
 
 ---
 
@@ -43,8 +55,8 @@
 | Q7 | Hero bypasses `Section` | **Resolved** | `HeroLanding` uses `Section` + `titleAs="h1"` |
 | Q8 | `IndustrialButton` name | **Resolved** | [`IndustrialButton.tsx`](../src/components/ui/IndustrialButton.tsx) re-exports [`Button.tsx`](../src/components/ui/Button.tsx); prefer `Button` in new code |
 | Q9 | `laneConfig.tone` unused | **Resolved** | Wired to `StatusPip` on UDL tabs |
-| Q10 | `equivalentHalfIds` dead | **Resolved** | Removed from data module |
-| Q11 | E2e copy-locked | **Mitigated** | Primary paths use testids; [`e2e/helpers.ts`](../e2e/helpers.ts) `weaveFromHero()` |
+| Q10 | `equivalentHalfIds` dead | **Resolved** | Alias removed; use `equivalentCanonicalIds` |
+| Q11 | E2e copy-locked | **Resolved** | Hero-weave flows use [`e2e/helpers.ts`](../e2e/helpers.ts) `weaveFromHero()` |
 | Q12 | Judge demo long timeouts | **Accepted** | Tests pass; timeouts guard async demo |
 
 ---
@@ -59,8 +71,9 @@ After merging upstream judge-path features (`e2eddfc`), application state lives 
 
 - Export zip is a **demo** archive via `fflate` (`lesson-loom-fraction-garden.zip`); not a production pipeline.
 - `ResponsivePreview` is static device chrome, not live iframe preview.
-- `primitives.css` is not in the import chain (legacy); active styles use split partials.
-- `07_CONTENT_MODEL_AND_SAMPLE_DATA.md` may still mention legacy `equivalentHalfIds` in examples (planning doc only).
+- `primitives.css` is not in the import chain (legacy reference only); active styles use split partials in `src/styles/`.
+- Demo zip remains download-enabled pre-weave by design (`e2e/export-zip.spec.ts`); copy cards stay `hasWoven`-gated.
+- Planning pack examples use `equivalentCanonicalIds` (aligned with `lessonLoomData.ts`).
 
 ---
 
@@ -72,7 +85,7 @@ npx playwright install chromium
 npm run verify
 ```
 
-Expected: build, lint, typecheck, smoke (3), and e2e (53) all pass.
+Expected: build, lint, typecheck, smoke (3), and e2e (56, excludes capture) all pass.
 
 ---
 

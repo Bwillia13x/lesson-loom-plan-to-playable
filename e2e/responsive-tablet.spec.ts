@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { weaveFromHero } from './helpers';
 
 test.describe('tablet viewport (768px)', () => {
   test.beforeEach(async ({ page }) => {
@@ -7,8 +8,7 @@ test.describe('tablet viewport (768px)', () => {
   });
 
   test('no horizontal overflow after weave', async ({ page }) => {
-    await page.locator('#hero').getByTestId('weave-lesson-hero').click();
-    await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 5000 });
+    await weaveFromHero(page, { bannerTimeoutMs: 5000 });
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
     );

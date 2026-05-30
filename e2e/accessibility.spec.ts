@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { weaveFromHero } from './helpers';
 
 test.describe('accessibility affordances', () => {
   test.beforeEach(async ({ page }) => {
@@ -20,8 +21,7 @@ test.describe('accessibility affordances', () => {
   });
 
   test('garden hint toggle shows callout', async ({ page }) => {
-    await page.locator('#hero').getByTestId('weave-lesson-hero').click();
-    await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 4000 });
+    await weaveFromHero(page, { bannerTimeoutMs: 4000 });
 
     await page.getByTestId('workspace-student').click();
     await page.locator('#student').scrollIntoViewIfNeeded();
@@ -74,6 +74,22 @@ test.describe('accessibility affordances', () => {
     await expect(page.getByTestId('udl-task-variation-extend')).toContainText(
       'Create a new equivalent set',
     );
+  });
+
+  test('class mode toggles expose aria-pressed state', async ({ page }) => {
+    await weaveFromHero(page, { bannerTimeoutMs: 4000 });
+    await page.getByTestId('workspace-teacher').click();
+    await page.locator('#teacher').scrollIntoViewIfNeeded();
+
+    const wholeClass = page.getByTestId('class-mode-whole');
+    const smallGroups = page.getByTestId('class-mode-groups');
+
+    await expect(wholeClass).toHaveAttribute('aria-pressed', 'true');
+    await expect(smallGroups).toHaveAttribute('aria-pressed', 'false');
+
+    await smallGroups.click();
+    await expect(smallGroups).toHaveAttribute('aria-pressed', 'true');
+    await expect(wholeClass).toHaveAttribute('aria-pressed', 'false');
   });
 
   test('teacher timeline tabs respond to arrow-key roving', async ({ page }) => {

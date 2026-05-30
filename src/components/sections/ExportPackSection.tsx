@@ -5,6 +5,7 @@ import { StatusPip } from '../ui/StatusPip';
 
 type ExportPackSectionProps = {
   hasWoven: boolean;
+  studentAppActive: boolean;
   approved: boolean;
   copiedExportId: string | null;
   downloadNotice: string | null;
@@ -14,6 +15,7 @@ type ExportPackSectionProps = {
 
 export function ExportPackSection({
   hasWoven,
+  studentAppActive,
   approved,
   copiedExportId,
   downloadNotice,
@@ -31,9 +33,15 @@ export function ExportPackSection({
       <div className="flex-between" style={{ marginBottom: '1.25rem' }}>
         <div className="export-pack-status" data-testid="export-pack-status">
           <StatusPip
-            label={hasWoven ? 'All files generated' : 'Preview artifacts'}
-            tone={hasWoven ? 'green' : 'amber'}
-            pulse={hasWoven}
+            label={
+              studentAppActive
+                ? 'All files generated'
+                : hasWoven
+                  ? 'Weaving in progress'
+                  : 'Preview artifacts'
+            }
+            tone={studentAppActive ? 'green' : 'amber'}
+            pulse={hasWoven && !studentAppActive}
           />
           {approved && (
             <span data-testid="export-approved-pip">
@@ -60,7 +68,8 @@ export function ExportPackSection({
 
       {!hasWoven && (
         <p className="export-lock-notice" role="note" data-testid="export-lock-notice">
-          Weave the lesson first to unlock the full export preview.
+          Weave the lesson first to copy individual export files. Demo zip download stays
+          available as a prototype handoff.
         </p>
       )}
 

@@ -1,6 +1,6 @@
 # Lesson Loom — Application Complete
 
-**Date:** 2026-05-29 (synced with `e2eddfc` — full judge-path + verify 53/53)  
+**Date:** 2026-05-29 (synced with `476d80d` — doc/code alignment + Thermo re-audit; verify 53/53)  
 **Workspace:** `lesson-loom-agent-context-pack-v2`  
 **Attestation:** Cursor agent session (completion gate, Thermo fixes, judge-path restore)  
 **Thermo resolution:** See [`docs/THERMO_AUDIT_RESOLUTION.md`](THERMO_AUDIT_RESOLUTION.md)
@@ -32,7 +32,7 @@
 | `npm run lint` | Pass |
 | `npm run typecheck` | Pass |
 | `npm run test:smoke` | **3/3 passed** |
-| `npm run test:e2e` | **53/53 passed** (excludes `capture-screenshots`) |
+| `npm run test:e2e` | **56/56 passed** (excludes `capture-screenshots`) |
 | `npm run verify` | **Pass** (all of the above) |
 
 ### E2E coverage summary
@@ -40,7 +40,7 @@
 - **smoke:** Golden path — pre-weave gating, weave, fractions, `Teacher approval recorded`, export copy.
 - **accessibility:** Skip link focus, garden hint, UDL + teacher tab roving, workspace toggles.
 - **Judge path:** Demo URL, session spine, export gate/zip, signal surface links, presenter mode, scenes menu, phase-2 session, unified session, responsive viewports, and related specs.
-- **Helpers:** [`e2e/helpers.ts`](../e2e/helpers.ts) — `weaveFromHero()` for consistent weave CTA (`weave-lesson-hero`).
+- **Helpers:** [`e2e/helpers.ts`](../e2e/helpers.ts) — `weaveFromHero()` (configurable banner timeout) for hero weave across specs.
 
 ---
 

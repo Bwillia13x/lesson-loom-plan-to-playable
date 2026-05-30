@@ -686,6 +686,7 @@ export default function App() {
           <ReviewSafety approved={approved} onApprove={() => setApproved(true)} />
           <ExportPackSection
             hasWoven={hasWoven}
+            studentAppActive={studentAppActive}
             approved={approved}
             copiedExportId={copiedExportId}
             downloadNotice={downloadNotice}

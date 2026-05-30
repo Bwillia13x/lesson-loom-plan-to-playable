@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { weaveFromHero } from './helpers';
 
 test('golden path: weave → fractions → approve → export copy', async ({ page }) => {
   await page.goto('/');
@@ -15,8 +16,7 @@ test('golden path: weave → fractions → approve → export copy', async ({ pa
   await expect(copyBtn).toBeDisabled();
   await expect(page.getByTestId('export-lock-notice')).toBeVisible();
 
-  await page.locator('#hero').getByTestId('weave-lesson-hero').click();
-  await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 4000 });
+  await weaveFromHero(page, { bannerTimeoutMs: 4000 });
 
   await page.getByTestId('workspace-student').click();
   await expect(page.getByTestId('tile-one-half')).toBeEnabled();

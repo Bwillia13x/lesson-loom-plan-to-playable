@@ -156,9 +156,6 @@ export const fractionTiles: FractionTile[] = [
 /** Demo canonical trio shown in hero and success feedback */
 export const equivalentCanonicalIds = ['one-half', 'two-fourths', 'three-sixths'];
 
-/** @deprecated Use equivalentCanonicalIds */
-export const equivalentHalfIds = equivalentCanonicalIds;
-
 export const teacherTimeline = [
   {
     id: 'warmup',

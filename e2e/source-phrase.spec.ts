@@ -1,12 +1,10 @@
 import { expect, test } from '@playwright/test';
+import { weaveFromHero } from './helpers';
 
 test('source badge scrolls lesson intake into view', async ({ page }) => {
   await page.goto('/');
 
-  await page.locator('#hero').getByTestId('weave-lesson-hero').click();
-  await expect(page.getByTestId('weave-complete-banner')).toBeVisible({
-    timeout: 3000,
-  });
+  await weaveFromHero(page, { bannerTimeoutMs: 3000 });
 
   const sourceBadge = page.getByTestId('source-phrase-goal');
   await page.locator('#signals').scrollIntoViewIfNeeded();

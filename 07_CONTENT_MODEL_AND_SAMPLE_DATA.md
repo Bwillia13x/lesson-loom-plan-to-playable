@@ -125,7 +125,7 @@ export const fractionTiles = [
 Equivalent success group:
 
 ```ts
-const equivalentHalfIds = ['one-half', 'two-fourths', 'four-eighths'];
+const equivalentCanonicalIds = ['one-half', 'two-fourths', 'three-sixths'];
 ```
 
 Alternative acceptable success if selected values all equal 0.5:

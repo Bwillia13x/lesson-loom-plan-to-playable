@@ -211,7 +211,12 @@ export function LessonIntake({
       </div>
 
       <div className="mt-2">
-        <IndustrialButton variant="primary" size="lg" onClick={onExtract}>
+        <IndustrialButton
+          variant="primary"
+          size="lg"
+          data-testid="weave-lesson-intake"
+          onClick={onExtract}
+        >
           Extract Teaching Signal
         </IndustrialButton>
         <p className="text-mono mt-1" style={{ fontSize: '0.72rem', color: 'var(--ll-muted)' }}>

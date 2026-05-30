@@ -1,9 +1,9 @@
 import { expect, test } from '@playwright/test';
+import { weaveFromHero } from './helpers';
 
 test('UDL extend lane updates student mission copy', async ({ page }) => {
   await page.goto('/');
-  await page.locator('#hero').getByTestId('weave-lesson-hero').click();
-  await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 4000 });
+  await weaveFromHero(page, { bannerTimeoutMs: 4000 });
 
   await page.locator('#udl').scrollIntoViewIfNeeded();
   await page.getByTestId('lane-extend').click();
@@ -28,8 +28,7 @@ test('teacher segment changes console prompts', async ({ page }) => {
 
 test('devices preview mirrors woven session and extend lane', async ({ page }) => {
   await page.goto('/');
-  await page.locator('#hero').getByTestId('weave-lesson-hero').click();
-  await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 4000 });
+  await weaveFromHero(page, { bannerTimeoutMs: 4000 });
 
   await page.locator('#udl').scrollIntoViewIfNeeded();
   await page.getByTestId('lane-extend').click();
@@ -49,8 +48,7 @@ test('groups class mode shows partner rotation copy', async ({ page }) => {
 
 test('devices preview mirrors approval state', async ({ page }) => {
   await page.goto('/?w=1');
-  await page.locator('#hero').getByTestId('weave-lesson-hero').click();
-  await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 4000 });
+  await weaveFromHero(page, { bannerTimeoutMs: 4000 });
 
   await page.locator('#devices').scrollIntoViewIfNeeded();
   await expect(page.getByTestId('devices-review-state')).toContainText('Pending review');

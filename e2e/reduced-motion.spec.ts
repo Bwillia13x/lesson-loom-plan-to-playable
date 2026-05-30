@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { weaveFromHero } from './helpers';
 
 test('reduced motion: weave completes immediately and banner shows', async ({
   page,
@@ -7,11 +8,7 @@ test('reduced motion: weave completes immediately and banner shows', async ({
   await page.goto('/');
 
   const started = Date.now();
-  await page.locator('#hero').getByTestId('weave-lesson-hero').click();
-
-  await expect(page.getByTestId('weave-complete-banner')).toBeVisible({
-    timeout: 800,
-  });
+  await weaveFromHero(page, { bannerTimeoutMs: 800 });
 
   const elapsed = Date.now() - started;
   expect(elapsed).toBeLessThan(1000);
@@ -30,10 +27,7 @@ test('reduced motion: workspace toggle reaches teacher section', async ({
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
 
-  await page.locator('#hero').getByTestId('weave-lesson-hero').click();
-  await expect(page.getByTestId('weave-complete-banner')).toBeVisible({
-    timeout: 800,
-  });
+  await weaveFromHero(page, { bannerTimeoutMs: 800 });
 
   await page.getByTestId('workspace-teacher').click();
   await expect(page.locator('#teacher')).toBeInViewport();

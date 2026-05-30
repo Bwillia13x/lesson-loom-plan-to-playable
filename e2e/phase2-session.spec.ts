@@ -1,11 +1,11 @@
 import { expect, test } from '@playwright/test';
+import { weaveFromHero } from './helpers';
 
 test('system map reaches Review before approval and Export after', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByTestId('system-map')).toHaveAttribute('data-active-step', '0');
 
-  await page.locator('#hero').getByTestId('weave-lesson-hero').click();
-  await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 4000 });
+  await weaveFromHero(page, { bannerTimeoutMs: 4000 });
   await expect(page.getByTestId('system-map')).toHaveAttribute('data-active-step', '3');
 
   await page.locator('#review').scrollIntoViewIfNeeded();
