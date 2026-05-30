@@ -1,5 +1,5 @@
 import { exportGateCopy, exportPack } from '../../data/lessonLoomData';
-import { useLessonLoomSession } from '../../context/LessonLoomSessionContext';
+import { useLessonLoomSession } from '../../context/useLessonLoomSession';
 import { Button } from '../ui/Button';
 import { Section } from '../ui/Section';
 import { StatusPip } from '../ui/StatusPip';

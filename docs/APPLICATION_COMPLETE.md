@@ -1,6 +1,6 @@
 # Lesson Loom — Application Complete
 
-**Date:** 2026-05-29 (synced with `476d80d` — doc/code alignment + Thermo re-audit; verify 53/53)  
+**Date:** 2026-05-30 (post-merge plan 004 @ `160e4cc` + plan 005 hygiene; verify 56/56)  
 **Workspace:** `lesson-loom-agent-context-pack-v2`  
 **Attestation:** Cursor agent session (completion gate, Thermo fixes, judge-path restore)  
 **Thermo resolution:** See [`docs/THERMO_AUDIT_RESOLUTION.md`](THERMO_AUDIT_RESOLUTION.md)
@@ -24,7 +24,7 @@
 
 ---
 
-## Commands run (2026-05-29)
+## Commands run (2026-05-30)
 
 | Command | Result |
 |---------|--------|
@@ -48,11 +48,13 @@
 
 | Area | Location |
 |------|----------|
-| App state & judge demo | [`src/App.tsx`](../src/App.tsx) (~713 lines) |
+| App shell & layout | [`src/App.tsx`](../src/App.tsx) (~500 lines post–weave extract) |
+| Judge demo path | [`src/demo/`](../src/demo/) — `useLessonLoomDemo`, `judgeDemoSequence`, `JudgeDemoTopbar` |
+| Session context | [`src/context/LessonLoomSessionContext.tsx`](../src/context/LessonLoomSessionContext.tsx) + [`useLessonLoomSession.ts`](../src/context/useLessonLoomSession.ts) |
+| Weave GSAP orchestration | [`src/motion/useWeaveSequence.ts`](../src/motion/useWeaveSequence.ts) + [`createWeaveTimeline.ts`](../src/motion/createWeaveTimeline.ts) |
 | Demo URL hydration | [`src/hooks/useDemoUrlState.ts`](../src/hooks/useDemoUrlState.ts) + `App.tsx` |
-| Motion / GSAP weave | [`src/motion/`](../src/motion/) + [`src/main.tsx`](../src/main.tsx) `MotionProvider` |
-| Styles | [`src/styles/index.css`](../src/styles/index.css) → split partials (no monolith) |
-| Buttons | [`Button.tsx`](../src/components/ui/Button.tsx); `IndustrialButton` is a re-export alias |
+| Styles | [`src/styles/index.css`](../src/styles/index.css) → split partials; legacy `primitives.css` archived under `docs/archive/styles/` |
+| Buttons | [`Button.tsx`](../src/components/ui/Button.tsx); `IndustrialButton` re-export alias (compat only) |
 
 ---
 
@@ -83,7 +85,7 @@
 1. **Export zip** — Real demo download via `fflate`; content is prototype handoff text, not production LMS export.
 2. **ResponsivePreview** — Static framed mockups, not embedded live student app.
 3. **No backend** — Client-side state; demo URL params only; no auth or real Stitch API.
-4. **App.tsx size** — Monolithic shell acceptable for contest prototype (see Thermo Q2 deferred).
+4. **App.tsx size** — Shell still owns nav, URL sync, and intersection spy; further splits optional (Thermo Q2 partial).
 
 ---
 
@@ -106,4 +108,4 @@
 
 ## Sign-off
 
-The Lesson Loom **application prototype** meets the plan’s “Definition of complete” for in-repo demo and contest walkthrough. **`npm run verify` is green (53 e2e + smoke)** on commit `e2eddfc` and after doc/code drift cleanup.
+The Lesson Loom **application prototype** meets the plan’s “Definition of complete” for in-repo demo and contest walkthrough. **`npm run verify` is green (56 e2e + smoke)** on `main` after merge of plan 004 (`160e4cc`) and plan 005 bounded weave extract.

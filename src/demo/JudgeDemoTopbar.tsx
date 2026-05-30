@@ -2,7 +2,7 @@ import {
   judgeDemoPresenterCaptions,
   JUDGE_DEMO_STEP_COUNT,
 } from '../data/presenterCaptions';
-import { IndustrialButton } from '../components/ui/IndustrialButton';
+import { Button } from '../components/ui/Button';
 
 type JudgeDemoTopbarProps = {
   demoRunning: boolean;
@@ -48,7 +48,7 @@ export function JudgeDemoTopbar({
           <option value="approved">Approved</option>
         </select>
       </div>
-      <IndustrialButton
+      <Button
         variant="ghost"
         size="sm"
         onClick={() => void onRunJudgeDemo()}
@@ -68,7 +68,7 @@ export function JudgeDemoTopbar({
             </span>
           </>
         )}
-      </IndustrialButton>
+      </Button>
       {demoRunning && (
         <div
           className="judge-demo-rail"

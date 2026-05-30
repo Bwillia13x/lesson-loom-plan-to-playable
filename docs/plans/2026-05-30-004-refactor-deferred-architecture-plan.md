@@ -1,6 +1,6 @@
 ---
 title: "refactor: Deferred Thermo architecture (subagent-driven)"
-status: active
+status: completed
 date: 2026-05-30
 type: refactor
 origin: docs/THERMO_AUDIT_RESOLUTION.md

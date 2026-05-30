@@ -1,15 +1,10 @@
-import { createContext, useContext, type ReactNode } from 'react';
-import type { SupportLane, WorkspaceMode } from '../data/lessonLoomData';
+import type { ReactNode } from 'react';
+import {
+  LessonLoomSessionContext,
+  type LessonLoomSessionValue,
+} from './sessionContext';
 
-export type LessonLoomSessionValue = {
-  hasWoven: boolean;
-  studentAppActive: boolean;
-  approved: boolean;
-  workspaceMode: WorkspaceMode;
-  activeSupport: SupportLane;
-};
-
-const LessonLoomSessionContext = createContext<LessonLoomSessionValue | null>(null);
+export type { LessonLoomSessionValue } from './sessionContext';
 
 export type LessonLoomSessionProviderProps = LessonLoomSessionValue & {
   children: ReactNode;
@@ -36,12 +31,4 @@ export function LessonLoomSessionProvider({
       {children}
     </LessonLoomSessionContext.Provider>
   );
-}
-
-export function useLessonLoomSession(): LessonLoomSessionValue {
-  const ctx = useContext(LessonLoomSessionContext);
-  if (!ctx) {
-    throw new Error('useLessonLoomSession must be used within LessonLoomSessionProvider');
-  }
-  return ctx;
 }

@@ -8,7 +8,7 @@ import { useMotion } from '../../motion/motionContext';
 import { runGsapScoped } from '../../motion/runGsapScoped';
 import { useScrollToSection } from '../../motion/useScrollToSection';
 import { WEAVE_SIGNAL_REVEAL_DELAY_S } from '../../motion/weaveTiming';
-import { useLessonLoomSession } from '../../context/LessonLoomSessionContext';
+import { useLessonLoomSession } from '../../context/useLessonLoomSession';
 import { Button } from '../ui/Button';
 import { Panel } from '../ui/Panel';
 import { Section } from '../ui/Section';

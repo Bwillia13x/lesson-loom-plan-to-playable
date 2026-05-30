@@ -17,7 +17,7 @@ import { studentMissionSteps } from '../../data/lessonLoomData';
 import { ProgressRail } from '../ui/ProgressRail';
 import { Section } from '../ui/Section';
 import { StatusPip } from '../ui/StatusPip';
-import { useLessonLoomSession } from '../../context/LessonLoomSessionContext';
+import { useLessonLoomSession } from '../../context/useLessonLoomSession';
 
 type StudentFractionGardenProps = {
   selectedTileIds: string[];

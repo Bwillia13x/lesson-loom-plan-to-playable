@@ -2,7 +2,9 @@
 
 **Phase 3 manual evidence:** See `docs/qa/MANUAL_PASS_2026-05-30.md` after human pass.
 
-Tracked against `08_QA_ACCEPTANCE_CHECKLIST.md`. Last updated: 2026-05-30 (Phase 3: session spine, signal surface links, judge Scenes, presenter chrome).
+Tracked against `08_QA_ACCEPTANCE_CHECKLIST.md`. Last updated: 2026-05-30 (plan 004 merged @ `160e4cc`; plan 005 doc + weave hook).
+
+**Code architecture:** Post–plan 004 layout (`src/demo/`, session context, ~500-line `App.tsx` with `useWeaveSequence`) — see [`docs/APPLICATION_COMPLETE.md`](../APPLICATION_COMPLETE.md).
 
 ## Product acceptance
 
@@ -62,7 +64,7 @@ For each width:
 
 ## Accessibility checks
 
-- [ ] Semantic heading order. — _manual tab pass_
+- [x] Semantic heading order. — _e2e/semantic-headings.spec.ts; full keyboard tab pass still manual in MANUAL_PASS_
 - [x] Real buttons for interactions. — _code review_
 - [x] Visible keyboard focus. — _--ll-focus-ring on buttons/tiles/links (Phase 2 F1)_
 - [ ] Controls can be tabbed to. — _manual_

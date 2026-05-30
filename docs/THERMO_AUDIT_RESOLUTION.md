@@ -4,6 +4,10 @@
 **Doc sync:** 2026-05-29 (`e2eddfc` baseline — judge-path restore + verify 53/53)  
 **Re-audit:** 2026-05-29 @ `476d80d` — `/thermos` parallel pass; **0 Must-fix**; verify green (smoke 3/3, e2e 53/53).
 
+### Merge baseline (2026-05-30)
+
+Plan 004 merged to `main` @ `160e4cc` (`refactor/deferred-architecture` fast-forward). Plan 005 adds weave hook extract, context lint split, doc parity, and optional `e2e/semantic-headings.spec.ts`.
+
 ### Post-polish (2026-05-30)
 
 | Item | Status |
@@ -47,13 +51,13 @@
 | ID | Finding | Status | Notes |
 |----|---------|--------|-------|
 | Q1 | `styles.css` monolith >1k | **Resolved** | Active chain: `index.css` → `tokens`, `base`, `layout`, `motion`, `components-shared` (554), `components-sections` (634). Orphan `sections.css` **removed**. |
-| Q2 | `App.tsx` god-object | **Partially resolved** | Judge demo + topbar extracted to [`src/demo/`](../src/demo/) (2026-05-30); [`src/App.tsx`](../src/App.tsx) ~563 lines. Full weave/state split still deferred. |
+| Q2 | `App.tsx` god-object | **Partially resolved** | Judge demo in [`src/demo/`](../src/demo/); weave orchestration in [`useWeaveSequence.ts`](../src/motion/useWeaveSequence.ts) (plan 005 @ `main` post-`160e4cc`); [`src/App.tsx`](../src/App.tsx) ~500 lines. Nav/URL/intersection spy remain in App. |
 | Q3 | `hasWoven` prop drilling | **Resolved** | [`LessonLoomSessionContext`](../src/context/LessonLoomSessionContext.tsx) for export/student/signal shells; state remains in `App.tsx`. |
 | Q4 | Duplicate weave test id | **Resolved** | See B14 |
 | Q5 | 8th card dim logic | **Resolved** | See B12 |
 | Q6 | Four weave entry points | **Accepted** | Intentional demo affordances |
 | Q7 | Hero bypasses `Section` | **Resolved** | `HeroLanding` uses `Section` + `titleAs="h1"` |
-| Q8 | `IndustrialButton` name | **Resolved** | Section components use `Button`; [`IndustrialButton.tsx`](../src/components/ui/IndustrialButton.tsx) re-export kept for `App.tsx` topbar |
+| Q8 | `IndustrialButton` name | **Resolved** | Sections + [`JudgeDemoTopbar`](../src/demo/JudgeDemoTopbar.tsx) use `Button`; [`IndustrialButton.tsx`](../src/components/ui/IndustrialButton.tsx) re-export kept for compat |
 | Q9 | `laneConfig.tone` unused | **Resolved** | Wired to `StatusPip` on UDL tabs |
 | Q10 | `equivalentHalfIds` dead | **Resolved** | Alias removed; use `equivalentCanonicalIds` |
 | Q11 | E2e copy-locked | **Resolved** | Hero-weave flows use [`e2e/helpers.ts`](../e2e/helpers.ts) `weaveFromHero()` |

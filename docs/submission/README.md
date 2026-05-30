@@ -1,5 +1,15 @@
 # Lesson Loom — Submission Assets
 
+**Verify on `main` (post–plan 004 merge @ `160e4cc`, plan 005 hygiene):**
+
+```bash
+npm install
+npx playwright install chromium
+npm run verify
+```
+
+CI runs the same gate on push to `main` (`.github/workflows/ci.yml`).
+
 ## Manual steps remaining
 
 These items are **not** automated in CI and must be completed before Contra submission:
