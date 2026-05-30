@@ -1,7 +1,7 @@
 ---
 title: "feat: Address product-lens priority areas for Stitch submission"
 type: feat
-status: active
+status: completed
 created: 2026-05-30
 date: 2026-05-30
 plan_id: 008
