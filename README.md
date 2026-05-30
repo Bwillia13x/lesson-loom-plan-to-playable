@@ -25,7 +25,7 @@ npx playwright install chromium   # first-time E2E setup
 npm run verify
 ```
 
-Runs `build`, `lint`, `typecheck`, Playwright smoke tests (`e2e/smoke.spec.ts`), and the full E2E suite (`e2e/*.spec.ts`, excluding screenshot capture).
+Runs `build`, `lint`, `typecheck`, Playwright smoke tests (`e2e/smoke.spec.ts`), and the full E2E suite (`e2e/*.spec.ts`, **58 tests**, excluding screenshot capture). Agent vs human submission gates: [`docs/submission/SUBMISSION_READINESS.md`](docs/submission/SUBMISSION_READINESS.md).
 
 ## Submission screenshots
 
@@ -129,7 +129,7 @@ Use before posting to Contra / the challenge portal. Full QA detail lives in `08
 ### Technical & submission assets
 
 - [ ] `npm run build` succeeds.
-- [ ] `npm run verify` passes (or build + lint + smoke documented).
+- [ ] `npm run verify` passes (see [`docs/submission/SUBMISSION_READINESS.md`](docs/submission/SUBMISSION_READINESS.md)).
 - [ ] Page title and meta description are set.
 - [ ] Live deployment URL loads and deep links work (after you deploy).
 - [ ] Screenshots captured (`npm run capture:screenshots`).

@@ -141,7 +141,7 @@ For each width:
 
 ## Submission checks
 
-- [x] Live URL works. — _GitHub Pages https://bwillia13x.github.io/lesson-loom-plan-to-playable/ ; judge demo e2e on Chromium_
+- [ ] Live URL works. — _human verifies after enabling GitHub Pages: https://bwillia13x.github.io/lesson-loom-plan-to-playable/ (404 until Settings → Pages → GitHub Actions). Judge demo e2e green on Chromium against local build._
 - [x] Page title is set. — _index.html_
 - [x] Meta description is set. — _index.html_
 - [x] Screenshots captured. — _npm run capture:screenshots (local, gitignored)_

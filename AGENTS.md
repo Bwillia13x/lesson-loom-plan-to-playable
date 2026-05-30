@@ -280,15 +280,21 @@ At the end, provide:
 - When doc-vs-code drift is identified, fix it in the repo (docs and/or code) rather than only reporting it.
 - Near handoff, review and complete remaining items before commit/push; run final Thermo in a fresh session with a scoped prompt.
 - Scope Thermo and ship-readiness audits to application code (`src/`, `e2e/`, `package.json`, CI workflows), not planning-pack archives or external submission media unless UI copy is affected.
+- When `main` is verify-green, treat remaining work as submission ops (GitHub Pages enable, live URL smoke, human MANUAL_PASS/video) and avoid optional architecture or product experiments unless the user asks for code changes.
+- Flip plan `docs/plans/2026-05-30-005-feat-remaining-work-subagent-plan.md` to `status: completed` only after human U8 (MANUAL_PASS and walkthrough video), not when automated units finish.
 
 ## Learned Workspace Facts
 
 - This workspace is the Lesson Loom Google Stitch / Contra prototype, not a TLS repository.
 - Application completion is tracked in `docs/APPLICATION_COMPLETE.md`; Thermos audit remediation is tracked in `docs/THERMO_AUDIT_RESOLUTION.md`.
-- Styles load via `src/styles/index.css` (tokens, base, layout, motion, components-shared, components-sections); orphan `sections.css` was removed; use `03_DESIGN.md` palette, not industrial orange/cyan.
-- `npm run verify` is the release gate (build, lint, typecheck, smoke 3/3, e2e 53/53 excluding capture); CI runs the same script after Playwright browser install.
-- Application state, GSAP weave, demo URL hydration, and `runJudgeDemo` live in `src/App.tsx` (~720 lines); `useLessonLoomFlow` was removed; `IndustrialButton` re-exports `Button`—preserve full judge-path UI (presenter mode, scenes menu, session spine, export zip) when merging or refactoring.
-- Thermo ship-readiness re-audit: 2026-05-29 @ `476d80d` — verdict Ship with notes, 0 Must-fix, verify 53/53; recorded in `docs/THERMO_AUDIT_RESOLUTION.md`. Monolithic `App.tsx` remains an accepted Q2 deferral unless explicitly requested.
+- Styles load via `src/styles/index.css` (tokens, base, layout, motion, components-shared, components-sections); orphan `sections.css` was removed; use `03_DESIGN.md` palette, not industrial orange/cyan. Legacy `primitives.css` is archived under `docs/archive/styles/`.
+- `npm run verify` is the release gate (build, lint, typecheck, smoke 3/3, e2e 58/58 excluding capture); CI runs the same script after Playwright browser install.
+- `main` @ `4a9ba91` is the integration branch after merge of `refactor/deferred-architecture` (plans 004–005); CI runs `npm run verify` green (smoke 3/3, e2e 58/58). Use `main` for new agent work unless the user names another branch. Judge demo lives in `src/demo/`; weave/session flags use `LessonLoomSessionContext` and `useLessonLoomSession()`; GSAP weave orchestration is in `src/motion/useWeaveSequence.ts`; `src/App.tsx` is ~545 lines—preserve presenter mode, scenes menu, session spine, and export zip on refactors. `IndustrialButton` re-exports `Button`.
+- Thermo ship-readiness re-audit: 2026-05-29 @ `476d80d` — Ship with notes, 0 Must-fix; post-merge `main` architecture and verify counts supersede that baseline for file layout and e2e totals.
 - Weave CTAs use `weave-lesson-hero`, `weave-lesson-panel`, and `weave-lesson-intake` (not a shared `weave-lesson` on one element).
 - Export copy is `hasWoven`-gated; `handleExportCopy` shows Copied only on clipboard success. Demo zip via `fflate` stays download-enabled even pre-weave by design (`e2e/export-zip.spec.ts`).
 - `e2e/helpers.ts` provides `weaveFromHero()` for specs that need hero weave before downstream steps; prefer it over duplicating hero-weave waits (Q11).
+- GitHub Pages deploy requires enabling Pages in repo Settings (source: GitHub Actions); the workflow returns 404 until enabled, then re-run Deploy.
+- Contra submission still needs human execution: complete `docs/qa/MANUAL_PASS_2026-05-30.md` and recording URL per `docs/submission/`—agents must not auto-check MANUAL_PASS boxes.
+- Agent vs human submission gates: [`docs/submission/SUBMISSION_READINESS.md`](docs/submission/SUBMISSION_READINESS.md) (plan 006 agent lane); flip plan 005 only after human U8.
+- Plans `docs/plans/2026-05-30-004-refactor-deferred-architecture-plan.md` (shipped) and `005-feat-remaining-work-subagent-plan.md` (automated units landed on `main`; keep 005 `status: active` until human U8). Execute multi-unit work via `/ce-work` subagent waves when the user invokes it. Pre-submit out of scope: full App split beyond weave hook, Q6 weave CTAs, zip-on-weave gate, hero AI-native copy churn.

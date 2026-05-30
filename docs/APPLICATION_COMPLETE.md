@@ -1,9 +1,10 @@
 # Lesson Loom — Application Complete
 
-**Date:** 2026-05-30 (post-merge plan 004 @ `160e4cc` + plan 005 hygiene; verify 56/56)  
+**Date:** 2026-05-30 (post-merge plan 004 @ `160e4cc` + plan 005 on `main` @ `4a9ba91`; verify **58/58** e2e + smoke)  
 **Workspace:** `lesson-loom-agent-context-pack-v2`  
 **Attestation:** Cursor agent session (completion gate, Thermo fixes, judge-path restore)  
-**Thermo resolution:** See [`docs/THERMO_AUDIT_RESOLUTION.md`](THERMO_AUDIT_RESOLUTION.md)
+**Thermo resolution:** See [`docs/THERMO_AUDIT_RESOLUTION.md`](THERMO_AUDIT_RESOLUTION.md)  
+**Submission handoff:** See [`docs/submission/SUBMISSION_READINESS.md`](submission/SUBMISSION_READINESS.md)
 
 ---
 
@@ -32,7 +33,7 @@
 | `npm run lint` | Pass |
 | `npm run typecheck` | Pass |
 | `npm run test:smoke` | **3/3 passed** |
-| `npm run test:e2e` | **56/56 passed** (excludes `capture-screenshots`) |
+| `npm run test:e2e` | **58/58 passed** (excludes `capture-screenshots`) |
 | `npm run verify` | **Pass** (all of the above) |
 
 ### E2E coverage summary
@@ -48,7 +49,7 @@
 
 | Area | Location |
 |------|----------|
-| App shell & layout | [`src/App.tsx`](../src/App.tsx) (~545 lines post–weave extract @ `614ac30`) |
+| App shell & layout | [`src/App.tsx`](../src/App.tsx) (~545 lines post–weave extract on `main` @ `4a9ba91`) |
 | Judge demo path | [`src/demo/`](../src/demo/) — `useLessonLoomDemo`, `judgeDemoSequence`, `JudgeDemoTopbar` |
 | Session context | [`src/context/LessonLoomSessionContext.tsx`](../src/context/LessonLoomSessionContext.tsx) + [`useLessonLoomSession.ts`](../src/context/useLessonLoomSession.ts) |
 | Weave GSAP orchestration | [`src/motion/useWeaveSequence.ts`](../src/motion/useWeaveSequence.ts) + [`createWeaveTimeline.ts`](../src/motion/createWeaveTimeline.ts) |
@@ -108,4 +109,4 @@
 
 ## Sign-off
 
-The Lesson Loom **application prototype** meets the plan’s “Definition of complete” for in-repo demo and contest walkthrough. **`npm run verify` is green (58 e2e + smoke)** on `main` @ `614ac30` after merge of plan 004 (`160e4cc`) and plan 005 bounded weave extract.
+The Lesson Loom **application prototype** meets the plan’s “Definition of complete” for in-repo demo and contest walkthrough. **`npm run verify` is green (58 e2e + smoke 3/3)** on `main` @ `4a9ba91` after merge of plan 004 (`160e4cc`) and plan 005 bounded weave extract. Human submission steps (Pages, MANUAL_PASS, video) are tracked in [`docs/submission/SUBMISSION_READINESS.md`](submission/SUBMISSION_READINESS.md).

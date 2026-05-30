@@ -1,12 +1,12 @@
 # Thermo audit — resolution checklist
 
 **Remediation date:** 2026-05-29  
-**Doc sync:** 2026-05-29 (`e2eddfc` baseline — judge-path restore + verify 53/53)  
-**Re-audit:** 2026-05-29 @ `476d80d` — `/thermos` parallel pass; **0 Must-fix**; verify green (smoke 3/3, e2e 53/53).
+**Doc sync:** 2026-05-30 (`main` @ `4a9ba91` — plan 004/005 merge + submission readiness)  
+**Re-audit:** 2026-05-29 @ `476d80d` — `/thermos` parallel pass; **0 Must-fix**; superseded counts on `main`: smoke 3/3, e2e **58/58**.
 
 ### Merge baseline (2026-05-30)
 
-Plan 004 merged to `main` @ `160e4cc` (`refactor/deferred-architecture` fast-forward). Plan 005 adds weave hook extract, context lint split, doc parity, and optional `e2e/semantic-headings.spec.ts`.
+Plan 004 merged to `main` @ `160e4cc` (`refactor/deferred-architecture` fast-forward). Plan 005 landed weave hook extract, context lint split, doc parity, and `e2e/semantic-headings.spec.ts` (**58/58** e2e on `main` @ `4a9ba91`). Agent submission ops: plan 006 — [`docs/submission/SUBMISSION_READINESS.md`](submission/SUBMISSION_READINESS.md).
 
 ### Post-polish (2026-05-30)
 
@@ -26,7 +26,7 @@ Plan 004 merged to `main` @ `160e4cc` (`refactor/deferred-architecture` fast-for
 
 | ID | Finding | Status | Evidence |
 |----|---------|--------|----------|
-| B1 | No critical judge-path blockers | **Resolved** | `npm run verify` — smoke 3/3, e2e 53/53 (excludes capture) |
+| B1 | No critical judge-path blockers | **Resolved** | `npm run verify` — smoke 3/3, e2e 58/58 (excludes capture) |
 | B2 | Tab arrow-key roving missing | **Resolved** | [`src/utils/tabRoving.ts`](../src/utils/tabRoving.ts); UDL + Teacher `onKeyDown` |
 | B3 | E2e used `.focus()` only | **Resolved** | UDL `ArrowRight`; teacher timeline test in `e2e/accessibility.spec.ts` |
 | B4 | No teacher tab e2e | **Resolved** | `e2e/accessibility.spec.ts` teacher timeline test |
@@ -51,7 +51,7 @@ Plan 004 merged to `main` @ `160e4cc` (`refactor/deferred-architecture` fast-for
 | ID | Finding | Status | Notes |
 |----|---------|--------|-------|
 | Q1 | `styles.css` monolith >1k | **Resolved** | Active chain: `index.css` → `tokens`, `base`, `layout`, `motion`, `components-shared` (554), `components-sections` (634). Orphan `sections.css` **removed**. |
-| Q2 | `App.tsx` god-object | **Partially resolved** | Judge demo in [`src/demo/`](../src/demo/); weave orchestration in [`useWeaveSequence.ts`](../src/motion/useWeaveSequence.ts) (plan 005 @ `main` post-`160e4cc`); [`src/App.tsx`](../src/App.tsx) ~500 lines. Nav/URL/intersection spy remain in App. |
+| Q2 | `App.tsx` god-object | **Partially resolved** | Judge demo in [`src/demo/`](../src/demo/); weave orchestration in [`useWeaveSequence.ts`](../src/motion/useWeaveSequence.ts) (plan 005 @ `main` @ `4a9ba91`); [`src/App.tsx`](../src/App.tsx) ~545 lines. Nav/URL/intersection spy remain in App. |
 | Q3 | `hasWoven` prop drilling | **Resolved** | [`LessonLoomSessionContext`](../src/context/LessonLoomSessionContext.tsx) for export/student/signal shells; state remains in `App.tsx`. |
 | Q4 | Duplicate weave test id | **Resolved** | See B14 |
 | Q5 | 8th card dim logic | **Resolved** | See B12 |
@@ -89,7 +89,7 @@ npx playwright install chromium
 npm run verify
 ```
 
-Expected: build, lint, typecheck, smoke (3), and e2e (56, excludes capture) all pass.
+Expected: build, lint, typecheck, smoke (3), and e2e (58, excludes capture) all pass.
 
 ---
 

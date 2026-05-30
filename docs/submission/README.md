@@ -1,6 +1,8 @@
 # Lesson Loom — Submission Assets
 
-**Verify on `main` (post–plan 004 merge @ `160e4cc`, plan 005 hygiene):**
+**Verify on `main` @ `4a9ba91` (post–plan 004/005; agent lane plan 006):**
+
+See also [`SUBMISSION_READINESS.md`](./SUBMISSION_READINESS.md) for agent-complete vs human-required gates.
 
 ```bash
 npm install
@@ -23,9 +25,34 @@ Do not paste a fake deploy URL in this repo.
 
 ### One-time: enable GitHub Pages (required for deploy workflow)
 
-1. Repo **Settings → Pages → Build and deployment → Source:** **GitHub Actions**.
-2. Re-run the latest **Deploy GitHub Pages** workflow (Actions tab → workflow → Re-run all jobs), or push to `main`.
-3. Confirm the site loads at the URL below before Contra submit.
+The [Deploy GitHub Pages](../../.github/workflows/deploy-pages.yml) workflow runs on every push to `main` and via **workflow_dispatch**. Until Pages is enabled in repo Settings, the **build** job usually succeeds while the public site stays **404** (observed on baseline `4a9ba91`).
+
+**Enable (founder, one time):**
+
+1. Open the repo on GitHub → **Settings** → **Pages**.
+2. Under **Build and deployment**, set **Source** to **GitHub Actions** (not “Deploy from a branch”).
+3. Save. No branch-based `gh-pages` branch is required for this workflow.
+
+**Deploy:**
+
+1. **Actions** → **Deploy GitHub Pages** → open the latest run → **Re-run all jobs**,  
+   **or** push an empty commit / any commit to `main` to trigger `on: push`.
+2. Wait for both jobs: **build** (Vite with `VITE_BASE_PATH: /<repo-name>/`) then **deploy** (`deploy-pages@v4`).
+3. When green, GitHub shows the environment URL on the deploy job (also under **Settings → Pages**).
+
+**Expected URL pattern:**
+
+- `https://<github-user>.github.io/<repository-name>/`
+- This repo: https://bwillia13x.github.io/lesson-loom-plan-to-playable/
+
+**Live smoke (human, before Contra):**
+
+1. Open the Pages URL — confirm HTML loads (not “There isn’t a GitHub Pages site here”).
+2. Click **Run judge demo** in the top bar; confirm auto-weave through export.
+3. Open shareable student deep link: `?w=1#student` on the same host.
+4. Optional manual path: **Weave lesson** (hero `weave-lesson-hero`) → student tiles → **Check** → **Approve for Classroom Use** → export **Copy**.
+
+If deploy logs show permission errors, confirm **Settings → Actions → General** allows workflows and that the `github-pages` environment exists after first Pages enable.
 
 ## Live demo
 
@@ -48,7 +75,7 @@ npx playwright install chromium --with-deps
 npm run capture:screenshots
 ```
 
-Output: `submission-screenshots/01-hero.png` … `06-mobile-student.png`.
+Output: `submission-screenshots/01-hero.png` … `06-mobile-student.png` (see artifact table for exact filenames).
 
 Screenshots are gitignored by default; generate locally before submitting or attach from CI artifacts.
 
@@ -59,11 +86,13 @@ After `npm run capture:screenshots`, expect:
 | File | Section |
 |------|---------|
 | `submission-screenshots/01-hero.png` | Hero |
-| `submission-screenshots/02-weave.png` | Lesson Weave |
-| `submission-screenshots/03-student.png` | Fraction Garden |
-| `submission-screenshots/04-teacher.png` | Teacher Console |
-| `submission-screenshots/05-export.png` | Export Pack |
+| `submission-screenshots/02-teaching-signals.png` | Teaching signals (post-weave) |
+| `submission-screenshots/03-fraction-garden.png` | Fraction Garden |
+| `submission-screenshots/04-teacher-console.png` | Teacher Console |
+| `submission-screenshots/05-review-export.png` | Review & export |
 | `submission-screenshots/06-mobile-student.png` | Student @ 390px |
+
+**Last captured:** 2026-05-30 on `main` @ `4a9ba91` (`npm run capture:screenshots` exit 0; PNGs local only, gitignored).
 
 Commit screenshots only if repo policy allows binaries; otherwise gitignore and attach to Contra upload.
 
