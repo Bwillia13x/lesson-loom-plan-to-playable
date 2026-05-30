@@ -1,4 +1,9 @@
-import { differentiation, udlChecks, type SupportLane } from '../../data/lessonLoomData';
+import {
+  differentiation,
+  udlChecks,
+  type SupportLane,
+  type WorkspaceMode,
+} from '../../data/lessonLoomData';
 import { handleTabRovingKeyDown } from '../../utils/tabRoving';
 import { Panel } from '../ui/Panel';
 import { Section } from '../ui/Section';
@@ -7,6 +12,8 @@ import { StatusPip } from '../ui/StatusPip';
 type DifferentiationUDLProps = {
   activeLane: SupportLane;
   onLaneChange: (lane: SupportLane) => void;
+  workspaceMode?: WorkspaceMode;
+  surfaceHighlighted?: boolean;
 };
 
 const laneConfig: Record<
@@ -18,29 +25,34 @@ const laneConfig: Record<
   extend: { className: 'lane-tab--extend', tone: 'green' },
 };
 
-const UDL_LANE_PANEL_ID = 'udl-lane-panel';
-const LANE_IDS = Object.keys(differentiation) as SupportLane[];
-
-export function DifferentiationUDL({ activeLane, onLaneChange }: DifferentiationUDLProps) {
+export function DifferentiationUDL({
+  activeLane,
+  onLaneChange,
+  workspaceMode = 'teacher',
+  surfaceHighlighted = false,
+}: DifferentiationUDLProps) {
   const lane = differentiation[activeLane];
+  const laneIds = Object.keys(differentiation) as SupportLane[];
 
   return (
     <Section
       id="udl"
       workspace="teacher"
+      className={surfaceHighlighted ? 'll-surface-highlight' : ''}
       eyebrow="Differentiation"
-      title="Support every learner without rebuilding the lesson."
-      lead="Switch between support, core, and extension moves while keeping the same learning goal."
+      title="Differentiation / UDL layer"
+      lead="Three lanes keep the same learning goal while adjusting scaffolds and challenge."
     >
-      <div
-        className="lane-tabs"
-        role="tablist"
-        aria-label="Support lanes"
-        onKeyDown={(event) =>
-          handleTabRovingKeyDown(event, LANE_IDS, activeLane, onLaneChange)
-        }
-      >
-        {LANE_IDS.map((key) => {
+      {workspaceMode === 'student' && (
+        <div style={{ marginBottom: '1rem' }} data-testid="udl-student-lane-preview">
+          <StatusPip
+            label={`Student app previewing ${lane.label} lane`}
+            tone="cyan"
+          />
+        </div>
+      )}
+      <div className="lane-tabs" role="tablist" aria-label="Support lanes">
+        {(Object.keys(differentiation) as SupportLane[]).map((key) => {
           const data = differentiation[key];
           const cfg = laneConfig[key];
           return (
@@ -48,15 +60,15 @@ export function DifferentiationUDL({ activeLane, onLaneChange }: Differentiation
               key={key}
               type="button"
               role="tab"
-              id={`udl-tab-${key}`}
               aria-selected={activeLane === key}
-              aria-controls={UDL_LANE_PANEL_ID}
-              tabIndex={activeLane === key ? 0 : -1}
               data-testid={`lane-${key}`}
               className={`lane-tab ${cfg.className} ${activeLane === key ? 'lane-tab--active' : ''}`}
               onClick={() => onLaneChange(key)}
+              onKeyDown={(event) =>
+                handleTabRovingKeyDown(event, laneIds, activeLane, onLaneChange)
+              }
             >
-              <StatusPip label={data.label} tone={cfg.tone} />
+              <div style={{ fontWeight: 600 }}>{data.label}</div>
               <div className="lane-tab__count">{data.students}</div>
               <div className="text-mono" style={{ fontSize: '0.62rem', color: 'var(--ll-muted)' }}>
                 students
@@ -66,20 +78,12 @@ export function DifferentiationUDL({ activeLane, onLaneChange }: Differentiation
         })}
       </div>
 
-      <div
-        className="grid-2"
-        role="tabpanel"
-        id={UDL_LANE_PANEL_ID}
-        aria-labelledby={`udl-tab-${activeLane}`}
-      >
+      <div className="grid-2">
         <Panel bracket screws>
           <div className="meta-grid">
             <div className="meta-item">
               <div className="meta-item__label">Task variation</div>
-              <div
-                className="meta-item__value"
-                data-testid={`udl-task-variation-${activeLane}`}
-              >
+              <div className="meta-item__value" data-testid={`udl-task-variation-${activeLane}`}>
                 {lane.taskVariation}
               </div>
             </div>
@@ -97,9 +101,6 @@ export function DifferentiationUDL({ activeLane, onLaneChange }: Differentiation
         </Panel>
 
         <Panel title="UDL checklist">
-          <p style={{ fontSize: '0.88rem', color: 'var(--ll-graphite)', margin: '0 0 1rem' }}>
-            UDL-informed checks help the lesson offer multiple ways to engage, understand, and respond.
-          </p>
           {udlChecks.map((check) => (
             <div
               key={check.id}

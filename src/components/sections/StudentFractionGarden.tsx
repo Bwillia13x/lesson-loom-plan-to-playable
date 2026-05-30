@@ -1,29 +1,57 @@
-import { useMemo, useState } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useMotion } from '../../motion/motionContext';
+import { runGsapScoped } from '../../motion/runGsapScoped';
 import {
   differentiation,
   equivalentCanonicalIds,
   fractionTiles,
   studentActivity,
   type FractionTile,
+  type ClassMode,
   type SupportLane,
 } from '../../data/lessonLoomData';
 import { FractionTileVisual } from '../FractionTileVisual';
-import { Button } from '../ui/Button';
+import { IndustrialButton } from '../ui/IndustrialButton';
 import { Panel } from '../ui/Panel';
+import { studentMissionSteps } from '../../data/lessonLoomData';
+import { ProgressRail } from '../ui/ProgressRail';
 import { Section } from '../ui/Section';
 import { StatusPip } from '../ui/StatusPip';
 
 type StudentFractionGardenProps = {
-  studentAppActive: boolean;
-  activeSupport: SupportLane;
-  classMode?: 'whole' | 'groups';
   selectedTileIds: string[];
   onToggleTile: (id: string) => void;
   onReset: () => void;
   onCheck: () => void;
   checkSuccess: boolean;
+  checkAttempted: boolean;
   showSuccessPulse: boolean;
+  studentAppActive?: boolean;
+  reflectionText: string;
+  reflectionSaved: boolean;
+  reflectionTouched: boolean;
+  onReflectionChange: (value: string) => void;
+  onReflectionTouch: () => void;
+  onSaveReflection: () => void;
+  activeSupport: SupportLane;
+  classMode?: ClassMode;
+  surfaceHighlighted?: boolean;
 };
+
+function studentProgressIndex(
+  selectedCount: number,
+  checkAttempted: boolean,
+  checkSuccess: boolean,
+  reflectionSaved: boolean,
+  reflectionTouched: boolean,
+): number {
+  if (reflectionSaved) return studentMissionSteps.length;
+  if (checkSuccess && (reflectionSaved || reflectionTouched)) {
+    return 2;
+  }
+  if (selectedCount >= 3 || checkAttempted) return 1;
+  return 0;
+}
 
 function GardenBedVisual({ tile }: { tile: FractionTile | undefined }) {
   const parts = tile?.parts ?? 4;
@@ -41,19 +69,48 @@ function GardenBedVisual({ tile }: { tile: FractionTile | undefined }) {
 }
 
 export function StudentFractionGarden({
-  studentAppActive,
-  activeSupport,
-  classMode = 'whole',
   selectedTileIds,
   onToggleTile,
   onReset,
   onCheck,
   checkSuccess,
+  checkAttempted,
   showSuccessPulse,
+  studentAppActive = false,
+  reflectionText,
+  reflectionSaved,
+  reflectionTouched,
+  onReflectionChange,
+  onReflectionTouch,
+  onSaveReflection,
+  activeSupport,
+  classMode = 'whole',
+  surfaceHighlighted = false,
 }: StudentFractionGardenProps) {
-  const studentLocked = !studentAppActive;
   const lane = differentiation[activeSupport];
+  const { reduced } = useMotion();
   const [hintVisible, setHintVisible] = useState(false);
+  const successRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const el = successRef.current;
+    if (!showSuccessPulse || !checkSuccess || !el) return;
+
+    return runGsapScoped(
+      successRef,
+      reduced,
+      (gsapApi) => {
+        gsapApi.fromTo(
+          el,
+          { scale: 0.98, opacity: 0.7 },
+          { scale: 1, opacity: 1, duration: 0.6, ease: 'power2.out' },
+        );
+      },
+      (gsapApi) => {
+        gsapApi.set(el, { scale: 1, opacity: 1 });
+      },
+    );
+  }, [showSuccessPulse, checkSuccess, reduced]);
 
   const selectedTiles = useMemo(
     () => fractionTiles.filter((t) => selectedTileIds.includes(t.id)),
@@ -67,11 +124,24 @@ export function StudentFractionGarden({
     selectedTiles[2],
   ];
 
+  const progressIndex = studentProgressIndex(
+    selectedTileIds.length,
+    checkAttempted,
+    checkSuccess,
+    reflectionSaved,
+    reflectionTouched,
+  );
+
   return (
     <Section
       id="student"
       workspace="student"
-      className={studentAppActive ? 'll-section--woven-active' : ''}
+      className={[
+        studentAppActive ? 'll-section--woven-active' : '',
+        surfaceHighlighted ? 'll-surface-highlight' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
       eyebrow="Student app"
       title={studentActivity.title}
       lead={studentActivity.mission}
@@ -101,14 +171,14 @@ export function StudentFractionGarden({
           </p>
         )}
       </div>
-      {studentLocked && (
+      {!studentAppActive && (
         <p className="student-lock-notice" role="note" data-testid="student-lock-notice">
           Weave lesson to unlock the student app. You can preview this section anytime; tiles
           activate after weaving.
         </p>
       )}
       <div
-        className={['garden-layout', studentLocked ? 'garden-layout--locked' : '']
+        className={['garden-layout', !studentAppActive ? 'garden-layout--locked' : '']
           .filter(Boolean)
           .join(' ')}
       >
@@ -155,6 +225,13 @@ export function StudentFractionGarden({
             {studentActivity.equation}
           </p>
 
+          <ProgressRail
+            activeIndex={progressIndex}
+            steps={studentMissionSteps}
+            ariaLabel="Student mission progress"
+            data-testid="student-progress-rail"
+          />
+
           <div className="tile-bank" role="group" aria-label="Fraction tiles">
             {fractionTiles.map((tile) => {
               const selected = selectedTileIds.includes(tile.id);
@@ -181,15 +258,21 @@ export function StudentFractionGarden({
                     .filter(Boolean)
                     .join(' ')}
                   aria-pressed={selected}
-                  aria-disabled={studentLocked}
-                  disabled={studentLocked}
                   aria-label={tileLabel}
+                  disabled={!studentAppActive}
                   onClick={() => onToggleTile(tile.id)}
                 >
                   <FractionTileVisual tile={tile} />
-                  {success && (
-                    <span className="fraction-tile__check" aria-hidden="true">
-                      ✓
+                  {selected && (
+                    <span
+                      className={
+                        success
+                          ? 'fraction-tile__check'
+                          : 'fraction-tile__selected-mark'
+                      }
+                      aria-hidden="true"
+                    >
+                      {success ? '✓' : '●'}
                     </span>
                   )}
                   <span>{tile.label}</span>
@@ -199,46 +282,117 @@ export function StudentFractionGarden({
           </div>
 
           <div className="flex-between mt-1">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onReset}
-              disabled={studentLocked}
-            >
+            <IndustrialButton variant="ghost" size="sm" onClick={onReset}>
               Reset
-            </Button>
-            <Button
+            </IndustrialButton>
+            <IndustrialButton
               variant="secondary"
               size="sm"
               type="button"
               aria-expanded={hintVisible}
               aria-controls="garden-hint-callout"
               data-testid="garden-hint-btn"
-              disabled={studentLocked}
               onClick={() => setHintVisible((v) => !v)}
             >
               {hintVisible ? 'Hide hint' : 'Hint'}
-            </Button>
-            <Button
+            </IndustrialButton>
+            <IndustrialButton
               variant="primary"
               size="sm"
               onClick={onCheck}
-              disabled={studentLocked}
               data-testid="fraction-check"
             >
               Check
-            </Button>
+            </IndustrialButton>
           </div>
+
+          {checkAttempted && !checkSuccess && (
+            <div
+              className="garden-hint-callout garden-hint-callout--soft"
+              role="status"
+              data-testid="fraction-check-feedback"
+              aria-live="polite"
+            >
+              {studentActivity.hint}
+            </div>
+          )}
 
           {checkSuccess && (
             <div
-              className={`garden-success ${showSuccessPulse ? 'garden-success--pulse' : ''}`}
+              ref={successRef}
+              className="garden-success"
               role="status"
               aria-live="polite"
               data-testid="fraction-check-success"
             >
               <span aria-hidden="true">✓ </span>
               {studentActivity.success}
+            </div>
+          )}
+
+          {checkSuccess && (
+            <div className="garden-reflection mt-1" data-testid="student-reflection-panel">
+              <label
+                htmlFor="student-reflection"
+                className="garden-reflection__label"
+                style={{ fontSize: '0.88rem', fontWeight: 600 }}
+              >
+                Reflection
+              </label>
+              <textarea
+                id="student-reflection"
+                className="garden-reflection__input"
+                rows={3}
+                value={reflectionText}
+                placeholder={studentActivity.reflection}
+                aria-describedby="student-reflection-hint"
+                data-testid="student-reflection"
+                style={{
+                  width: '100%',
+                  border: '1px solid var(--ll-line)',
+                  borderRadius: '10px',
+                  padding: '0.75rem',
+                  fontFamily: 'var(--ll-font-ui)',
+                  fontSize: '0.88rem',
+                  resize: 'vertical',
+                  background: 'var(--ll-paper)',
+                  marginTop: '0.35rem',
+                }}
+                onChange={(e) => {
+                  onReflectionChange(e.target.value);
+                  onReflectionTouch();
+                }}
+                onBlur={onReflectionTouch}
+              />
+              <p
+                id="student-reflection-hint"
+                className="garden-reflection__hint"
+                style={{ fontSize: '0.8rem', color: 'var(--ll-muted)' }}
+              >
+                Draft for your exit ticket. Saved only in this demo — no student data leaves
+                your device.
+              </p>
+              <div className="flex-between mt-1">
+                <IndustrialButton
+                  variant="primary"
+                  size="sm"
+                  type="button"
+                  data-testid="student-reflection-save"
+                  onClick={onSaveReflection}
+                >
+                  Save reflection
+                </IndustrialButton>
+                {reflectionSaved && (
+                  <span
+                    role="status"
+                    aria-live="polite"
+                    data-testid="student-reflection-saved"
+                    style={{ fontSize: '0.8rem', color: 'var(--ll-green)' }}
+                  >
+                    Reflection saved
+                  </span>
+                )}
+              </div>
             </div>
           )}
         </Panel>
@@ -254,7 +408,7 @@ export function StudentFractionGarden({
             <strong>Hint:</strong> {studentActivity.hint}
           </p>
           <p className="mt-1 text-mono" style={{ fontSize: '0.75rem' }}>
-            Reflection: {studentActivity.reflection}
+            Exit stem: {studentActivity.reflection}
           </p>
         </Panel>
       </div>

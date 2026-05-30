@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 test('golden path: weave → fractions → approve → export copy', async ({ page }) => {
   await page.goto('/');
 
-  await expect(page.getByTestId('weave-lesson-hero')).toHaveText('Weave lesson');
+  await expect(page.locator('#hero').getByTestId('weave-lesson-hero')).toHaveText('Weave lesson');
 
   await page.getByTestId('workspace-student').click();
   await expect(page.locator('#student')).toBeInViewport();
@@ -15,7 +15,7 @@ test('golden path: weave → fractions → approve → export copy', async ({ pa
   await expect(copyBtn).toBeDisabled();
   await expect(page.getByTestId('export-lock-notice')).toBeVisible();
 
-  await page.getByTestId('weave-lesson-hero').click();
+  await page.locator('#hero').getByTestId('weave-lesson-hero').click();
   await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 4000 });
 
   await page.getByTestId('workspace-student').click();

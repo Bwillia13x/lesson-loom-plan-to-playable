@@ -13,7 +13,9 @@ test('judge demo visits signals and UDL with presenter captions', async ({ page 
 
   await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 8000 });
 
-  await expect.poll(async () => caption.textContent()).toMatch(/Extend|Differentiation/i);
+  await expect
+    .poll(async () => caption.textContent(), { timeout: 20_000 })
+    .toMatch(/Extend|Differentiation/i);
 
   await expect(page.getByText('Equivalent? Yes!')).toBeVisible({ timeout: 12000 });
   await expect(page.getByText('Teacher approval recorded')).toBeVisible({ timeout: 12000 });

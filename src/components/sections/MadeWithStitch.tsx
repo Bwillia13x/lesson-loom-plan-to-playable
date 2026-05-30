@@ -19,8 +19,8 @@ export function MadeWithStitch({ systemMapStep = 0 }: MadeWithStitchProps) {
     <Section
       id="stitch"
       eyebrow="Process"
-      title="Built around a Stitch-style workflow."
-      lead="The prototype shows how natural-language lesson intent can become high-fidelity UI: plan, prompt, screen, interaction, review, export."
+      title="Made with Stitch"
+      lead="Lesson Loom starts with a lesson a teacher already trusts. Stitch turns that plan into a visual, interactive classroom interface while keeping teacher review, accessibility, privacy, and printable backup at the center."
     >
       <div
         className="system-map"

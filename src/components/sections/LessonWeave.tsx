@@ -1,5 +1,5 @@
 import { weaveSteps } from '../../data/lessonLoomData';
-import { Button } from '../ui/Button';
+import { IndustrialButton } from '../ui/IndustrialButton';
 import { Panel } from '../ui/Panel';
 import { Section } from '../ui/Section';
 import { StatusPip } from '../ui/StatusPip';
@@ -15,7 +15,7 @@ export function LessonWeave({ hasWoven, activeWeaveStep, onWeave }: LessonWeaveP
     <Section
       id="weave"
       eyebrow="Lesson weave"
-      title="The lesson becomes a learning interface."
+      title="The lesson becomes a learning interface"
       lead="Lesson Loom extracts the teaching signal, chooses a visual model, adds interaction, builds checkpoints, and prepares teacher-facing supports."
     >
       <Panel bracket screws className="weave-panel" title="Lesson Weave">
@@ -91,7 +91,7 @@ export function LessonWeave({ hasWoven, activeWeaveStep, onWeave }: LessonWeaveP
             aria-valuemax={weaveSteps.length}
             aria-valuenow={
               hasWoven
-                ? Math.min(activeWeaveStep + 1, weaveSteps.length)
+                ? Math.max(0, Math.min(activeWeaveStep + 1, weaveSteps.length))
                 : 0
             }
             aria-valuetext={
@@ -99,7 +99,9 @@ export function LessonWeave({ hasWoven, activeWeaveStep, onWeave }: LessonWeaveP
                 ? 'Weave not started'
                 : activeWeaveStep >= weaveSteps.length - 1
                   ? 'Weave complete'
-                  : `Step ${activeWeaveStep + 1} of ${weaveSteps.length}: ${weaveSteps[activeWeaveStep]}`
+                  : activeWeaveStep < 0
+                    ? 'Weaving in progress'
+                    : `Step ${activeWeaveStep + 1} of ${weaveSteps.length}: ${weaveSteps[activeWeaveStep]}`
             }
           />
         </nav>
@@ -117,13 +119,13 @@ export function LessonWeave({ hasWoven, activeWeaveStep, onWeave }: LessonWeaveP
             pulse={hasWoven && activeWeaveStep < weaveSteps.length - 1}
           />
           {!hasWoven && (
-            <Button
+            <IndustrialButton
               variant="primary"
               onClick={onWeave}
               data-testid="weave-lesson-panel"
             >
               Weave lesson
-            </Button>
+            </IndustrialButton>
           )}
         </div>
       </Panel>

@@ -1,4 +1,4 @@
-import { Button } from './ui/Button';
+import { IndustrialButton } from './ui/IndustrialButton';
 import { StatusPip } from './ui/StatusPip';
 
 import type { SupportLane } from '../data/lessonLoomData';
@@ -42,15 +42,15 @@ export function WeaveCompleteBanner({
         </p>
       </div>
       <div className="weave-complete-banner__actions">
-        <Button variant="primary" size="sm" onClick={onStudent}>
+        <IndustrialButton variant="primary" size="sm" onClick={onStudent}>
           Open student app
-        </Button>
-        <Button variant="secondary" size="sm" onClick={onTeacher}>
+        </IndustrialButton>
+        <IndustrialButton variant="secondary" size="sm" onClick={onTeacher}>
           Open teacher console
-        </Button>
-        <Button variant="ghost" size="sm" onClick={onExport}>
+        </IndustrialButton>
+        <IndustrialButton variant="ghost" size="sm" onClick={onExport}>
           View export pack
-        </Button>
+        </IndustrialButton>
       </div>
     </div>
   );

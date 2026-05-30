@@ -1,7 +1,9 @@
 import { expect, test } from '@playwright/test';
+import { weaveFromHero } from './helpers';
 
 test('fraction check shows gentle hint when selection is wrong', async ({ page }) => {
   await page.goto('/');
+  await weaveFromHero(page);
   await page.getByTestId('workspace-student').click();
   await page.locator('#student').scrollIntoViewIfNeeded();
 
@@ -19,6 +21,7 @@ test('fraction check shows gentle hint when selection is wrong', async ({ page }
 
 test('fraction check shows hint when Check is pressed with no tiles', async ({ page }) => {
   await page.goto('/');
+  await weaveFromHero(page);
   await page.getByTestId('workspace-student').click();
   await page.locator('#student').scrollIntoViewIfNeeded();
   await page.getByTestId('fraction-check').click();

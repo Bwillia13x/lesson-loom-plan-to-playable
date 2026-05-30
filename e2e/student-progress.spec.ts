@@ -1,9 +1,11 @@
 import { expect, test } from '@playwright/test';
+import { weaveFromHero } from './helpers';
 
 const CANONICAL_TILES = ['one-half', 'two-fourths', 'three-sixths'];
 
 test('student progress rail advances through mission steps', async ({ page }) => {
   await page.goto('/');
+  await weaveFromHero(page);
   await page.getByTestId('workspace-student').click();
   await page.locator('#student').scrollIntoViewIfNeeded();
 

@@ -6,6 +6,14 @@
   min-height: 100vh;
 }
 
+.app-shell--presenter {
+  grid-template-columns: 1fr;
+}
+
+.app-shell--presenter .app-nav {
+  display: none;
+}
+
 .app-nav {
   position: sticky;
   top: 0;

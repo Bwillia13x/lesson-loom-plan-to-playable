@@ -3,14 +3,11 @@ import { StatusPip } from '../ui/StatusPip';
 
 export function PrintableFallback() {
   return (
-    <Panel inset bracket title="Printable fallback">
-      <p style={{ fontSize: '0.88rem', color: 'var(--ll-muted)', margin: '0 0 0.85rem' }}>
-        Use grid paper or projected garden beds if devices are not available.
-      </p>
+    <Panel inset bracket title="Printable fallback preview">
       <div className="printable-preview">
         <div className="printable-preview__header">
           <strong>Fraction Garden — Worksheet</strong>
-          <StatusPip label="Printable fallback" tone="cyan" />
+          <StatusPip label="No-tech backup" tone="cyan" />
         </div>
         <p className="printable-preview__instructions">
           Shade garden beds to show equivalent fractions. Compare how much of each whole

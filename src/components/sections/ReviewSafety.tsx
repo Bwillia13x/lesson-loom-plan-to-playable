@@ -1,6 +1,6 @@
 import { safetyCards } from '../../data/lessonLoomData';
 import { PrintableFallback } from './PrintableFallback';
-import { Button } from '../ui/Button';
+import { IndustrialButton } from '../ui/IndustrialButton';
 import { Panel } from '../ui/Panel';
 import { Section } from '../ui/Section';
 import { StatusPip } from '../ui/StatusPip';
@@ -29,7 +29,7 @@ export function ReviewSafety({ approved, onApprove }: ReviewSafetyProps) {
     <Section
       id="review"
       eyebrow="Review & safety"
-      title="Review before classroom use."
+      title="Review before classroom use"
       lead="Lesson Loom creates a classroom-ready draft. The teacher reviews the lesson, checks alignment, and decides what to use."
     >
       <div className="safety-grid">
@@ -73,15 +73,15 @@ export function ReviewSafety({ approved, onApprove }: ReviewSafetyProps) {
             This interactive lesson interface is a <strong>teacher-reviewed draft</strong>.
             Approve only after you verify goals, timing, and classroom fit.
           </p>
-          <Button
+          <IndustrialButton
             variant="primary"
             size="lg"
             onClick={onApprove}
             aria-pressed={approved}
             data-testid="approve-classroom"
           >
-            {approved ? 'Draft reviewed' : 'Mark draft reviewed'}
-          </Button>
+            {approved ? 'Approved for Classroom Use' : 'Approve for Classroom Use'}
+          </IndustrialButton>
           {approved && (
             <p
               className="garden-success mt-1"

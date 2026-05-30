@@ -1,4 +1,4 @@
-import { Button } from '../ui/Button';
+import { IndustrialButton } from '../ui/IndustrialButton';
 import { Panel } from '../ui/Panel';
 import { Section } from '../ui/Section';
 
@@ -43,7 +43,7 @@ export function LabsCaseStudy() {
             curriculum-aligned drafts without student data collection.
           </p>
           <div className="mt-2">
-            <Button
+            <IndustrialButton
               variant="secondary"
               size="md"
               type="button"
@@ -53,7 +53,7 @@ export function LabsCaseStudy() {
               }}
             >
               Contact PrairieSignal
-            </Button>
+            </IndustrialButton>
           </div>
         </Panel>
       </div>

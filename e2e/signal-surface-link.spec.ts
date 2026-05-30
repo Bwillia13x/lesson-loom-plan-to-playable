@@ -1,9 +1,9 @@
 import { expect, test } from '@playwright/test';
+import { weaveFromHero } from './helpers';
 
 async function weaveToSignals(page: import('@playwright/test').Page) {
   await page.goto('/');
-  await page.getByTestId('weave-lesson-hero').click();
-  await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 15000 });
+  await weaveFromHero(page);
 }
 
 test('signal See in lesson scrolls to student section', async ({ page }) => {

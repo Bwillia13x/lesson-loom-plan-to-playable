@@ -1,7 +1,22 @@
-import { teacherTimeline } from '../../data/lessonLoomData';
+import {
+  teacherTimeline,
+  type DevicesSnapshot,
+} from '../../data/lessonLoomData';
 import { Section } from '../ui/Section';
+import { StatusPip } from '../ui/StatusPip';
 
-export function ResponsivePreview() {
+const PLACEHOLDER_TILES = ['1/2', '2/4', '3/6'];
+
+type ResponsivePreviewProps = {
+  snapshot: DevicesSnapshot;
+};
+
+export function ResponsivePreview({ snapshot }: ResponsivePreviewProps) {
+  const tileLabels =
+    snapshot.selectedTileLabels.length > 0
+      ? snapshot.selectedTileLabels
+      : PLACEHOLDER_TILES;
+
   return (
     <Section
       id="devices"
@@ -9,12 +24,39 @@ export function ResponsivePreview() {
       title="Mobile & tablet preview"
       lead="Teacher console on tablet; student activity on mobile — same lesson, adapted layout."
     >
+      <ul className="devices-session-meta" data-testid="devices-session-meta">
+        <li data-testid="devices-review-state">
+          Review: {snapshot.approved ? 'Teacher approved' : 'Pending review'}
+        </li>
+        <li data-testid="devices-class-mode">
+          Class: {snapshot.classMode === 'groups' ? 'Small groups' : 'Whole class'}
+        </li>
+      </ul>
+
+      <div className="flex-between" style={{ marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+        <div data-testid="devices-woven-pip">
+          <StatusPip
+            label={snapshot.woven ? 'Lesson woven · live session' : 'Pre-weave preview'}
+            tone={snapshot.woven ? 'green' : 'amber'}
+          />
+        </div>
+        <div data-testid="devices-session-pip">
+          <StatusPip
+            label={`${snapshot.workspaceMode === 'teacher' ? 'Teacher' : 'Student'} workspace · ${snapshot.activeSupport} lane`}
+            tone="cyan"
+          />
+        </div>
+      </div>
+
       <div className="device-row">
         <div>
           <p className="text-mono" style={{ fontSize: '0.7rem', marginBottom: '0.5rem' }}>
             Tablet · Teacher console
           </p>
-          <div className="device-frame device-frame--tablet">
+          <div
+            className={`device-frame device-frame--tablet ${snapshot.woven ? 'device-frame--live' : ''}`}
+            data-testid="device-frame-tablet"
+          >
             <div className="device-frame__bar" aria-hidden="true">
               <span className="device-frame__dot" />
               <span className="device-frame__dot" />
@@ -26,9 +68,10 @@ export function ResponsivePreview() {
                   <span
                     key={s.id}
                     className="badge"
+                    data-testid={snapshot.activeSegment === s.id ? 'device-active-segment' : undefined}
                     style={
-                      s.id === 'partner'
-                        ? { background: 'var(--ll-gold-soft)', borderColor: 'var(--ll-gold)' }
+                      snapshot.activeSegment === s.id
+                        ? { background: 'var(--ll-orange-soft)', borderColor: 'var(--ll-orange)' }
                         : undefined
                     }
                   >
@@ -37,7 +80,11 @@ export function ResponsivePreview() {
                 ))}
               </div>
               <p style={{ marginTop: '0.75rem', color: 'var(--ll-muted)' }}>
-                Partner challenge active · Printable backup ready
+                {snapshot.activeSegment === 'partner'
+                  ? 'Partner challenge active'
+                  : `${teacherTimeline.find((t) => t.id === snapshot.activeSegment)?.label ?? 'Segment'} active`}
+                {' · '}
+                Printable backup ready
               </p>
             </div>
           </div>
@@ -47,40 +94,33 @@ export function ResponsivePreview() {
           <p className="text-mono" style={{ fontSize: '0.7rem', marginBottom: '0.5rem' }}>
             Mobile · Student activity
           </p>
-          <div className="device-frame device-frame--phone">
+          <div
+            className={`device-frame device-frame--phone ${snapshot.woven ? 'device-frame--live' : ''}`}
+            data-testid="device-frame-phone"
+          >
             <div className="device-frame__bar" aria-hidden="true">
               <span className="device-frame__dot" />
             </div>
             <div className="device-frame__content">
               <strong>Fraction Garden</strong>
-              <p style={{ fontSize: '0.75rem', margin: '0.35rem 0' }}>
+              <p
+                style={{ fontSize: '0.75rem', margin: '0.35rem 0' }}
+                data-testid="device-student-lane"
+              >
+                {snapshot.activeSupport.charAt(0).toUpperCase() + snapshot.activeSupport.slice(1)} lane
+                {' · '}
                 Build three garden beds…
               </p>
               <div style={{ display: 'flex', gap: '4px', marginBottom: '0.5rem' }}>
-                {['1/2', '2/4', '3/6'].map((l) => (
-                  <div
-                    key={l}
-                    style={{
-                      flex: 1,
-                      padding: '0.35rem',
-                      background: 'var(--ll-sage-soft)',
-                      borderRadius: '6px',
-                      textAlign: 'center',
-                      fontSize: '0.7rem',
-                      fontFamily: 'var(--ll-font-mono)',
-                    }}
-                  >
+                {tileLabels.map((l) => (
+                  <span key={l} className="badge" style={{ fontSize: '0.65rem' }}>
                     {l}
-                  </div>
-                ))}
-              </div>
-              <div style={{ display: 'flex', gap: '0.25rem', flexWrap: 'wrap' }}>
-                {['1/2', '2/4', '3/6', '1/3'].map((t) => (
-                  <span key={t} className="badge badge--orange">
-                    {t}
                   </span>
                 ))}
               </div>
+              <p style={{ fontSize: '0.7rem', color: 'var(--ll-muted)' }}>
+                {snapshot.woven ? 'Interactive tiles active' : 'Weave lesson to activate'}
+              </p>
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import { exportGateCopy, exportPack } from '../../data/lessonLoomData';
-import { Button } from '../ui/Button';
+import { IndustrialButton } from '../ui/IndustrialButton';
 import { Section } from '../ui/Section';
 import { StatusPip } from '../ui/StatusPip';
 
@@ -24,14 +24,14 @@ export function ExportPackSection({
     <Section
       id="export"
       eyebrow="Export pack"
-      title="Export the lesson interface pack."
-      lead="Carry the lesson from Stitch-style design into classroom review or implementation."
+      title="Export pack — build passport"
+      lead="Stitch-ready artifacts for regenerating the lesson interface, design rules, teacher guide, and printable fallback."
       className={approved ? 'export-section--approved' : undefined}
     >
       <div className="flex-between" style={{ marginBottom: '1.25rem' }}>
         <div className="export-pack-status" data-testid="export-pack-status">
           <StatusPip
-            label={hasWoven ? 'Export preview ready' : 'Preview artifacts'}
+            label={hasWoven ? 'All files generated' : 'Preview artifacts'}
             tone={hasWoven ? 'green' : 'amber'}
             pulse={hasWoven}
           />
@@ -41,7 +41,7 @@ export function ExportPackSection({
             </span>
           )}
         </div>
-        <Button
+        <IndustrialButton
           variant="primary"
           size="lg"
           type="button"
@@ -49,17 +49,18 @@ export function ExportPackSection({
           onClick={onDownload}
         >
           Download Pack (.zip)
-        </Button>
+        </IndustrialButton>
       </div>
 
       {downloadNotice && (
-        <p
-          className="export-notice"
-          role="status"
-          aria-live="polite"
-          data-testid="export-download-notice"
-        >
+        <p className="export-notice" role="status" aria-live="polite" data-testid="export-download-notice">
           {downloadNotice}
+        </p>
+      )}
+
+      {!hasWoven && (
+        <p className="export-lock-notice" role="note" data-testid="export-lock-notice">
+          Weave the lesson first to unlock the full export preview.
         </p>
       )}
 
@@ -76,18 +77,7 @@ export function ExportPackSection({
         </p>
       )}
 
-      {!hasWoven && (
-        <p className="export-lock-notice" role="note" data-testid="export-lock-notice">
-          Weave the lesson first to unlock the full export preview.
-        </p>
-      )}
-
-      <div
-        className={['export-grid', !hasWoven ? 'export-grid--locked' : 'export-grid--active']
-          .filter(Boolean)
-          .join(' ')}
-        aria-hidden={!hasWoven ? true : undefined}
-      >
+      <div className="export-grid">
         {exportPack.map((file) => (
           <article key={file.id} className="export-card">
             <div className="export-card__head">
@@ -100,7 +90,7 @@ export function ExportPackSection({
               <span className="export-card__ext">{file.ext}</span>
             </div>
             <pre className="export-card__preview">{file.preview}</pre>
-            <Button
+            <IndustrialButton
               variant="secondary"
               size="sm"
               disabled={!hasWoven}
@@ -109,7 +99,7 @@ export function ExportPackSection({
               data-testid={`export-copy-${file.id}`}
             >
               {copiedExportId === file.id ? 'Copied' : 'Copy'}
-            </Button>
+            </IndustrialButton>
           </article>
         ))}
       </div>

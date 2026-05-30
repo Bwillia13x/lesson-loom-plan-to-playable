@@ -19,7 +19,7 @@ test('capture submission screenshots', async ({ page }) => {
     fullPage: false,
   });
 
-  await page.getByTestId('weave-lesson-hero').click();
+  await page.locator('#hero').getByTestId('weave-lesson-hero').click();
   await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 5000 });
 
   await page.locator('#signals').scrollIntoViewIfNeeded();

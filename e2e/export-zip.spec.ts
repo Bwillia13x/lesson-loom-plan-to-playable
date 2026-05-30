@@ -26,7 +26,7 @@ const CANONICAL_TILES = ['one-half', 'two-fourths', 'three-sixths'];
 test('export zip includes saved reflection notes', async ({ page }) => {
   await page.goto('/');
 
-  await page.getByTestId('weave-lesson-hero').click();
+  await page.locator('#hero').getByTestId('weave-lesson-hero').click();
   await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 4000 });
 
   await page.getByTestId('workspace-student').click();

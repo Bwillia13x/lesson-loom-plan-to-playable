@@ -20,7 +20,7 @@ test.describe('accessibility affordances', () => {
   });
 
   test('garden hint toggle shows callout', async ({ page }) => {
-    await page.getByTestId('weave-lesson-hero').click();
+    await page.locator('#hero').getByTestId('weave-lesson-hero').click();
     await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 4000 });
 
     await page.getByTestId('workspace-student').click();
