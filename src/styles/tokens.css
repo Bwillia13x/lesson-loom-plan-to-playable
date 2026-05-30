@@ -1,124 +1,44 @@
-/* Lesson Loom — industrial classroom studio */
+/* Lesson Loom design tokens (03_DESIGN.md) */
 :root {
-  --ll-bg: #faf8f4;
-  --ll-bg-soft: #fffefb;
-  --ll-paper: #ffffff;
-  --ll-paper-inset: #f3f0ea;
-  --ll-ink: #1c1c1c;
-  --ll-graphite: #3d3d3d;
-  --ll-muted: #525252;
-  --ll-line: rgba(28, 28, 28, 0.1);
-  --ll-line-strong: rgba(28, 28, 28, 0.18);
-  --ll-orange: #e85d04;
-  --ll-orange-deep: #c44d03;
-  --ll-orange-glow: rgba(232, 93, 4, 0.35);
-  --ll-orange-soft: rgba(232, 93, 4, 0.12);
-  --ll-cyan: #0ea5b4;
-  --ll-cyan-soft: rgba(14, 165, 180, 0.15);
-  --ll-amber: #d97706;
-  --ll-amber-soft: rgba(217, 119, 6, 0.15);
-  --ll-green: #16a34a;
-  --ll-green-soft: rgba(22, 163, 74, 0.15);
-  --ll-sage: #6b8f71;
-  --ll-sage-soft: #dcebd6;
-  --ll-shadow: 0 20px 60px rgba(28, 28, 28, 0.1);
-  --ll-shadow-soft: 0 8px 28px rgba(28, 28, 28, 0.07);
-  --ll-shadow-inset: inset 0 2px 4px rgba(28, 28, 28, 0.06);
+  --ll-bg: #f7f2e8;
+  --ll-bg-soft: #fbf8f1;
+  --ll-paper: #fffdf7;
+  --ll-paper-warm: #f2eadc;
+  --ll-paper-inset: #f2eadc;
+  --ll-ink: #112035;
+  --ll-graphite: #2e3440;
+  --ll-muted: #667085;
+  --ll-line: rgba(17, 32, 53, 0.12);
+  --ll-line-strong: rgba(17, 32, 53, 0.22);
+  --ll-sage: #8fae8b;
+  --ll-sage-deep: #4f7652;
+  --ll-mint: #dcebd6;
+  --ll-lavender: #b7b8f3;
+  --ll-lavender-deep: #6d72d9;
+  --ll-lavender-soft: rgba(109, 114, 217, 0.15);
+  --ll-lavender-glow: rgba(109, 114, 217, 0.28);
+  --ll-gold: #d8aa4f;
+  --ll-gold-soft: rgba(216, 170, 79, 0.18);
+  --ll-rose: #df8f7a;
+  --ll-blue-soft: #dbeafe;
+  --ll-navy: #112035;
+  --ll-ivory: #fffdf7;
+  --ll-sage-glow: rgba(79, 118, 82, 0.32);
+  --ll-sage-soft: rgba(143, 174, 139, 0.22);
+  --ll-amber: var(--ll-gold);
+  --ll-amber-soft: var(--ll-gold-soft);
+  --ll-green: var(--ll-sage-deep);
+  --ll-green-soft: var(--ll-mint);
+  --ll-shadow: 0 24px 80px rgba(17, 32, 53, 0.12);
+  --ll-shadow-soft: 0 16px 44px rgba(17, 32, 53, 0.08);
+  --ll-shadow-inset: inset 0 2px 4px rgba(17, 32, 53, 0.06);
   --ll-radius: 16px;
-  --ll-radius-lg: 22px;
+  --ll-radius-lg: 28px;
   --ll-radius-pill: 999px;
-  --ll-font-display: 'Instrument Serif', 'Iowan Old Style', 'Apple Garamond', Georgia,
-    'Times New Roman', serif;
-  --ll-font-ui: 'DM Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --ll-font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas,
-    'Liberation Mono', monospace;
+  --ll-font-display: 'Instrument Serif', Georgia, serif;
+  --ll-font-ui: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --ll-font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
   --ll-max: 1240px;
   --ll-nav-w: 72px;
-  --ll-focus-ring: 0 0 0 3px rgba(45, 74, 62, 0.35);
-  --ll-eyebrow-hero: #3d5242;
-  --ll-topbar-height: 4.5rem;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: var(--ll-font-ui);
-  font-size: 1rem;
-  line-height: 1.55;
-  color: var(--ll-graphite);
-  background: var(--ll-bg);
-  background-image:
-    radial-gradient(circle at 12% 8%, rgba(232, 93, 4, 0.04), transparent 40%),
-    radial-gradient(circle at 88% 92%, rgba(14, 165, 180, 0.04), transparent 35%);
-  -webkit-font-smoothing: antialiased;
-}
-
-#root {
-  min-height: 100vh;
-}
-
-h1,
-h2,
-h3,
-h4 {
-  color: var(--ll-ink);
-  margin: 0;
-  font-weight: 600;
-}
-
-a {
-  color: var(--ll-orange);
-}
-
-button {
-  font-family: inherit;
-}
-
-:focus-visible {
-  outline: 2px solid var(--ll-orange);
-  outline-offset: 3px;
-}
-
-button:focus-visible,
-a:focus-visible,
-[role='button']:focus-visible {
-  outline: 2px solid var(--ll-orange-deep);
-  outline-offset: 2px;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+  --ease-out-soft: cubic-bezier(0.22, 0.8, 0.24, 1);
 }

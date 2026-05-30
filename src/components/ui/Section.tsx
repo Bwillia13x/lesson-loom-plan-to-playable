@@ -5,7 +5,10 @@ type SectionProps = {
   id: string;
   eyebrow?: string;
   title: string;
+  titleAs?: 'h1' | 'h2';
+  titleClassName?: string;
   lead?: string;
+  leadClassName?: string;
   children: ReactNode;
   className?: string;
   workspace?: WorkspaceMode;
@@ -16,12 +19,18 @@ export function Section({
   id,
   eyebrow,
   title,
+  titleAs = 'h2',
+  titleClassName = '',
   lead,
+  leadClassName = '',
   children,
   className = '',
   workspace,
   deferRender = id !== 'hero',
 }: SectionProps) {
+  const TitleTag = titleAs;
+  const titleClasses = ['ll-section__title', titleClassName].filter(Boolean).join(' ');
+
   return (
     <section
       id={id}
@@ -38,10 +47,14 @@ export function Section({
     >
       <div className="ll-section__inner">
         {eyebrow && <p className="ll-section__eyebrow">{eyebrow}</p>}
-        <h2 id={`${id}-title`} className="ll-section__title">
+        <TitleTag id={`${id}-title`} className={titleClasses}>
           {title}
-        </h2>
-        {lead && <p className="ll-section__lead">{lead}</p>}
+        </TitleTag>
+        {lead && (
+          <p className={['ll-section__lead', leadClassName].filter(Boolean).join(' ')}>
+            {lead}
+          </p>
+        )}
         {children}
       </div>
     </section>

@@ -1,6 +1,1 @@
-/* Lesson Loom — stylesheet entry (partials under src/styles/) */
-@import './styles/tokens.css';
-@import './styles/layout.css';
-@import './styles/primitives.css';
-@import './styles/motion.css';
-@import './styles/sections.css';
+@import './styles/index.css';

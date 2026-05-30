@@ -261,30 +261,16 @@ At the end, provide:
 5. remaining risks or polish items;
 6. final submission checklist status.
 
-## Cursor Cloud specific instructions
+## Learned User Preferences
 
-This is a pure client-side Vite + React + TypeScript SPA with no backend, database, or external services.
+- Prioritize the runnable application over Contra/README/video and other external submission artifacts until the app is considered 100% complete.
+- Use subagent-driven development for major completion work: one implementer subagent per task, then spec compliance review, then code quality review (in that order).
+- Prefer dispatching subagents to execute implementation plans instead of a single long agent run.
+- For final quality assessment, audit the Lesson Loom app against `AGENTS.md` and the context pack; do not run `tls-final-excellence-orchestrator` (TLS-only).
 
-### Services
+## Learned Workspace Facts
 
-| Service | Command | URL |
-|---|---|---|
-| Vite dev server | `npm run dev` | `http://127.0.0.1:5173` |
-
-### Key commands
-
-See `package.json` scripts. Quick reference:
-
-- **Dev server:** `npm run dev`
-- **Build (tsc + vite):** `npm run build`
-- **Lint:** `npm run lint`
-- **Smoke tests:** `npm run test:smoke` (requires Playwright Chromium; fast subset)
-- **Full verify:** `npm run verify` (build + lint + full Playwright e2e suite)
-- **Submission verify:** `npm run verify:submission` (verify + screenshot capture)
-- **Capture screenshots:** `npm run capture:screenshots`
-
-### Gotchas
-
-- Playwright browsers must be installed separately: `npx playwright install --with-deps chromium`.
-- No `.env` file, API keys, or secrets are needed; all data is hardcoded.
-- The "Run judge demo" button in the top bar auto-plays the full prototype flow — useful for quick verification.
+- This workspace is the Lesson Loom Google Stitch / Contra prototype, not a TLS repository.
+- Application completion is tracked in `docs/APPLICATION_COMPLETE.md`; Thermos audit remediation is tracked in `docs/THERMO_AUDIT_RESOLUTION.md`.
+- Styles live under `src/styles/` (tokens, base, layout, components-shared, components-sections); use `03_DESIGN.md` palette, not industrial orange/cyan.
+- `npm run verify` runs build, lint, typecheck, smoke, and full e2e; CI uses the same script after Playwright browser install.

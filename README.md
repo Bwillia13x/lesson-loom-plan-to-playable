@@ -20,10 +20,12 @@ Open the URL shown in the terminal (typically `http://localhost:5173`).
 ## Verify
 
 ```bash
+npm install
+npx playwright install chromium   # first-time E2E setup
 npm run verify
 ```
 
-Runs build, lint, and the full Playwright e2e suite (smoke, accessibility, responsive).
+Runs `build`, `lint`, `typecheck`, Playwright smoke tests (`e2e/smoke.spec.ts`), and the full E2E suite (`e2e/*.spec.ts`, excluding screenshot capture).
 
 ## Submission screenshots
 
@@ -35,35 +37,20 @@ npm run capture:screenshots
 
 Captures: hero, teaching signals, fraction garden, teacher console, review/export, and mobile student view.
 
-## Submission package
-
-Judge-ready copy and walkthrough: [`docs/submission/`](docs/submission/).
-
 ## What is real vs prototype
 
 - **Real:** UI, interactions, sample lesson data, copy-to-clipboard on export cards
-- **Demo / not implemented:** AI generation, auth, database, LMS, automated grading, official curriculum claims
-- **Client-side only:** Export pack downloads as `lesson-loom-fraction-garden.zip` (markdown artifacts; no server)
+- **Demo / not implemented:** AI generation, auth, database, LMS, real zip download, automated grading, official curriculum claims
 
 ## Flow
 
 Hero → Lesson Intake → Lesson Weave → Teaching Signal → Fraction Garden → Teacher Console → UDL → Review & Safety → Export Pack → Device previews → Made with Stitch
 
-## Deploy
+## Deploy (Vercel)
 
 This project is a Vite SPA. `vercel.json` sets build output to `dist` and rewrites client routes to `index.html`.
 
-### Deploy (GitHub Pages)
-
-On push to `main`, [.github/workflows/deploy-pages.yml](.github/workflows/deploy-pages.yml) builds with `VITE_BASE_PATH=/lesson-loom-plan-to-playable/` and publishes to GitHub Pages.
-
-1. In the repo: **Settings → Pages → Build and deployment → Source:** GitHub Actions.
-2. After the workflow succeeds, open: **https://bwillia13x.github.io/lesson-loom-plan-to-playable/**
-3. Smoke-test **Run judge demo** on that URL.
-
-### Deploy (Vercel)
-
-### Option A — GitHub import (recommended for custom domain)
+### Option A — GitHub (recommended)
 
 1. Push this repo to [lesson-loom-plan-to-playable](https://github.com/Bwillia13x/lesson-loom-plan-to-playable).
 2. In [Vercel](https://vercel.com/new), import the repository.
@@ -103,7 +90,7 @@ Click **Run judge demo** in the top bar to auto-weave, open Fraction Garden with
 
 Or walk manually:
 
-1. **Weave Lesson** on the hero
+1. **Weave lesson** on the hero
 2. **Student view** → select tiles → **Check**
 3. **Teacher console** → review timeline
 4. **Approve for Classroom Use**
@@ -142,7 +129,7 @@ Use before posting to Contra / the challenge portal. Full QA detail lives in `08
 ### Technical & submission assets
 
 - [ ] `npm run build` succeeds.
-- [ ] `npm run verify` passes (build + lint + full e2e suite).
+- [ ] `npm run verify` passes (or build + lint + smoke documented).
 - [ ] Page title and meta description are set.
 - [ ] Live deployment URL loads and deep links work (after you deploy).
 - [ ] Screenshots captured (`npm run capture:screenshots`).
