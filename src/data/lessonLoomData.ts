@@ -185,6 +185,12 @@ export const misconceptionNotes = [
 
 export type SupportLane = 'support' | 'core' | 'extend';
 
+export const exportGateCopy = {
+  pending:
+    'Complete teacher review before classroom handoff. Exports remain preview drafts.',
+  approved: 'Teacher reviewed this draft. Artifacts are ready for your workflow.',
+} as const;
+
 export const differentiation = {
   support: {
     label: 'Support',
@@ -334,6 +340,33 @@ export const exportPack = [
 ];
 
 export type WorkspaceMode = 'student' | 'teacher';
+
+const laneLabels: Record<SupportLane, string> = {
+  support: 'Support',
+  core: 'Core',
+  extend: 'Extend',
+};
+
+const segmentLabels: Record<TimelineId, string> = {
+  warmup: 'Warm-up',
+  guided: 'Guided demo',
+  partner: 'Partner',
+  share: 'Share-out',
+  exit: 'Exit ticket',
+};
+
+export function sessionSpineSubline(input: {
+  activeSupport: SupportLane;
+  activeSegment: TimelineId;
+  approved: boolean;
+  workspaceMode: WorkspaceMode;
+}): string {
+  const review = input.approved
+    ? 'Teacher-approved draft'
+    : 'Awaiting teacher review';
+  const mode = input.workspaceMode === 'student' ? 'Student view' : 'Teacher view';
+  return `${laneLabels[input.activeSupport]} lane · ${segmentLabels[input.activeSegment]} · ${review} · ${mode}`;
+}
 
 export const navSections = [
   { id: 'hero', label: 'Home' },

@@ -7,7 +7,7 @@ test('reduced motion: weave completes immediately and banner shows', async ({
   await page.goto('/');
 
   const started = Date.now();
-  await page.getByTestId('weave-lesson').first().click();
+  await page.getByTestId('weave-lesson-hero').click();
 
   await expect(page.getByTestId('weave-complete-banner')).toBeVisible({
     timeout: 800,
@@ -30,7 +30,7 @@ test('reduced motion: workspace toggle reaches teacher section', async ({
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
 
-  await page.getByTestId('weave-lesson').first().click();
+  await page.getByTestId('weave-lesson-hero').click();
   await expect(page.getByTestId('weave-complete-banner')).toBeVisible({
     timeout: 800,
   });

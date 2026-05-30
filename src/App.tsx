@@ -1,5 +1,7 @@
 import { navSections } from './data/lessonLoomData';
+import { ClassroomSessionSpine } from './components/ClassroomSessionSpine';
 import { SiteFooter } from './components/SiteFooter';
+import { LabsCaseStudy } from './components/sections/LabsCaseStudy';
 import { WeaveCompleteBanner } from './components/WeaveCompleteBanner';
 import { useLessonLoomFlow } from './hooks/useLessonLoomFlow';
 import { DifferentiationUDL } from './components/sections/DifferentiationUDL';
@@ -29,6 +31,7 @@ const navIcons: Record<string, string> = {
   export: '⬇',
   devices: '▭',
   stitch: '✦',
+  labs: '◆',
 };
 
 export default function App() {
@@ -95,8 +98,21 @@ export default function App() {
           </p>
         </header>
 
-        {flow.hasWoven && (
+        <ClassroomSessionSpine
+          visible={flow.hasWoven || flow.demoRunning}
+          activeStepIndex={flow.spineActiveIndex}
+          activeSupport={flow.activeSupport}
+          activeSegment={flow.activeSegment}
+          approved={flow.approved}
+          workspaceMode={flow.workspaceMode}
+          onNavigate={flow.handleSpineNavigate}
+        />
+
+        {flow.hasWoven && flow.studentAppActive && (
           <WeaveCompleteBanner
+            activeSupport={flow.activeSupport}
+            approved={flow.approved}
+            checkSuccess={flow.checkSuccess}
             onStudent={() => {
               flow.handleWorkspaceModeChange('student');
             }}
@@ -128,7 +144,9 @@ export default function App() {
             onWeave={flow.runWeaveSequence}
           />
           <StudentFractionGarden
-            hasWoven={flow.hasWoven}
+            studentAppActive={flow.studentAppActive}
+            activeSupport={flow.activeSupport}
+            classMode={flow.classMode}
             selectedTileIds={flow.selectedTileIds}
             onToggleTile={flow.handleToggleTile}
             onReset={flow.handleResetTiles}
@@ -149,6 +167,7 @@ export default function App() {
           <ReviewSafety approved={flow.approved} onApprove={() => flow.setApproved(true)} />
           <ExportPackSection
             hasWoven={flow.hasWoven}
+            approved={flow.approved}
             copiedExportId={flow.copiedExportId}
             downloadNotice={flow.downloadNotice}
             onCopy={flow.handleExportCopy}
@@ -156,6 +175,7 @@ export default function App() {
           />
           <ResponsivePreview />
           <MadeWithStitch />
+          <LabsCaseStudy />
         </main>
 
         <SiteFooter />

@@ -89,7 +89,7 @@ export function ReviewSafety({ approved, onApprove }: ReviewSafetyProps) {
               aria-live="polite"
               data-testid="review-recorded"
             >
-              Review recorded. Ready for classroom draft use.
+              Teacher approval recorded. Ready for classroom draft use.
             </p>
           )}
         </Panel>

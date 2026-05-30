@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 test('source badge scrolls lesson intake into view', async ({ page }) => {
   await page.goto('/');
 
-  await page.getByTestId('weave-lesson').first().click();
+  await page.getByTestId('weave-lesson-hero').click();
   await expect(page.getByTestId('weave-complete-banner')).toBeVisible({
     timeout: 3000,
   });

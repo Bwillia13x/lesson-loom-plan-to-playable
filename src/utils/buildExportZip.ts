@@ -12,7 +12,7 @@ export type ExportZipOptions = {
 export function buildExportZipBlob(options?: ExportZipOptions): Blob {
   const files: Record<string, Uint8Array> = {};
   for (const file of exportPack) {
-    files[file.filename] = strToU8(file.body);
+    files[file.filename] = strToU8(file.preview);
   }
 
   const reviewLine = options?.approved

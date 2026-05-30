@@ -1,9 +1,11 @@
 import { useMemo, useState } from 'react';
 import {
+  differentiation,
   equivalentCanonicalIds,
   fractionTiles,
   studentActivity,
   type FractionTile,
+  type SupportLane,
 } from '../../data/lessonLoomData';
 import { FractionTileVisual } from '../FractionTileVisual';
 import { Button } from '../ui/Button';
@@ -12,7 +14,9 @@ import { Section } from '../ui/Section';
 import { StatusPip } from '../ui/StatusPip';
 
 type StudentFractionGardenProps = {
-  hasWoven: boolean;
+  studentAppActive: boolean;
+  activeSupport: SupportLane;
+  classMode?: 'whole' | 'groups';
   selectedTileIds: string[];
   onToggleTile: (id: string) => void;
   onReset: () => void;
@@ -37,7 +41,9 @@ function GardenBedVisual({ tile }: { tile: FractionTile | undefined }) {
 }
 
 export function StudentFractionGarden({
-  hasWoven,
+  studentAppActive,
+  activeSupport,
+  classMode = 'whole',
   selectedTileIds,
   onToggleTile,
   onReset,
@@ -45,7 +51,8 @@ export function StudentFractionGarden({
   checkSuccess,
   showSuccessPulse,
 }: StudentFractionGardenProps) {
-  const studentLocked = !hasWoven;
+  const studentLocked = !studentAppActive;
+  const lane = differentiation[activeSupport];
   const [hintVisible, setHintVisible] = useState(false);
 
   const selectedTiles = useMemo(
@@ -64,10 +71,36 @@ export function StudentFractionGarden({
     <Section
       id="student"
       workspace="student"
+      className={studentAppActive ? 'll-section--woven-active' : ''}
       eyebrow="Student app"
       title={studentActivity.title}
       lead={studentActivity.mission}
     >
+      <div
+        className="student-lane-callout"
+        data-testid="student-lane-mission"
+        style={{ fontSize: '0.88rem', marginBottom: '1rem', color: 'var(--ll-graphite)' }}
+      >
+        <p style={{ margin: '0 0 0.35rem' }}>
+          <strong>{lane.label} lane:</strong> {lane.taskVariation}
+        </p>
+        <p
+          className="text-mono"
+          style={{ margin: 0, fontSize: '0.75rem', color: 'var(--ll-muted)' }}
+          data-testid="student-lane-scaffolds"
+        >
+          Scaffolds: {lane.scaffolds}
+        </p>
+        {classMode === 'groups' && (
+          <p
+            className="text-mono"
+            style={{ margin: '0.5rem 0 0', fontSize: '0.75rem', color: 'var(--ll-muted)' }}
+            data-testid="student-groups-hint"
+          >
+            Talk with your partner about equal parts, not just matching numbers.
+          </p>
+        )}
+      </div>
       {studentLocked && (
         <p className="student-lock-notice" role="note" data-testid="student-lock-notice">
           Weave lesson to unlock the student app. You can preview this section anytime; tiles

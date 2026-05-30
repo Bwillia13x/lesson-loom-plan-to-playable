@@ -10,7 +10,7 @@ test('hero matches copy deck primary messages', async ({ page }) => {
     'Paste a trusted lesson plan. Lesson Loom creates a student activity',
   );
   await expect(page.locator('#hero').getByRole('button', { name: 'View student app' })).toBeVisible();
-  await expect(page.locator('#hero').getByTestId('weave-lesson')).toBeVisible();
+  await expect(page.locator('#hero').getByTestId('weave-lesson-hero')).toBeVisible();
   await expect(page.locator('#hero')).toContainText(
     'Teacher-reviewed draft. No student accounts or personal data required.',
   );

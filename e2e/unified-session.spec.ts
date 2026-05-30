@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 test('UDL extend lane updates student mission copy', async ({ page }) => {
   await page.goto('/');
-  await page.getByTestId('weave-lesson').first().click();
+  await page.getByTestId('weave-lesson-hero').click();
   await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 4000 });
 
   await page.locator('#udl').scrollIntoViewIfNeeded();
@@ -28,7 +28,7 @@ test('teacher segment changes console prompts', async ({ page }) => {
 
 test('devices preview mirrors woven session and extend lane', async ({ page }) => {
   await page.goto('/');
-  await page.getByTestId('weave-lesson').first().click();
+  await page.getByTestId('weave-lesson-hero').click();
   await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 4000 });
 
   await page.locator('#udl').scrollIntoViewIfNeeded();
@@ -49,7 +49,7 @@ test('groups class mode shows partner rotation copy', async ({ page }) => {
 
 test('devices preview mirrors approval state', async ({ page }) => {
   await page.goto('/?w=1');
-  await page.getByTestId('weave-lesson').first().click();
+  await page.getByTestId('weave-lesson-hero').click();
   await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 4000 });
 
   await page.locator('#devices').scrollIntoViewIfNeeded();

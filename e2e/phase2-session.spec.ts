@@ -4,7 +4,7 @@ test('system map reaches Review before approval and Export after', async ({ page
   await page.goto('/');
   await expect(page.getByTestId('system-map')).toHaveAttribute('data-active-step', '0');
 
-  await page.getByTestId('weave-lesson').first().click();
+  await page.getByTestId('weave-lesson-hero').click();
   await expect(page.getByTestId('weave-complete-banner')).toBeVisible({ timeout: 4000 });
   await expect(page.getByTestId('system-map')).toHaveAttribute('data-active-step', '3');
 

@@ -1,32 +1,48 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   equivalentCanonicalIds,
   exportPack,
   navSections,
   teachingSignals,
+  weaveSteps,
   type SupportLane,
   type TimelineId,
   type WorkspaceMode,
 } from '../data/lessonLoomData';
+import { readDemoUrlOnLoad, useDemoUrlState } from './useDemoUrlState';
+import { useHashNavigationOnLoad } from './useHashNavigation';
 import { usePrefersReducedMotion } from './usePrefersReducedMotion';
 import { isEquivalentTileSelection } from '../utils/fractionCheck';
+import { downloadExportZip } from '../utils/buildExportZip';
 import { delay, scrollToSection } from '../utils/scroll';
 
+const urlOnLoad = readDemoUrlOnLoad();
 const FINAL_SIGNAL_STEP = teachingSignals.length - 1;
+const FINAL_WEAVE_STEP = weaveSteps.length - 1;
 
 export function useLessonLoomFlow() {
-  const [hasWoven, setHasWoven] = useState(false);
-  const [activeWeaveStep, setActiveWeaveStep] = useState(0);
-  const [workspaceMode, setWorkspaceMode] = useState<WorkspaceMode>('student');
-  const [activeSupport, setActiveSupport] = useState<SupportLane>('core');
-  const [selectedTileIds, setSelectedTileIds] = useState<string[]>([]);
+  const [hasWoven, setHasWoven] = useState(urlOnLoad?.woven ?? false);
+  const [activeWeaveStep, setActiveWeaveStep] = useState(() =>
+    urlOnLoad?.woven ? FINAL_SIGNAL_STEP : 0,
+  );
+  const [workspaceMode, setWorkspaceMode] = useState<WorkspaceMode>(
+    urlOnLoad?.mode ?? 'student',
+  );
+  const [activeSupport, setActiveSupport] = useState<SupportLane>(
+    urlOnLoad?.support ?? 'core',
+  );
+  const [selectedTileIds, setSelectedTileIds] = useState<string[]>(urlOnLoad?.tiles ?? []);
   const [copiedExportId, setCopiedExportId] = useState<string | null>(null);
   const [downloadNotice, setDownloadNotice] = useState<string | null>(null);
-  const [checkSuccess, setCheckSuccess] = useState(false);
+  const [checkSuccess, setCheckSuccess] = useState(() =>
+    urlOnLoad?.tiles?.length ? isEquivalentTileSelection(urlOnLoad.tiles) : false,
+  );
   const [showSuccessPulse, setShowSuccessPulse] = useState(false);
   const [activeSegment, setActiveSegment] = useState<TimelineId>('partner');
   const [classMode, setClassMode] = useState<'whole' | 'groups'>('whole');
-  const [approved, setApproved] = useState(false);
+  const [approved, setApproved] = useState(urlOnLoad?.approved ?? false);
+  const [reflectionText, setReflectionText] = useState('');
+  const [reflectionSaved, setReflectionSaved] = useState(false);
   const [activeNav, setActiveNav] = useState('hero');
   const [demoRunning, setDemoRunning] = useState(false);
   const [weaveLiveMessage, setWeaveLiveMessage] = useState('');
@@ -37,6 +53,36 @@ export function useLessonLoomFlow() {
 
   const prefersReducedMotion = usePrefersReducedMotion();
   const scrollBehavior: ScrollBehavior = prefersReducedMotion ? 'auto' : 'smooth';
+
+  const studentAppActive = hasWoven && activeWeaveStep >= FINAL_WEAVE_STEP;
+
+  useHashNavigationOnLoad(prefersReducedMotion);
+
+  const demoUrlSnapshot = useMemo(
+    () => ({
+      woven: hasWoven && studentAppActive,
+      mode: workspaceMode,
+      tiles: selectedTileIds,
+      approved,
+      support: activeSupport,
+    }),
+    [hasWoven, studentAppActive, workspaceMode, selectedTileIds, approved, activeSupport],
+  );
+
+  useDemoUrlState({ snapshot: demoUrlSnapshot });
+
+  const spineActiveIndex = useMemo(() => {
+    if (approved || activeNav === 'export') return 4;
+    if (activeNav === 'review') return 3;
+    if (
+      studentAppActive &&
+      (activeNav === 'student' || activeNav === 'teacher' || activeNav === 'udl')
+    ) {
+      return 2;
+    }
+    if (hasWoven) return 1;
+    return 0;
+  }, [approved, activeNav, studentAppActive, hasWoven]);
 
   const scrollTo = useCallback(
     (id: string) => scrollToSection(id, scrollBehavior),
@@ -170,13 +216,32 @@ export function useLessonLoomFlow() {
   );
 
   const handleDownload = useCallback(() => {
-    if (!hasWoven) return;
-    setDownloadNotice(
-      'Demo prototype: download is a visual preview only. Use Copy on each export card for handoff text.',
-    );
-    const t = window.setTimeout(() => setDownloadNotice(null), 4000);
+    downloadExportZip({
+      reflectionSaved,
+      reflectionText,
+      approved,
+    });
+    setDownloadNotice('Download started: lesson-loom-fraction-garden.zip');
+    const t = window.setTimeout(() => setDownloadNotice(null), 3500);
     uiTimers.current.push(t);
-  }, [hasWoven]);
+  }, [approved, reflectionSaved, reflectionText]);
+
+  const handleSpineNavigate = useCallback(
+    (sectionId: string) => {
+      if (sectionId === 'teacher') {
+        setWorkspaceMode('teacher');
+      } else if (sectionId === 'student') {
+        setWorkspaceMode('student');
+      }
+      scrollTo(sectionId);
+    },
+    [scrollTo],
+  );
+
+  const handleSaveReflection = useCallback(() => {
+    if (!reflectionText.trim()) return;
+    setReflectionSaved(true);
+  }, [reflectionText]);
 
   const runJudgeDemo = useCallback(async () => {
     if (demoRunning) return;
@@ -211,9 +276,11 @@ export function useLessonLoomFlow() {
 
   return {
     hasWoven,
+    studentAppActive,
     activeWeaveStep,
     workspaceMode,
     activeSupport,
+    spineActiveIndex,
     selectedTileIds,
     copiedExportId,
     downloadNotice,
@@ -234,10 +301,15 @@ export function useLessonLoomFlow() {
     handleResetTiles,
     handleExportCopy,
     handleDownload,
+    handleSpineNavigate,
+    handleSaveReflection,
     runJudgeDemo,
+    reflectionText,
+    reflectionSaved,
     setActiveSupport,
     setActiveSegment,
     setClassMode,
     setApproved,
+    setReflectionText,
   };
 }
