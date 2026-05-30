@@ -48,7 +48,7 @@
 
 | Area | Location |
 |------|----------|
-| App shell & layout | [`src/App.tsx`](../src/App.tsx) (~500 lines post–weave extract) |
+| App shell & layout | [`src/App.tsx`](../src/App.tsx) (~545 lines post–weave extract @ `614ac30`) |
 | Judge demo path | [`src/demo/`](../src/demo/) — `useLessonLoomDemo`, `judgeDemoSequence`, `JudgeDemoTopbar` |
 | Session context | [`src/context/LessonLoomSessionContext.tsx`](../src/context/LessonLoomSessionContext.tsx) + [`useLessonLoomSession.ts`](../src/context/useLessonLoomSession.ts) |
 | Weave GSAP orchestration | [`src/motion/useWeaveSequence.ts`](../src/motion/useWeaveSequence.ts) + [`createWeaveTimeline.ts`](../src/motion/createWeaveTimeline.ts) |
@@ -108,4 +108,4 @@
 
 ## Sign-off
 
-The Lesson Loom **application prototype** meets the plan’s “Definition of complete” for in-repo demo and contest walkthrough. **`npm run verify` is green (56 e2e + smoke)** on `main` after merge of plan 004 (`160e4cc`) and plan 005 bounded weave extract.
+The Lesson Loom **application prototype** meets the plan’s “Definition of complete” for in-repo demo and contest walkthrough. **`npm run verify` is green (58 e2e + smoke)** on `main` @ `614ac30` after merge of plan 004 (`160e4cc`) and plan 005 bounded weave extract.
