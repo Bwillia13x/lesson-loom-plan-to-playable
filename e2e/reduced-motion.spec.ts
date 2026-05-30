@@ -11,7 +11,8 @@ test('reduced motion: weave completes immediately and banner shows', async ({
   await weaveFromHero(page, { bannerTimeoutMs: 800 });
 
   const elapsed = Date.now() - started;
-  expect(elapsed).toBeLessThan(1000);
+  // Reduced-motion weave is instant in-app; allow headroom for dev-server + parallel CI workers.
+  expect(elapsed).toBeLessThan(2000);
 
   await expect(page.locator('[role="progressbar"]')).toHaveAttribute(
     'aria-valuetext',

@@ -672,7 +672,7 @@ Download builds \`lesson-loom-fraction-garden.zip\` from \`exportPack\` bodies i
       'Facilitator checklist: review learning goal, misconception watch, UDL lanes, approval gate, printable fallback.',
     body: `# Workshop Checklist — From Static Lesson to Interactive Interface
 
-Use this checklist when facilitating a facilitated workshop session with Lesson Loom.
+Use this checklist when facilitating a workshop session with Lesson Loom.
 
 ## Before the session
 

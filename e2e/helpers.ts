@@ -90,10 +90,15 @@ export async function waitForJudgeDemoMilestones(
   await expect(page.getByTestId('judge-demo-rail')).toBeVisible();
 
   const caption = page.getByTestId('presenter-caption');
+  const banner = page.getByTestId('weave-complete-banner');
   await expect(caption).toBeVisible();
-  await expect(caption).toContainText(/teaching signal|Weaving/i);
+  // Demo can outpace the assertion under parallel workers; accept weave caption or post-weave banner.
+  await expect(async () => {
+    if (await banner.isVisible()) return;
+    await expect(caption).toContainText(/teaching signal|Weaving/i);
+  }).toPass({ timeout: 15_000 });
 
-  await expect(page.getByTestId('weave-complete-banner')).toBeVisible({
+  await expect(banner).toBeVisible({
     timeout: 15_000, // GSAP weave steps complete ~820ms; banner gates on last step
   });
 

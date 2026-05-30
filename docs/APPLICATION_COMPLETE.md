@@ -65,7 +65,7 @@
 
 ### Desktop (~1280px)
 
-- Hero **Weave lesson** / **View student app**; trust line present.
+- Hero **Weave lesson** / **Run judge demo** (`run-judge-demo-hero`); single trust line present.
 - Pre-weave: student tiles and export copy **disabled**; lock notices visible.
 - Post-weave: banner, session spine, signals, student garden, teacher console, UDL, review, export zip.
 - **Run judge demo:** presenter mode, captions, auto path through export.
