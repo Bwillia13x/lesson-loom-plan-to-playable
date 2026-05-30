@@ -88,6 +88,16 @@
 3. **No backend** — Client-side state; demo URL params only; no auth or real Stitch API.
 4. **App.tsx size** — Shell still owns nav, URL sync, and intersection spy; further splits optional (Thermo Q2 partial).
 
+## Design polish — plan 007 (2026-05-30)
+
+Frontend design polish wave per [`docs/plans/2026-05-30-007-feat-frontend-design-polish-plan.md`](plans/2026-05-30-007-feat-frontend-design-polish-plan.md). All five units (U1–U5) shipped on `feat/frontend-design-polish-007`; `npm run verify` green (58/58 e2e + smoke 3/3).
+
+- **U1** — Retired undefined `--ll-orange*` tokens in `src/styles/` and `src/components/`; weave active stroke + student woven ring now use `--ll-weave-active` alias (→ `--ll-lavender-deep`) for self-documenting motion.
+- **U2** — Removed inert `scanline` markup; hero CTA row, lead, trust line moved to named CSS utilities (`.hero-actions`, `.hero-actions__group`, `.hero-trust-line`); eyebrow + trust-line color bumped to `--ll-graphite` for WCAG AA on ivory.
+- **U3** — Garden success state migrated from green to gold (`--ll-gold-soft` bg + `--ll-graphite` text, ~10.7:1 AA); `.garden-bed--active` gained an inner-highlight inset for non-color signaling; secondary UDL panel dropped `screws` per KTD3.
+- **U4** — All 7 literal + 4 dynamic `tone="cyan"`/`tone="orange"` StatusPip call sites migrated to `lavender`/`sage`/`gold` semantics; `'orange'` and `'cyan'` retained in the union with `@deprecated` JSDoc; `.app-nav` background flattened to `var(--ll-paper-warm)`.
+- **U5** — Doc cleanup; `npm run capture:screenshots` recommended after this polish wave to refresh `submission-screenshots/*.png` (artifacts remain gitignored).
+
 ---
 
 ## Out of scope (per plan)

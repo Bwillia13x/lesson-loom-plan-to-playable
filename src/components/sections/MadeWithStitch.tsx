@@ -54,7 +54,7 @@ export function MadeWithStitch({ systemMapStep = 0 }: MadeWithStitchProps) {
             </ol>
           </div>
           <div style={{ textAlign: 'right' }}>
-            <StatusPip label="Stitch-native" tone="orange" pulse />
+            <StatusPip label="Stitch-native" tone="gold" pulse />
             <p className="text-mono mt-1" style={{ fontSize: '0.72rem', maxWidth: '28ch' }}>
               High-fidelity UI from natural-language lesson plan — teacher-reviewed draft only.
             </p>

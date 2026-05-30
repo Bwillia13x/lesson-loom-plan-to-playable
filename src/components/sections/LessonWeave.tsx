@@ -115,7 +115,7 @@ export function LessonWeave({ hasWoven, activeWeaveStep, onWeave }: LessonWeaveP
                   : 'Weaving…'
                 : 'Ready to weave'
             }
-            tone={hasWoven ? 'orange' : 'amber'}
+            tone={hasWoven ? 'lavender' : 'amber'}
             pulse={hasWoven && activeWeaveStep < weaveSteps.length - 1}
           />
           {!hasWoven && (

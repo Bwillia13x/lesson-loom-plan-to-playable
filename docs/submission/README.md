@@ -98,6 +98,9 @@ After `npm run capture:screenshots`, expect:
 
 **Last captured:** 2026-05-30 on `main` @ `4a9ba91` (`npm run capture:screenshots` exit 0; PNGs local only, gitignored).
 
+**After plan 007 design polish:** Re-run `npm run capture:screenshots` from `feat/frontend-design-polish-007` to refresh the six artifacts above. Polish wave changes the hero/eyebrow contrast, fraction-garden gold success state, StatusPip tones, and `.app-nav` chrome — visual baselines drift accordingly. PNGs stay gitignored.
+
+
 Commit screenshots only if repo policy allows binaries; otherwise gitignore and attach to Contra upload.
 
 ## Walkthrough video

@@ -19,10 +19,10 @@
 }
 
 .weave-path__line--active {
-  stroke: var(--ll-orange);
+  stroke: var(--ll-weave-active);
   stroke-width: 3;
   stroke-dasharray: none;
-  filter: drop-shadow(0 0 6px var(--ll-orange-glow));
+  filter: drop-shadow(0 0 6px var(--ll-weave-glow));
   transition: stroke-dashoffset 0.6s ease;
 }
 
@@ -42,7 +42,7 @@
 /* Student app activates when weave reaches final step (spec ~820ms) */
 #student.ll-section--woven-active .panel {
   box-shadow:
-    0 0 0 2px var(--ll-orange),
+    0 0 0 2px var(--ll-weave-active),
     var(--ll-shadow-soft);
   transition: box-shadow 0.35s ease;
 }

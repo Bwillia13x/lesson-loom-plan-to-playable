@@ -451,7 +451,10 @@
 }
 
 .garden-bed--active {
-  box-shadow: 0 0 0 2px var(--ll-lavender-deep), 0 8px 20px var(--ll-lavender-glow);
+  box-shadow:
+    0 0 0 2px var(--ll-lavender-deep),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.55),
+    0 8px 20px var(--ll-lavender-glow);
 }
 
 .tile-bank {
@@ -512,24 +515,24 @@
 }
 
 .fraction-tile--success {
-  border-color: var(--ll-green);
-  background: var(--ll-green-soft);
-  box-shadow: inset 0 0 0 1px rgba(22, 163, 74, 0.35);
+  border-color: var(--ll-gold);
+  background: var(--ll-gold-soft);
+  box-shadow: inset 0 0 0 1px rgba(216, 170, 79, 0.55);
 }
 
 .fraction-tile__check {
   font-size: 0.7rem;
   font-weight: 700;
   line-height: 1;
-  color: #14532d;
+  color: var(--ll-graphite);
 }
 
 .garden-success {
   padding: 0.75rem 1rem;
   border-radius: 10px;
-  background: var(--ll-green-soft);
-  border: 1px solid rgba(22, 163, 74, 0.3);
-  color: #14532d;
+  background: var(--ll-gold-soft);
+  border: 1px solid rgba(216, 170, 79, 0.55);
+  color: var(--ll-graphite);
   font-size: 0.88rem;
   margin-top: 1rem;
 }

@@ -31,14 +31,14 @@ export function HeroLanding({
         <h1 id="hero-title" className="hero-headline">
           Turn lesson plans into interactive classroom apps.
         </h1>
-        <p className="ll-section__lead" style={{ maxWidth: '58ch' }}>
+        <p className="ll-section__lead">
           Paste a trusted lesson plan. Lesson Loom creates a student activity, teacher
           console, differentiation supports, assessment checkpoints, printable fallback,
           and Stitch-ready export pack.
         </p>
 
-        <div className="flex-between gap-1" style={{ marginBottom: '2rem' }}>
-          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+        <div className="hero-actions">
+          <div className="hero-actions__group">
             <Button
               variant="primary"
               size="lg"
@@ -51,19 +51,19 @@ export function HeroLanding({
               View student app
             </Button>
           </div>
-          <p className="text-mono" style={{ fontSize: '0.75rem', color: 'var(--ll-muted)' }}>
+          <p className="text-mono hero-trust-line">
             Teacher-reviewed draft. No student accounts or personal data required.
           </p>
         </div>
 
-        <div className={`hero-visual scanline ${hasWoven ? 'scanline--active' : ''}`}>
+        <div className="hero-visual">
           <WeaveSignalLine active={hasWoven} />
           <Panel
             className="hero-plan"
             bracket
             screws
             title="Teacher Lesson Plan"
-            headerRight={<StatusPip label="Source" tone="cyan" />}
+            headerRight={<StatusPip label="Source" tone="lavender" />}
           >
             <div className="meta-grid" style={{ marginBottom: '0.75rem' }}>
               <div className="meta-item">
@@ -90,7 +90,7 @@ export function HeroLanding({
             headerRight={
               <StatusPip
                 label={hasWoven ? 'Woven' : 'Preview'}
-                tone="orange"
+                tone="lavender"
                 pulse={hasWoven}
               />
             }

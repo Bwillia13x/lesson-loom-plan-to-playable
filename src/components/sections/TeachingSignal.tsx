@@ -120,7 +120,7 @@ export function TeachingSignal({
                   <StatusPip
                     label="Live"
                     tone={
-                      index % 3 === 0 ? 'cyan' : index % 3 === 1 ? 'amber' : 'green'
+                      index % 3 === 0 ? 'lavender' : index % 3 === 1 ? 'amber' : 'green'
                     }
                   />
                 )}

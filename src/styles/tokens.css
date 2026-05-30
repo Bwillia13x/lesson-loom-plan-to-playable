@@ -29,6 +29,8 @@
   --ll-amber-soft: var(--ll-gold-soft);
   --ll-green: var(--ll-sage-deep);
   --ll-green-soft: var(--ll-mint);
+  --ll-weave-active: var(--ll-lavender-deep);
+  --ll-weave-glow: var(--ll-lavender-glow);
   --ll-shadow: 0 24px 80px rgba(17, 32, 53, 0.12);
   --ll-shadow-soft: 0 16px 44px rgba(17, 32, 53, 0.08);
   --ll-shadow-inset: inset 0 2px 4px rgba(17, 32, 53, 0.06);

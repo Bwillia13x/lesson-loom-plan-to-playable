@@ -26,6 +26,6 @@ Single spine via **`MotionProvider`** + **`useMotion()`**:
 
 ## Post-weave UI (CSS)
 
-`src/styles/motion.css` — `#student.ll-section--woven-active` orange ring when weave completes.
+`src/styles/motion.css` — `#student.ll-section--woven-active` lavender ring (`--ll-weave-active`) when weave completes.
 
 Do not add infinite decorative loops without reduced-motion off switch.

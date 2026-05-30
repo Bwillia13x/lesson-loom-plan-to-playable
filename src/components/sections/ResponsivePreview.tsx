@@ -43,7 +43,7 @@ export function ResponsivePreview({ snapshot }: ResponsivePreviewProps) {
         <div data-testid="devices-session-pip">
           <StatusPip
             label={`${snapshot.workspaceMode === 'teacher' ? 'Teacher' : 'Student'} workspace · ${snapshot.activeSupport} lane`}
-            tone="cyan"
+            tone="lavender"
           />
         </div>
       </div>
@@ -71,7 +71,7 @@ export function ResponsivePreview({ snapshot }: ResponsivePreviewProps) {
                     data-testid={snapshot.activeSegment === s.id ? 'device-active-segment' : undefined}
                     style={
                       snapshot.activeSegment === s.id
-                        ? { background: 'var(--ll-orange-soft)', borderColor: 'var(--ll-orange)' }
+                        ? { background: 'var(--ll-sage-soft)', borderColor: 'var(--ll-sage-deep)' }
                         : undefined
                     }
                   >

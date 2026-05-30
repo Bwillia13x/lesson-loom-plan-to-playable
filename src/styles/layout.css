@@ -19,7 +19,7 @@
   top: 0;
   height: 100vh;
   padding: 1rem 0.5rem;
-  background: linear-gradient(180deg, #fffefb 0%, #f5f2ec 100%);
+  background: var(--ll-paper-warm);
   border-right: 1px solid var(--ll-line);
   display: flex;
   flex-direction: column;
@@ -304,7 +304,7 @@
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--ll-sage-deep);
+  color: var(--ll-graphite);
   margin-bottom: 0.5rem;
 }
 

@@ -186,7 +186,7 @@ export function StudentFractionGarden({
           <div className="flex-between" style={{ marginBottom: '1rem' }}>
             <StatusPip
               label={`${bedsBuilt} / 3 beds built`}
-              tone="cyan"
+              tone="lavender"
             />
             <StatusPip
               label={checkSuccess ? 'Equivalent? Yes!' : 'Equivalent?'}

@@ -18,10 +18,10 @@ type DifferentiationUDLProps = {
 
 const laneConfig: Record<
   SupportLane,
-  { className: string; tone: 'cyan' | 'orange' | 'green' }
+  { className: string; tone: 'lavender' | 'sage' | 'green' }
 > = {
-  support: { className: 'lane-tab--support', tone: 'cyan' },
-  core: { className: 'lane-tab--core', tone: 'orange' },
+  support: { className: 'lane-tab--support', tone: 'lavender' },
+  core: { className: 'lane-tab--core', tone: 'sage' },
   extend: { className: 'lane-tab--extend', tone: 'green' },
 };
 
@@ -47,7 +47,7 @@ export function DifferentiationUDL({
         <div style={{ marginBottom: '1rem' }} data-testid="udl-student-lane-preview">
           <StatusPip
             label={`Student app previewing ${lane.label} lane`}
-            tone="cyan"
+            tone="lavender"
           />
         </div>
       )}
@@ -79,7 +79,7 @@ export function DifferentiationUDL({
       </div>
 
       <div className="grid-2">
-        <Panel bracket screws>
+        <Panel bracket>
           <div className="meta-grid">
             <div className="meta-item">
               <div className="meta-item__label">Task variation</div>

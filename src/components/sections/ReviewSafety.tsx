@@ -11,10 +11,10 @@ type ReviewSafetyProps = {
 };
 
 const statusTone = {
-  required: 'orange' as const,
+  required: 'gold' as const,
   review: 'amber' as const,
   pass: 'green' as const,
-  ready: 'cyan' as const,
+  ready: 'lavender' as const,
 };
 
 const statusLabel = {

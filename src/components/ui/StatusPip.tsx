@@ -1,6 +1,21 @@
 import type { HTMLAttributes } from 'react';
 
-type StatusPipTone = 'sage' | 'lavender' | 'gold' | 'amber' | 'orange' | 'cyan' | 'green';
+/**
+ * StatusPip tone keys. Canonical tones are `sage`, `lavender`, `gold`, `amber`,
+ * and `green`. The legacy keys `orange` and `cyan` are retained as deprecated
+ * aliases for one release so call sites can migrate without a breaking sweep
+ * (CSS maps them to sage and lavender respectively in `components-shared.css`).
+ */
+type StatusPipTone =
+  | 'sage'
+  | 'lavender'
+  | 'gold'
+  | 'amber'
+  | 'green'
+  /** @deprecated Use 'sage' or 'gold' instead. Kept for back-compat; CSS aliases to sage. */
+  | 'orange'
+  /** @deprecated Use 'lavender' instead. Kept for back-compat; CSS aliases to lavender. */
+  | 'cyan';
 
 type StatusPipProps = {
   label: string;

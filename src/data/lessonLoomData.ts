@@ -449,7 +449,7 @@ This prompt regenerates the interactive lesson interface from the trusted lesson
     filename: 'DESIGN.md',
     ext: '.md',
     preview:
-      ':root { --ll-bg: #faf8f4; --ll-orange: #e85d04; --ll-ink: #1c1c1c; } /* warm industrial classroom studio */',
+      ':root { --ll-bg: #faf8f4; --ll-sage-deep: #4f7652; --ll-lavender-deep: #6d72d9; --ll-ink: #1c1c1c; } /* calm classroom studio */',
     body: `# DESIGN.md — Fraction Garden
 
 Portable design rules for the Lesson Loom Fraction Garden prototype.
@@ -460,7 +460,8 @@ Portable design rules for the Lesson Loom Fraction Garden prototype.
 :root {
   --ll-bg: #faf8f4;
   --ll-paper: #fffdf8;
-  --ll-orange: #e85d04;
+  --ll-sage-deep: #4f7652;
+  --ll-lavender-deep: #6d72d9;
   --ll-ink: #1c1c1c;
   --ll-muted: #5c5c5c;
   --ll-line: rgba(28, 28, 28, 0.12);

@@ -7,7 +7,7 @@ export function PrintableFallback() {
       <div className="printable-preview">
         <div className="printable-preview__header">
           <strong>Fraction Garden — Worksheet</strong>
-          <StatusPip label="No-tech backup" tone="cyan" />
+          <StatusPip label="No-tech backup" tone="lavender" />
         </div>
         <p className="printable-preview__instructions">
           Shade garden beds to show equivalent fractions. Compare how much of each whole
