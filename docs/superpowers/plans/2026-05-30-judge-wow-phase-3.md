@@ -50,7 +50,7 @@ Create `docs/qa/MANUAL_PASS_2026-05-30.md`:
 # Manual QA pass — 2026-05-30
 
 **Tester:** _name_  
-**Live URL:** https://bwillia13x.github.io/lesson-loom-plan-to-playable/  
+**Live URL:** https://bwillia13x.github.io/lesson-loom-plan-to-playable/ _(obsolete URL — superseded by Vercel deploy per plan 006; use https://lesson-loom.vercel.app)_  
 **Browser:** Chrome _version_ / Safari _version or N/A_
 
 ## Product perception
