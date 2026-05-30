@@ -102,23 +102,6 @@
   margin-top: 0.1rem;
 }
 
-.app-topbar__status {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--ll-font-mono);
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--ll-muted);
-}
-
-.app-topbar__trust {
-  font-size: 0.75rem;
-  color: var(--ll-graphite);
-  text-align: right;
-}
-
 .workspace-toggle {
   flex-shrink: 0;
 }

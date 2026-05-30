@@ -636,11 +636,6 @@
 }
 
 @media (max-width: 720px) {
-  .app-topbar__status,
-  .app-topbar__trust {
-    display: none;
-  }
-
   .weave-complete-banner {
     margin: 0 1rem;
     flex-direction: column;
