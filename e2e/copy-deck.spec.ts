@@ -2,7 +2,8 @@ import { expect, test } from '@playwright/test';
 
 test('hero matches copy deck primary messages', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('#hero')).toContainText('AI-native lesson interface studio');
+  await expect(page.locator('#hero')).toContainText('Plan to Playable');
+  await expect(page.locator('#hero')).toContainText('teacher-reviewed drafts');
   await expect(page.locator('#hero-title')).toContainText(
     'Turn lesson plans into interactive classroom apps',
   );

@@ -346,11 +346,21 @@
 /* Signal cards grid */
 .signal-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1rem;
 }
 
+@media (min-width: 1024px) {
+  .signal-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
 .signal-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 9.25rem;
   padding: 1rem 1.1rem;
   border-radius: var(--ll-radius);
   border: 1px solid var(--ll-line);
@@ -358,13 +368,34 @@
   transition:
     transform 0.2s,
     box-shadow 0.2s,
-    border-color 0.2s;
+    border-color 0.2s,
+    opacity 0.25s ease;
   border-left: 3px solid transparent;
 }
 
-.signal-card:hover {
+.signal-card--locked {
+  opacity: 0.62;
+  filter: saturate(0.88);
+}
+
+.signal-card--locked .signal-card__value {
+  color: var(--ll-muted);
+}
+
+.signal-card--live {
+  border-left-color: var(--ll-lavender-deep);
+}
+
+.signal-card--live:hover {
   transform: translateY(-2px);
   box-shadow: var(--ll-shadow-soft);
+}
+
+.signal-card__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: auto;
 }
 
 .signal-card--revealed {

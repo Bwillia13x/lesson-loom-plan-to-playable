@@ -304,7 +304,7 @@ export const exportPack = [
 ## Hero copy
 
 ```text
-AI-native lesson interface studio
+Plan to Playable · teacher-reviewed drafts
 
 Turn lesson plans into interactive classroom apps.
 

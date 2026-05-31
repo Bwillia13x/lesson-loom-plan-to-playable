@@ -12,7 +12,7 @@ Prefer: draft, review, supports, classroom-ready, no student data, printable fal
 
 Eyebrow:
 
-> AI-native lesson interface studio
+> Plan to Playable · teacher-reviewed drafts
 
 Headline:
 

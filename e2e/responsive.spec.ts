@@ -13,6 +13,7 @@ test.describe('mobile viewport (390px)', () => {
     await expect(page.locator('#hero-title')).toContainText(
       'Turn lesson plans into interactive classroom apps',
     );
+    await expect(page.locator('.app-topbar__subtitle')).toBeHidden();
 
     await page
       .getByRole('navigation', { name: 'Section navigation' })

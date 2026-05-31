@@ -392,7 +392,10 @@ export default function App() {
         data-session-spine={hasWoven || demoRunning ? 'true' : undefined}
       >
         <header className="app-topbar">
-          <div>
+          <div
+            className="app-topbar__brand"
+            aria-label="Lesson Loom — turn a teacher-approved lesson plan into an interactive classroom interface"
+          >
             <div className="app-topbar__title">Lesson Loom</div>
             <div className="app-topbar__subtitle">
               Turn a teacher-approved lesson plan into an interactive classroom interface.

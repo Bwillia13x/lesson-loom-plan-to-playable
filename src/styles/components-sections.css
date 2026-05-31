@@ -344,10 +344,13 @@
 
 .hero-headline {
   font-family: var(--ll-font-display);
-  font-size: clamp(3rem, 8vw, 7.2rem);
-  line-height: 0.92;
+  font-size: clamp(2.35rem, 7vw, 7.2rem);
+  line-height: 0.95;
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
+  max-width: 14ch;
+  text-wrap: balance;
+  overflow-wrap: break-word;
 }
 
 .hero-visual {
@@ -400,6 +403,20 @@
 
   .hero-actions__group > * {
     flex: 1 1 100%;
+  }
+}
+
+.hero-eyebrow {
+  color: var(--ll-sage-deep);
+  letter-spacing: 0.1em;
+  max-width: 52ch;
+  line-height: 1.45;
+}
+
+@media (max-width: 480px) {
+  .hero-eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.07em;
   }
 }
 

@@ -29,7 +29,7 @@ Avoid:
 Neon, robots, generic AI brains, childish primary colors, cluttered dashboards, cartoon overload, stock teacher/student imagery.
 
 Hero:
-Eyebrow: AI-native lesson interface studio
+Eyebrow: Plan to Playable · teacher-reviewed drafts
 Headline: Turn lesson plans into interactive classroom apps.
 Subcopy: Paste a trusted lesson plan. Lesson Loom creates a student activity, teacher console, differentiation supports, assessment checkpoints, printable fallback, and Stitch-ready export pack.
 Primary button: Weave lesson

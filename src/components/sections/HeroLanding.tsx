@@ -27,8 +27,8 @@ export function HeroLanding({
   return (
     <section id="hero" className="ll-section" aria-labelledby="hero-title">
       <div className="ll-section__inner">
-        <p className="ll-section__eyebrow">
-          Lesson Loom · AI-native lesson interface studio
+        <p className="ll-section__eyebrow hero-eyebrow">
+          Lesson Loom · Plan to Playable · teacher-reviewed drafts
         </p>
         <h1 id="hero-title" className="hero-headline">
           Turn lesson plans into interactive classroom apps.

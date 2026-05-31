@@ -10,7 +10,7 @@
 
 ## Category
 
-AI-native lesson interface studio / high-fidelity education prototype.
+Plan to Playable · teacher-reviewed drafts / high-fidelity education prototype.
 
 ## Contest framing
 
@@ -137,7 +137,7 @@ Purpose: explain concept immediately.
 
 Content:
 
-- Eyebrow: AI-native lesson interface studio
+- Eyebrow: Plan to Playable · teacher-reviewed drafts
 - Headline: Turn lesson plans into interactive classroom apps.
 - Subcopy: Paste a trusted lesson plan. Lesson Loom creates a student activity, teacher console, differentiation supports, assessment checkpoints, printable fallback, and Stitch-ready export pack.
 - Primary CTA: Weave lesson

@@ -110,8 +110,9 @@ export function TeachingSignal({
         {teachingSignals.map((card, index) => (
           <article
             key={card.id}
-            className="signal-card"
-            style={!hasWoven ? { opacity: 0.55 } : undefined}
+            className={
+              hasWoven ? 'signal-card signal-card--live' : 'signal-card signal-card--locked'
+            }
           >
             <div className="signal-card__content">
               <div className="flex-between">

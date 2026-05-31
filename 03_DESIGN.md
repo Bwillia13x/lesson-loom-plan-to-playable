@@ -78,19 +78,19 @@ Use CSS variables.
 
 ## 4. Typography
 
-Recommended font strategy:
+Implemented font strategy (see `index.html` + `src/styles/tokens.css`):
 
-- Display / headline: serif or editorial face if available; otherwise `Georgia` fallback.
-- UI / body: `Inter`, `Geist`, or system sans.
-- Mono labels: `SFMono-Regular`, `ui-monospace`, `Menlo`.
+- Display / headline: **Instrument Serif** with `Georgia` fallback.
+- UI / body: **DM Sans** with system sans fallback.
+- Mono labels: **IBM Plex Mono** with system mono fallback.
 
-CSS:
+CSS (source of truth: `tokens.css`):
 
 ```css
 :root {
-  --ll-font-display: Georgia, 'Times New Roman', serif;
-  --ll-font-ui: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --ll-font-mono: 'SFMono-Regular', ui-monospace, Menlo, Monaco, Consolas, monospace;
+  --ll-font-display: 'Instrument Serif', Georgia, serif;
+  --ll-font-ui: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --ll-font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
 }
 ```
 
